@@ -4,13 +4,31 @@ require 'bootstrap.php';
 /**
  * Portfolio.class.php
  *
- * @author  Till GlÃ¶ggler <tgloeggl@uos.de>
+ * @author  Till Glöggler <tgloeggl@uos.de>
  * @version 0.1a
  */
 
+
 require_once dirname(__FILE__) . '/app/controllers/portfolio.php';
 
-class Portfolio extends StudIPPlugin implements HomepagePlugin {
+// load legacy code for older Stud.IP-Versions
+if (version_compare($GLOBALS['SOFTWARE_VERSION'], "2.4", '<=')) {
+    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/StudipArrayObject.php';
+    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/EPP_SimpleCollection.php';
+    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/EPP_SimpleORMapCollection.php';
+    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/EPP_SimpleORMap.php';
+    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/EPP_StudipDocument.php';
+    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/CourseMember.php';
+} else {
+    // for version starting from 2.5 use the same stub
+    require_once 'compat/2.5/EPP_SimpleCollection.php';
+    require_once 'compat/2.5/EPP_SimpleORMapCollection.php';
+    require_once 'compat/2.5/EPP_SimpleORMap.php';
+    require_once 'compat/2.5/EPP_StudipDocument.php';
+}
+
+class Portfolio extends StudIPPlugin implements HomepagePlugin
+{
 
     public function __construct() {
         parent::__construct();
