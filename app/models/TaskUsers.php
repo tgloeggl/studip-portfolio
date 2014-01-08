@@ -12,9 +12,9 @@
  * @category    Stud.IP
  */
 
-namespace EPP;
+namespace Portfolio;
 
-class TaskUsers extends \EPP_SimpleORMap
+class TaskUsers extends \Portfolio_SimpleORMap
 {
     /**
      * creates new task_user, sets up relations
@@ -23,40 +23,38 @@ class TaskUsers extends \EPP_SimpleORMap
      */    
     public function __construct($id = null)
     {
-        $this->db_table = 'ep_task_users';
+        $this->db_table = 'portfolio_task_users';
 
         $this->has_many['files'] = array(
-            'class_name'  => 'EPP\TaskUserFiles',
-            'assoc_foreign_key' => 'ep_task_users_id',
+            'class_name'  => 'Portfolio\TaskUserFiles',
+            'assoc_foreign_key' => 'portfolio_task_users_id',
         );
       
         $this->belongs_to['task'] = array(
-            'class_name'  => 'EPP\Tasks',
-            'foreign_key' => 'ep_tasks_id',
+            'class_name'  => 'Portfolio\Tasks',
+            'foreign_key' => 'portfolio_tasks_id',
         );
+        
+        $this->has_and_belongs_to_many = array(
+            'tags' => array(
+                'class_name'     => 'Portfolio\Tags',
+                'thru_table'     => 'portfolio_tags_task_users',
+                'thru_key'       => 'portfolio_task_users_id',
+                'thru_assoc_key' => 'portfolio_tags_id',
+                'on_delete'      => 'delete',
+                'on_store'       => 'store'
+            ),
+            'portfolios' => array(
+                'class_name'     => 'Portfolio\Portfolios',
+                'thru_table'     => 'portfolio_portfolios_task_users',
+                'thru_key'       => 'portfolio_task_users_id',
+                'thru_assoc_key' => 'portfolio_portfolios_id',
+                'on_delete'      => 'delete',
+                'on_store'       => 'store'
+            ),
+        );        
 
         parent::__construct($id);
         
-        // on initial creation, clear chdate and mkdate, since the student did not touch the task (yet)
-        //$this->registerCallback('after_create', 'clearDates');
     }
-
-    /**
-     * set chdate and mkdate for the current db-entry to zero.
-     * happens on initial creation since the student did not touch the task (yet)
-     */
-    /*
-    public function clearDates()
-    {
-        $where_query = $this->getWhereQuery();
-
-        // DBManager::get()->query(
-        $query = "UPDATE `{$this->db_table}` SET
-            chdate = 0, mkdate = 0
-            WHERE ". join(" AND ", $where_query);
-        
-        \DBManager::get()->exec($query);
-    }
-     * 
-     */
 }

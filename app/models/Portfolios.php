@@ -1,6 +1,6 @@
 <?php
 /**
- * filename - Short description for file
+ * Portfolios - Short description for file
  *
  * Long description for file (if any)...
  *
@@ -16,26 +16,26 @@
 
 namespace Portfolio;
 
-class TaskUserFiles extends \Portfolio_SimpleORMap
+class Portfolios extends \Portfolio_SimpleORMap
 {
     /**
-     * creates new task_user_file, sets up relations
+     * creates new portfolios, sets up relations
      * 
      * @param string $id
      */
     public function __construct($id = null)
     {
-        $this->db_table = 'portfolio_task_user_files';
+        $this->db_table = 'portfolio_portfolios';
 
-        $this->has_one['document'] = array(
-            'class_name'        => '\Portfolio_StudipDocument',
-            'foreign_key'       => 'dokument_id',
-            'assoc_foreign_key' => 'dokument_id'
-        );    
-        
-        $this->belongs_to['task_user'] = array(
-            'class_name'  => 'Portfolio\TaskUsers',
-            'foreign_key' => 'portfolio_task_users_id',
+        $this->has_and_belongs_to_many = array(
+            'task_users' => array(
+                'class_name'     => 'Portfolio\TaskUsers',
+                'thru_table'     => 'portfolio_tags_task_users',
+                'thru_key'       => 'portfolio_portfolios_id',
+                'thru_assoc_key' => 'portfolio_task_users_id',
+                'on_delete'      => 'delete',
+                'on_store'       => 'store'
+            ),
         );
 
         parent::__construct($id);

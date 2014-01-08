@@ -48,7 +48,7 @@
  * @property string priority database column
  * @property string author_name database column
  */
-class EPP_StudipDocument extends EPP_SimpleORMap {
+class Portfolio_StudipDocument extends Portfolio_SimpleORMap {
 
     /**
      * returns array of StudipDocument-objects of given course id

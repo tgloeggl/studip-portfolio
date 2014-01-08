@@ -1,6 +1,8 @@
 <?php
 /**
- * Tasks - presents a single task
+ * Tasksets - a collection of predefined tasks
+ *
+ * Long description for file (if any)...
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -10,32 +12,31 @@
  * @author      Till Glöggler <tgloeggl@uos.de>
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GPL version 3
  * @category    Stud.IP
- * 
  */
 
 namespace Portfolio;
 
-class Tasks extends \Portfolio_SimpleORMap
+class Tasksets extends \Portfolio_SimpleORMap
 {
     /**
-     * creates new task, sets up relations
+     * creates a new taskset, sets up relations
      * 
      * @param string $id
      */
     public function __construct($id = null)
     {
-        $this->db_table = 'portfolio_tasks';
+        $this->db_table = 'portfolio_tasksets';
 
-        $this->has_many['task_users'] = array(
-            'class_name'        => 'Portfolio\TaskUsers',
-            'assoc_foreign_key' => 'portfolio_tasks_id'
+        $this->has_many['tasks'] = array(
+            'class_name'        => 'Portfolio\Tasks',
+            'foreign_key'       => 'taskset_id',
         );
-        
-        $this->belongs_to['taskset'] = array(
-            'class_name'  => 'Portfolio\Tasksets',
-            'foreign_key' => 'taskset_id',
-        );        
-        
+
+        $this->has_many['studiengang_combos'] = array(
+            'class_name'        => 'Portfolio\TasksetsStudiengangCombos',
+            'foreign_key'       => 'portfolio_tasksets_id',
+        );
+
         parent::__construct($id);
     }
 }

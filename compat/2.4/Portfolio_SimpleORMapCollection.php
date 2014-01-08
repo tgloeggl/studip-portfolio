@@ -13,7 +13,7 @@
  * @license     http://www.gnu.org/licenses/gpl-2.0.html GPL version 2
  * @category    Stud.IP
 */
-class EPP_SimpleORMapCollection extends EPP_SimpleCollection
+class Portfolio_SimpleORMapCollection extends Portfolio_SimpleCollection
 {
 
     /**

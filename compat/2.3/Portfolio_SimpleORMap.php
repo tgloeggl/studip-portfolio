@@ -14,7 +14,7 @@
  * @category    Stud.IP
 */
 
-class EPP_SimpleORMap implements ArrayAccess, Countable, IteratorAggregate
+class Portfolio_SimpleORMap implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * table row data

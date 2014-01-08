@@ -1,6 +1,6 @@
 <?php
 /**
- * filename - Short description for file
+ * StudiengangCombos.php - Short description for file
  *
  * Long description for file (if any)...
  *
@@ -14,28 +14,29 @@
  * @category    Stud.IP
  */
 
+return;
 namespace Portfolio;
 
-class TaskUserFiles extends \Portfolio_SimpleORMap
+class StudiengangCombos extends \Portfolio_SimpleORMap
 {
     /**
-     * creates new task_user_file, sets up relations
+     * creates new entry for combo, sets up relations
      * 
      * @param string $id
      */
     public function __construct($id = null)
     {
-        $this->db_table = 'portfolio_task_user_files';
+        $this->db_table = 'portfolio_studiengang_combos';
 
-        $this->has_one['document'] = array(
-            'class_name'        => '\Portfolio_StudipDocument',
-            'foreign_key'       => 'dokument_id',
-            'assoc_foreign_key' => 'dokument_id'
-        );    
+        $this->belongs_to['studiengang_combos'] = array(
+            'class_name'  => 'Portfolio\TasksetsStudiengangCombos',
+            'foreign_key' => 'portfolio_studiengang_combos_id',
+        );
         
-        $this->belongs_to['task_user'] = array(
-            'class_name'  => 'Portfolio\TaskUsers',
-            'foreign_key' => 'portfolio_task_users_id',
+        $this->has_one['studiengang'] = array(
+            'class_name'        => '\Portfolio_StudyCourse',
+            'foreign_key'       => 'studiengang_id',
+            'foreign_assoc_key' => 'studiengang_id'
         );
 
         parent::__construct($id);

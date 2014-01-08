@@ -1,6 +1,6 @@
 <?php
 /**
- * Tasks - presents a single task
+ * TasksetsStudiengangCombos - a combo for a tasksets
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -15,26 +15,28 @@
 
 namespace Portfolio;
 
-class Tasks extends \Portfolio_SimpleORMap
+class TasksetsStudiengangCombos extends \Portfolio_SimpleORMap
 {
     /**
-     * creates new task, sets up relations
+     * creates a new studiengang-combo for a taskset, sets up relations
      * 
      * @param string $id
      */
     public function __construct($id = null)
     {
-        $this->db_table = 'portfolio_tasks';
+        $this->db_table = 'portfolio_tasksets_studiengang_combos';
 
-        $this->has_many['task_users'] = array(
-            'class_name'        => 'Portfolio\TaskUsers',
-            'assoc_foreign_key' => 'portfolio_tasks_id'
+        $this->has_many['studiengaenge'] = array(
+            'class_name'     => '\Portfolio_StudyCourse',
+            'thru_table'     => 'portfolio_studiengang_combos',
+            'thru_key'       => 'combo_id',
+            'thru_assoc_key' => 'studiengang_id',            
         );
         
-        $this->belongs_to['taskset'] = array(
+        $this->belongs_to['tasksets'] = array(
             'class_name'  => 'Portfolio\Tasksets',
-            'foreign_key' => 'taskset_id',
-        );        
+            'foreign_key' => 'portfolio_tasksets_id',
+        );
         
         parent::__construct($id);
     }

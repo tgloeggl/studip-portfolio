@@ -13,8 +13,8 @@ class AddPortfolioTables extends DBMigration {
               `id` INT NOT NULL AUTO_INCREMENT ,
               `name` VARCHAR(255) NULL ,
               `user_id` VARCHAR(32) NULL COMMENT 'who created this set?' ,
+              `chdate` INT NULL ,              
               `mkdate` INT NULL ,
-              `chdate` INT NULL ,
               PRIMARY KEY (`id`)
             ) ENGINE = InnoDB;
         ");
@@ -23,6 +23,7 @@ class AddPortfolioTables extends DBMigration {
             CREATE  TABLE IF NOT EXISTS `portfolio_tasks` (
               `id` INT NOT NULL AUTO_INCREMENT ,
               `taskset_id` INT NULL ,
+              `user_id` VARCHAR(32) NULL ,
               `title` VARCHAR(255) NULL ,
               `content` MEDIUMTEXT NULL ,
               `allow_text` TINYINT(1) NULL DEFAULT 0 ,
@@ -37,7 +38,7 @@ class AddPortfolioTables extends DBMigration {
         $db->exec("
             CREATE  TABLE IF NOT EXISTS `portfolio_task_users` (
               `id` INT NOT NULL AUTO_INCREMENT ,
-              `ep_tasks_id` INT NULL ,
+              `portfolio_tasks_id` INT NULL ,
               `user_id` VARCHAR(32) NULL ,
               `answer` MEDIUMTEXT NULL ,
               `feedback` MEDIUMTEXT NULL ,
@@ -46,20 +47,20 @@ class AddPortfolioTables extends DBMigration {
               `chdate` INT NULL ,
               `mkdate` INT NULL ,
               PRIMARY KEY (`id`) ,
-              INDEX `fk_ep_tasks_users_ep_tasks_idx` (`ep_tasks_id` ASC)
+              INDEX `fk_portfolio_tasks_users_portfolio_tasks_idx` (`portfolio_tasks_id` ASC)
             ) ENGINE = InnoDB;
         ");
 
         $db->exec("
             CREATE  TABLE IF NOT EXISTS `portfolio_task_user_files` (
               `id` INT NOT NULL AUTO_INCREMENT ,
-              `ep_task_users_id` INT NULL ,
+              `portfolio_task_users_id` INT NULL ,
               `user_id` VARCHAR(32) NULL ,
               `file_id` VARCHAR(32) NULL ,
               `chdate` INT NULL ,
               `mkdate` INT NULL ,
               PRIMARY KEY (`id`) ,
-              INDEX `fk_ep_tasks_users_files_ep_tasks_users1_idx` (`ep_task_users_id` ASC)
+              INDEX `fk_portfolio_tasks_users_files_portfolio_tasks_users1_idx` (`portfolio_task_users_id` ASC)
             ) ENGINE = InnoDB;
         ");
 
@@ -106,7 +107,7 @@ class AddPortfolioTables extends DBMigration {
               `portfolio_task_users_id` INT NOT NULL ,
               `user_id` VARCHAR(32) NULL ,
               `role` ENUM('supervisor','goal','fellow') NULL ,
-              PRIMARY KEY (`portfolio_task_users_id`) 
+              PRIMARY KEY (`portfolio_task_users_id`, `user_id`) 
             ) ENGINE = InnoDB;
         ");
 

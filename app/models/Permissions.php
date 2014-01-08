@@ -1,6 +1,8 @@
 <?php
 /**
- * Tasks - presents a single task
+ * Permissions - Short description for file
+ *
+ * Long description for file (if any)...
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -10,32 +12,26 @@
  * @author      Till Glöggler <tgloeggl@uos.de>
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GPL version 3
  * @category    Stud.IP
- * 
  */
 
 namespace Portfolio;
 
-class Tasks extends \Portfolio_SimpleORMap
+class Permissions extends \Portfolio_SimpleORMap
 {
     /**
-     * creates new task, sets up relations
+     * creates new permissions, sets up relations
      * 
      * @param string $id
      */
     public function __construct($id = null)
     {
-        $this->db_table = 'portfolio_tasks';
+        $this->db_table = 'portfolio_permissions';
 
-        $this->has_many['task_users'] = array(
-            'class_name'        => 'Portfolio\TaskUsers',
-            'assoc_foreign_key' => 'portfolio_tasks_id'
+        $this->belongs_to['task_user'] = array(
+            'class_name'  => 'EPP\TaskUsers',
+            'foreign_key' => 'portfolio_task_users_id',
         );
-        
-        $this->belongs_to['taskset'] = array(
-            'class_name'  => 'Portfolio\Tasksets',
-            'foreign_key' => 'taskset_id',
-        );        
-        
+
         parent::__construct($id);
     }
 }
