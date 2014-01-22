@@ -66,19 +66,19 @@ class AddPortfolioTables extends DBMigration {
 
         $db->exec("
             CREATE  TABLE IF NOT EXISTS `portfolio_tasksets_studiengang_combos` (
+              `id` INT NOT NULL AUTO_INCREMENT,
               `portfolio_tasksets_id` INT NOT NULL ,
-              `portfolio_studiengang_combos_id` INT NOT NULL ,
-              PRIMARY KEY (`portfolio_tasksets_id`, `portfolio_studiengang_combos_id`) ,
+              PRIMARY KEY (`id`) ,
               INDEX `fk_portfolio_tasksets_studiengang_combos_portfolio_tasksets_idx` (`portfolio_tasksets_id` ASC)
             ) ENGINE = InnoDB;
         ");
 
         $db->exec("
             CREATE  TABLE IF NOT EXISTS `portfolio_studiengang_combos` (
-              `combo_id` INT NOT NULL ,
+              `portfolio_tasksets_studiengang_combos_id` INT NOT NULL ,
               `studiengang_id` VARCHAR(32) NOT NULL ,
-              PRIMARY KEY (`combo_id`, `studiengang_id`) ,
-              INDEX `fk_portfolio_studiengang_combos_portfolio_tasks_studiengang_idx` (`combo_id` ASC)
+              PRIMARY KEY (`portfolio_tasksets_studiengang_combos_id`, `studiengang_id`) ,
+              INDEX `fk_portfolio_studiengang_combos_portfolio_tasks_studiengang_idx` (`portfolio_tasksets_studiengang_combos_id` ASC)
             ) ENGINE = InnoDB;
         ");
 

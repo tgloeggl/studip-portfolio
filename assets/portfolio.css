@@ -1,1 +1,4 @@
-/* CSS */ 
+#portfolio form label span { font-weight: bold; }
+#portfolio form input[type=text], #portfolio form textarea { width: 80%; }
+#portfolio form textarea { height: 12em; }
+#portfolio form select { width: 30%; }

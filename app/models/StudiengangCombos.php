@@ -14,8 +14,8 @@
  * @category    Stud.IP
  */
 
-return;
 namespace Portfolio;
+return;
 
 class StudiengangCombos extends \Portfolio_SimpleORMap
 {

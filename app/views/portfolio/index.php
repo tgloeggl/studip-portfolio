@@ -1,3 +1,3 @@
 <? foreach ($portfolios as $portfolio) : ?>
-    <h2><?= $portfolio ?></h2><br>
+    <h2><?= $portfolio['name'] ?></h2><br>
 <? endforeach ?>

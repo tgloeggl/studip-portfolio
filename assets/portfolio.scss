@@ -1,0 +1,20 @@
+#portfolio {
+    form {
+        label {
+            span {
+                font-weight: bold;
+            }
+        }
+        input[type=text], textarea {
+            width: 80%;
+        }
+        
+        textarea {
+            height: 12em;
+        }
+        
+        select {
+            width: 30%;
+        }
+    }
+}

@@ -29,12 +29,12 @@ class Tasksets extends \Portfolio_SimpleORMap
 
         $this->has_many['tasks'] = array(
             'class_name'        => 'Portfolio\Tasks',
-            'foreign_key'       => 'taskset_id',
+            'assoc_foreign_key' => 'taskset_id',
         );
 
         $this->has_many['studiengang_combos'] = array(
             'class_name'        => 'Portfolio\TasksetsStudiengangCombos',
-            'foreign_key'       => 'portfolio_tasksets_id',
+            'assoc_foreign_key' => 'portfolio_tasksets_id',
         );
 
         parent::__construct($id);
