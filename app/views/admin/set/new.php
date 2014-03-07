@@ -31,7 +31,7 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
         <div style="text-align: center">
             <div class="button-group">
                 <?= Studip\Button::createAccept(_('Aufgabenset erstellen')) ?>
-                <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('admin/portfolio/index')) ?>
+                <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('admin/set/index')) ?>
             </div>
         </div>
     </form>

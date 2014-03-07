@@ -15,7 +15,6 @@
  */
 
 namespace Portfolio;
-return;
 
 class StudiengangCombos extends \Portfolio_SimpleORMap
 {
@@ -28,10 +27,13 @@ class StudiengangCombos extends \Portfolio_SimpleORMap
     {
         $this->db_table = 'portfolio_studiengang_combos';
 
+        /*
         $this->belongs_to['studiengang_combos'] = array(
             'class_name'  => 'Portfolio\TasksetsStudiengangCombos',
             'foreign_key' => 'portfolio_studiengang_combos_id',
         );
+         * 
+         */
         
         $this->has_one['studiengang'] = array(
             'class_name'        => '\Portfolio_StudyCourse',
@@ -39,6 +41,12 @@ class StudiengangCombos extends \Portfolio_SimpleORMap
             'foreign_assoc_key' => 'studiengang_id'
         );
 
+        $this->has_one['abschluss'] = array(
+            'class_name'        => '\Portfolio_StudyCourse',
+            'foreign_key'       => 'studiengang_id',
+            'foreign_assoc_key' => 'studiengang_id'
+        );
+        
         parent::__construct($id);
     }
 }

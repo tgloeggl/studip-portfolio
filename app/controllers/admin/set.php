@@ -46,38 +46,63 @@ class Admin_SetController extends PortfolioPluginController
 
         $taskset = Portfolio\Tasksets::create($data);
         
-        foreach (Request::optionArray('studycourses') as $combo) {
-            $study_combo = new Portfolio\TasksetsStudiengangCombos();
-            $study_combo->portfolio_tasksets_id = $taskset->getId();
+        /*
+        foreach (Request::optionArray('studycourses') as $studycourses) {
             
-            foreach ($combo as $studiengang_id) {
-                $studiengang = new \Portfolio_Studycourse($studiengang_id);
-                $study_combo->studiengaenge[] = $studiengang;
+            // $combo->portfolio_tasksets_id = $taskset->getId();
+
+            foreach ($studycourses as $ids) {
+                list($studiengang_id, $abschluss_id) = explode('_', $ids);
+                
+                $study_combo = Portfolio\StudiengangCombos::create(array(
+                    'studiengang_id' => $studiengang_id,
+                    'abschluss_id'   => $abschluss_id
+                ));
+               
+                // $combo->study_combos[] = $study_combo;
+                
+                $combos[] = new Portfolio\TasksetsStudiengangCombos(array(
+                    $taskset->id,
+                    $study_combo->id
+                ));
             }
             
-            $study_combo->store();
+            
+            
+            $taskset->combos[] = $combos;
         }
+         * 
+         */
+        
+        $taskset->store();
 
-        $this->redirect('admin/portfolio/index');
+        $this->redirect('admin/set/index');
     }
     
     public function edit_action($set_id)
     {
-        $this->redirect('admin/portfolio/index');
+        $this->redirect('admin/set/index');
     }
     
     public function delete_action($set_id)
     {
-        $this->redirect('admin/portfolio/index');
+        $this->redirect('admin/set/index');
     }
     
     public function get_studycourses_action()
     {
-        $this->render_json(Portfolio_Studycourse::findAndMapBySQL(function($data) {
-            return array(
-                'value' => $data->studiengang_id ,
-                'name' => $data->name
-            );
-        }, '1 ORDER BY name ASC'));
+        $return = array();
+        $studiengaenge = Portfolio_Studycourse::findBySQL('1 ORDER BY name ASC');
+        $abschluesse   = Portfolio\Abschluss::findBySQL('1 ORDER BY name ASC');
+        
+        foreach ($studiengaenge as $studiengang) {
+            foreach ($abschluesse as $abschluss) {
+                $return[] = array(
+                    'value' => $studiengang->getId() .'_'. $abschluss->getId(),
+                    'name'  => $studiengang->name .' * '. $abschluss->name
+                );
+            }
+        }
+        $this->render_json($return);
     }
 }

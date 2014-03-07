@@ -5,7 +5,7 @@ $infobox_content[] = array(
     'eintrag'   => array(
         array(
             'icon' => 'icons/16/black/info.png',
-            'text' => sprintf(_('%sNeue Aufgaben anlegen%s'), '<a href="'.  $controller->url_for('admin/task/new/' . $portfolio->id) .'">', '</a>')
+            'text' => sprintf(_('%sNeue Aufgabe anlegen%s'), '<a href="'.  $controller->url_for('admin/task/new/' . $portfolio->id) .'">', '</a>')
         )
     )
 );
@@ -16,7 +16,7 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
 
 <div id="portfolio">
     <h1><?= sprintf(_('Aufgaben im Set "%s"'), $portfolio->name) ?></h1>
-    <? if (empty($tasks)) : ?>
+    <? if (!sizeof($portfolio->tasks)) : ?>
         <?= MessageBox::info(sprintf(_('Es sind bisher keine Aufgaben in diesem Aufgabensets vorhanden. %sLegen Sie eine neue Aufgabe an.%s'),
             '<a href="'. $controller->url_for('admin/task/new/' . $portfolio->id) .'">', '</a>')) ?>
     <? else : ?>
@@ -25,25 +25,26 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
                 <tr>
                     <th><?= _('Name') ?></th>
                     <th><?= _('Enthalten in Sets') ?></th>
+                    <th><?= _('Tags') ?></th>
                 </tr>
             </thead>
             <tbody>
-            <? foreach ($tasks as $task) : ?>
+            <? foreach ($portfolio->tasks as $task) : ?>
                 <tr>
                     <td>
-                        <a href="<?= $controller->url_for('admin/task/edit/' . $task['id']) ?>">
-                            <?= $task['name'] ?>
+                        <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->getId()) ?>">
+                            <?= $task->title ?>
                         </a>
                     </td>
                     <td>
-                        <? /*
                         <ul style="margin: 0px; padding-left: 0px;">
-                            <? foreach ($portfolio->studiengang_combos as $st) : ?>
-                            <li>
-                                <?= implode(', ', array_map(function($data) { return $data['name']; }, $st->studiengaenge->toArray())) ?>
-                            </li>
-                            <? endforeach; ?>
-                        </ul> */ ?>
+                            <?= implode(',', array_map(function($data) use ($controller) { 
+                                return '<a href="'. $controller->url_for('admin/task/index/' . $data['id']) .'">'. $data['name'] .'</a>';
+                            } , $task->tasksets->toArray())); ?>
+                        </ul>                        
+                    </td>
+                    <td>
+                        <?= implode(', ', $task->tags->pluck('tag')); ?>
                     </td>
                 </tr>
             <? endforeach ?>

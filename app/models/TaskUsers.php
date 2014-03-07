@@ -36,14 +36,6 @@ class TaskUsers extends \Portfolio_SimpleORMap
         );
         
         $this->has_and_belongs_to_many = array(
-            'tags' => array(
-                'class_name'     => 'Portfolio\Tags',
-                'thru_table'     => 'portfolio_tags_task_users',
-                'thru_key'       => 'portfolio_task_users_id',
-                'thru_assoc_key' => 'portfolio_tags_id',
-                'on_delete'      => 'delete',
-                'on_store'       => 'store'
-            ),
             'portfolios' => array(
                 'class_name'     => 'Portfolio\Portfolios',
                 'thru_table'     => 'portfolio_portfolios_task_users',

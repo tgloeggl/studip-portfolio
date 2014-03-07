@@ -27,15 +27,37 @@ class Tasksets extends \Portfolio_SimpleORMap
     {
         $this->db_table = 'portfolio_tasksets';
 
+        /*
         $this->has_many['tasks'] = array(
             'class_name'        => 'Portfolio\Tasks',
             'assoc_foreign_key' => 'taskset_id',
         );
+         * 
+         */
 
+        /*
         $this->has_many['studiengang_combos'] = array(
             'class_name'        => 'Portfolio\TasksetsStudiengangCombos',
             'assoc_foreign_key' => 'portfolio_tasksets_id',
         );
+         * 
+         */
+
+        $this->has_many['combos'] = array(
+            'class_name'        => 'Portfolio\TasksetsStudiengangCombos',
+            'assoc_foreign_key' => 'portfolio_tasksets_id',
+        );
+
+        $this->has_and_belongs_to_many = array(
+            'tasks' => array(
+                'class_name'  => 'Portfolio\Tasks',
+                'thru_table'  => 'portfolio_tasksets_tasks',
+                'thru_key'    => 'portfolio_tasksets_id',
+                'thru_assoc_key' => 'portfolio_tasks_id',
+                'on_delete'      => 'delete',
+                'on_store'       => 'store'
+            ),
+        );         
 
         parent::__construct($id);
     }

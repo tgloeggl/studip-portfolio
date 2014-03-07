@@ -1,6 +1,9 @@
 #portfolio {
     form {
         label {
+            display: block;
+            margin-top: 1em;
+
             span {
                 font-weight: bold;
             }
@@ -14,7 +17,7 @@
         }
         
         select {
-            width: 30%;
+            width: 80%;
         }
     }
 }

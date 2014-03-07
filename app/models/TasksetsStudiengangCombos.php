@@ -26,6 +26,13 @@ class TasksetsStudiengangCombos extends \Portfolio_SimpleORMap
     {
         $this->db_table = 'portfolio_tasksets_studiengang_combos';
 
+        $this->has_many['study_combos'] = array(
+            'class_name'        => 'Portfolio\StudienganCombos',
+            'foreign_key'       => 'portfolio_studiengang_combos_id',
+            'assoc_foreign_key' => 'combo_id',
+        );
+
+        /*
         $this->has_and_belongs_to_many['studiengaenge'] = array(
             'class_name'     => 'Portfolio_StudyCourse',
             'thru_table'     => 'portfolio_studiengang_combos',
@@ -34,7 +41,18 @@ class TasksetsStudiengangCombos extends \Portfolio_SimpleORMap
             'on_store'       => 'store',
             'on_delete'      => 'delete'
         );
-        
+
+        $this->has_and_belongs_to_many['abschluesse'] = array(
+            'class_name'     => 'Portfolio\Abschluss',
+            'thru_table'     => 'portfolio_studiengang_combos',
+            'thru_key'       => 'portfolio_tasksets_studiengang_combos_id',
+            'thru_assoc_key' => 'abschluss_id',
+            'on_store'       => 'store',
+            'on_delete'      => 'delete'
+        );
+        * 
+        */
+
         /*
         $this->belongs_to['tasksets'] = array(
             'class_name'        => 'Portfolio\Tasksets',

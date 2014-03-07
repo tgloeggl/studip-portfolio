@@ -28,9 +28,9 @@ class Tags extends \Portfolio_SimpleORMap
         $this->db_table = 'portfolio_tags';
 
         $this->has_and_belongs_to_many = array(
-            'task_users' => array(
-                'class_name'     => 'Portfolio\TaskUsers',
-                'thru_table'     => 'portfolio_tags_task_users',
+            'tasks' => array(
+                'class_name'     => 'Portfolio\Tasks',
+                'thru_table'     => 'portfolio_tags_tasks',
                 'thru_key'       => 'portfolio_tags_id',
                 'thru_assoc_key' => 'portfolio_task_users_id',
                 'on_delete'      => 'delete',
