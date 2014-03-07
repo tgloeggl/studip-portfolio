@@ -36,11 +36,14 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
                     </td>
                     <td>
                         <ul style="margin: 0px; padding-left: 0px;">
-                            <? /* foreach ($portfolio->studiengang_combos as $st) : ?>
-                            <li>
-                                <?= implode(', ', array_map(function($data) { return $data['name']; }, $st->studiengaenge->toArray())) ?>
-                            </li>
-                            <? endforeach; */ ?>
+                            <? foreach ($portfolio->combos as $combo) : ?>
+                                <? foreach ($combo->study_combos as $study_combo) : ?>
+                                <li>
+                                    <?= $study_combo->studiengang->name ?> *
+                                    <?= $study_combo->abschluss->name ?>
+                                </li>
+                                <? endforeach; ?>
+                            <? endforeach; ?>
                         </ul>
                     </td>
                 </tr>

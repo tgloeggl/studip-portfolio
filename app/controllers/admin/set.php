@@ -27,6 +27,8 @@ class Admin_SetController extends PortfolioPluginController
 
     public function index_action()
     {
+        SimpleORMap::expireTableScheme();
+
         $this->portfolios = Portfolio\Tasksets::findBySQL('1');
     }
 
@@ -37,45 +39,30 @@ class Admin_SetController extends PortfolioPluginController
     
     public function add_action()
     {
-        SimpleORMap::expireTableScheme();
-
         $data = array(
             'name'    => Request::get('name'),
             'user_id' => $GLOBALS['user']->id
         );
 
         $taskset = Portfolio\Tasksets::create($data);
-        
-        /*
+
         foreach (Request::optionArray('studycourses') as $studycourses) {
-            
-            // $combo->portfolio_tasksets_id = $taskset->getId();
+
+            $combo = Portfolio\TasksetsStudiengangCombos::create(array(
+                'tasksets_id' => $taskset->id
+            ));
 
             foreach ($studycourses as $ids) {
                 list($studiengang_id, $abschluss_id) = explode('_', $ids);
-                
+
                 $study_combo = Portfolio\StudiengangCombos::create(array(
+                    'combo_id'       => $combo->id,
                     'studiengang_id' => $studiengang_id,
                     'abschluss_id'   => $abschluss_id
                 ));
-               
-                // $combo->study_combos[] = $study_combo;
-                
-                $combos[] = new Portfolio\TasksetsStudiengangCombos(array(
-                    $taskset->id,
-                    $study_combo->id
-                ));
             }
-            
-            
-            
-            $taskset->combos[] = $combos;
         }
-         * 
-         */
         
-        $taskset->store();
-
         $this->redirect('admin/set/index');
     }
     

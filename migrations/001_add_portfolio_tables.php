@@ -65,17 +65,17 @@ class AddPortfolioTables extends DBMigration {
 
         $db->exec("
             CREATE  TABLE `portfolio_tasksets_studiengang_combos` (
-              `id` INT NOT NULL AUTO_INCREMENT,
-              `portfolio_tasksets_id` INT NOT NULL ,
-              PRIMARY KEY (`id`) )
+              `combo_id` INT NOT NULL AUTO_INCREMENT ,
+              `tasksets_id` INT NOT NULL,
+              PRIMARY KEY (`combo_id`) )
         ");
 
         $db->exec("
             CREATE  TABLE `portfolio_studiengang_combos` (
-              `portfolio_tasksets_studiengang_combos_id` INT NOT NULL ,
+              `combo_id` INT NOT NULL ,
               `studiengang_id` VARCHAR(32) NOT NULL ,
               `abschluss_id` VARCHAR(32) NOT NULL ,
-              PRIMARY KEY (`portfolio_tasksets_studiengang_combos_id`, `studiengang_id`, `abschluss_id`) )
+              PRIMARY KEY (`combo_id`, `studiengang_id`, `abschluss_id`) )
         ");
 
         $db->exec("
