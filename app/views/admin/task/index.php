@@ -26,13 +26,15 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
                     <th><?= _('Name') ?></th>
                     <th><?= _('Enthalten in Sets') ?></th>
                     <th><?= _('Tags') ?></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
             <? foreach ($portfolio->tasks as $task) : ?>
                 <tr>
                     <td>
-                        <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->getId()) ?>">
+                        <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->id) ?>">
                             <?= $task->title ?>
                         </a>
                     </td>
@@ -46,6 +48,18 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
                     <td>
                         <?= implode(', ', $task->tags->pluck('tag')); ?>
                     </td>
+                    
+                    <td>
+                        <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->id) ?>">
+                            <?= Assets::img('icons/16/blue/edit.png') ?>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="<?= $controller->url_for('admin/task/delete/' . $portfolio->id .'/'. $task->id) ?>">
+                            <?= Assets::img('icons/16/blue/trash.png') ?>
+                        </a>
+                    </td>                    
                 </tr>
             <? endforeach ?>
             </tbody>

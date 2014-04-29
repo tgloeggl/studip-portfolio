@@ -73,6 +73,10 @@ class Admin_SetController extends PortfolioPluginController
     
     public function delete_action($set_id)
     {
+        
+        $taskset = Portfolio\Tasksets::find($set_id);
+        $taskset->delete();
+        
         $this->redirect('admin/set/index');
     }
     

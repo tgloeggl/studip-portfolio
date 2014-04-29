@@ -24,7 +24,7 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
             <span><?= _('Aufgabenbeschreibung:') ?></span><br>
             <textarea name="content" required="required"><?= htmlReady($task->content) ?></textarea><br>
         </label>
-
+        
         <label>
             <span><?= _('Enthalten in Aufgabensets:') ?></span><br>
             <select name="sets" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
@@ -33,7 +33,7 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
                 <? endforeach ?>
             </select>
         </label>
-
+        
         <label>
             <span><?= _('Tags:') ?></span><br>
             <select name="tags" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
@@ -47,12 +47,12 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
             <input type="checkbox" name="allow_text" <?= $task->allow_text ? 'checked="checked"' : '' ?>>
             <?= _('Texteingabe erlauben?') ?>
         </label>
-
+        
         <label>
             <input type="checkbox" name="allow_files" <?= $task->allow_files ? 'checked="checked"' : '' ?>>
             <?= _('Dateiupload erlauben?') ?>
         </label>
-
+            
         <div style="text-align: center">
             <div class="button-group">
                 <?= Studip\Button::createAccept(_('Aufgabe speichern')) ?>

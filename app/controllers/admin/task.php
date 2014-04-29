@@ -47,7 +47,7 @@ class Admin_TaskController extends PortfolioPluginController
     {
         SimpleORMap::expireTableScheme();
 
-        $user_id = $GLOBALS['user']->id;
+        $user_id = $this->container['user']->id;
 
         $data = array(
             'user_id'     => 'global',
@@ -81,6 +81,56 @@ class Admin_TaskController extends PortfolioPluginController
         $this->redirect('admin/task/index/' . $portfolio_id);
     }
     
+    public function update_action($portfolio_id, $task_id)
+    {
+        $task = Portfolio\Tasks::find($task_id);
+        $task->setData(array(
+            'user_id'     => 'global',
+            'title'       => Request::get('title'),
+            'content'     => Request::get('content'),
+            'allow_text'  => Request::option('allow_text') ? 1 : 0,
+            'allow_files' => Request::option('allow_files') ? 1 : 0
+        ));
+        
+        /*
+       foreach (Request::optionArray('sets') as $pid) {
+            $taskset_combo = Portfolio\Tasksets::find($pid);
+            $task->tasksets[] = $taskset_combo;
+        }
+         * 
+         */
+
+        $tags = $task->tags->pluck('tag');
+
+        Portfolio\Helper::pick($task->tags, Request::getArray('tags'));
+
+        die;
+        foreach (Request::getArray('tags') as $tag_name) {
+            if (!$tag = current(Portfolio\Tags::findBySQL('user_id = ? AND tag = ?', array($user_id, $tag_name)))) {
+                $data = array(
+                    'user_id' => $user_id,
+                    'tag'     => $tag_name
+                );
+                $tag = Portfolio\Tags::create($data);
+            }
+            
+            $task->tags[] = $tag;
+        }
+        
+        die;
+
+        $task->store();
+
+        /*
+        $this->portfolio_id = $portfolio_id;
+        $this->portfolios   = Portfolio\Tasksets::findBySQL('1 ORDER BY name DESC');
+        $this->tags         = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($GLOBALS['user']->id));
+         * 
+         */
+        
+        $this->redirect('admin/task/index/' . $portfolio_id);
+    }
+
     public function edit_action($portfolio_id, $task_id)
     {
         $this->task = Portfolio\Tasks::find($task_id);
@@ -92,6 +142,9 @@ class Admin_TaskController extends PortfolioPluginController
     
     public function delete_action($portfolio_id, $task_id)
     {
+        $taskset = Portfolio\Tasks::find($task_id);
+        $taskset->delete();
+
         $this->redirect('admin/task/index/' . $portfolio_id);
     }
 }

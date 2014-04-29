@@ -16,6 +16,8 @@
 class PortfolioPluginController extends StudipController 
 {
 
+    var $container;
+
     public function __construct($dispatcher)
     {
         parent::__construct($dispatcher);
@@ -31,6 +33,8 @@ class PortfolioPluginController extends StudipController
 
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
         PageLayout::setTitle('Portfolio');
+        
+        $this->container['user'] = $GLOBALS['user'];
     }
 
     // customized #url_for for plugins

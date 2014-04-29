@@ -20,8 +20,43 @@ class PortfolioController extends PortfolioPluginController
     {
         Navigation::activateItem('/profile/portfolio');
 
-        $this->portfolios = array(
-            'GHR-300', 'Lehramt'
-        );
+        // get all studycourses for user
+        $studycourses = SimpleORMapCollection::createFromArray(
+                UserStudyCourse::findByUser($this->container['user']->id)
+        )->pluck('studiengang_id abschluss_id');
+        
+        // get all tasksets
+        $this->portfolios = \Portfolio\Tasksets::findBySQL('1');
+
+        // filter tasksets by studiengang-combos
+        foreach ($this->portfolios as $pkey => $portfolio) {
+            $remove_task = true;
+            
+            // check if combo if the user meets all requirements for one complete combo
+            foreach ($portfolio->combos as $combo) {
+                $has_studycourse = true;
+                
+                // check the studycourses for the current combo
+                foreach ($combo->study_combos as $study_combo) {
+                    $needle = array(
+                        $study_combo->studiengang->getId(),
+                        $study_combo->abschluss->getId()
+                    );
+
+                    if (in_array($needle, $studycourses) === false) {
+                        $has_studycourse = false;
+                    }
+                }
+                
+                if ($has_studycourse) {
+                    $remove_task = false;
+                }
+            }
+            
+            if ($remove_task) {
+                unset($this->portfolios[$pkey]);
+            }
+        }
+
     }
 }

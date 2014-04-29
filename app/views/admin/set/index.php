@@ -10,7 +10,12 @@ $infobox_content[] = array(
     )
 );
 
-$infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_content);
+if (file_exists('assets/images/sidebar/schedule-sidebar.png')) {
+    $infobox = array('picture' => 'sidebar/schedule-sidebar.png', 'content' => $infobox_content);
+} else {
+    $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_content);
+}
+    
 ?>
 
 <div id="portfolio">
@@ -24,6 +29,8 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
                 <tr>
                     <th><?= _('Name') ?></th>
                     <th><?= _('Studiengänge') ?></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +41,7 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
                             <?= $portfolio['name'] ?>
                         </a>
                     </td>
+
                     <td>
                         <ul style="margin: 0px; padding-left: 0px;">
                             <? foreach ($portfolio->combos as $combo) : ?>
@@ -45,6 +53,18 @@ $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_con
                                 <? endforeach; ?>
                             <? endforeach; ?>
                         </ul>
+                    </td>
+                    
+                    <td>
+                        <a href="<?= $controller->url_for('admin/set/edit/' . $portfolio['id']) ?>">
+                            <?= Assets::img('icons/16/blue/edit.png') ?>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="<?= $controller->url_for('admin/set/delete/' . $portfolio['id']) ?>">
+                            <?= Assets::img('icons/16/blue/trash.png') ?>
+                        </a>
                     </td>
                 </tr>
             <? endforeach ?>
