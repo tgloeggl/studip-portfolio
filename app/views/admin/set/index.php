@@ -10,12 +10,7 @@ $infobox_content[] = array(
     )
 );
 
-if (file_exists('assets/images/sidebar/schedule-sidebar.png')) {
-    $infobox = array('picture' => 'sidebar/schedule-sidebar.png', 'content' => $infobox_content);
-} else {
-    $infobox = array('picture' => 'infobox/schedules.jpg', 'content' => $infobox_content);
-}
-    
+$infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);    
 ?>
 
 <div id="portfolio">

@@ -23,6 +23,11 @@ class PortfolioPluginController extends StudipController
         parent::__construct($dispatcher);
         $this->plugin = $dispatcher->plugin;
         
+        if (file_exists('assets/images/sidebar/schedule-sidebar.png')) {
+            $this->infobox_picture = 'sidebar/schedule-sidebar.png';
+        } else {
+            $this->infobox_picture =  'infobox/schedules.jpg';
+        }
     }
 
     public function before_filter(&$action, &$args)
