@@ -13,7 +13,7 @@ $infobox_content[] = array(
 $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);    
 ?>
 <div id="portfolio">
-    <h1><?= $portfolio['name'] ?></h1>
+    <h1><?= htmlReady($portfolio['name']) ?></h1>
 
     <table style="border-collapse: collapse; width: 100%">
         <tr>
@@ -33,11 +33,11 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                 </thead>
                 <tbody>
                 <? foreach ($portfolio->tasks as $task) : ?>
-                    <? implode(', ', $task->tags->pluck('tag')); ?>
+                    <? htmlReady(implode(', ', $task->tags->pluck('tag'))); ?>
                     <tr>
                         <td>
                             <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->id) ?>">
-                                <?= $task->title ?>
+                                <?= htmlReady($task->title) ?>
                             </a>
                         </td>
 
