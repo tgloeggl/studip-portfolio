@@ -24,8 +24,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                 <tr>
                     <th><?= _('Name') ?></th>
                     <th><?= _('Studiengänge') ?></th>
-                    <th></th>
-                    <th></th>
+                    <th style="width: 5%" colspan="2"><?= _('Aktionen') ?></th>
                 </tr>
             </thead>
             <tbody>
