@@ -27,7 +27,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
         
         <label>
             <span><?= _('Enthalten in Aufgabensets:') ?></span><br>
-            <select name="sets" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
+            <select name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
                 <? foreach ($portfolios as $portfolio) : ?>
                     <option value="<?= $portfolio->id ?>" <?= in_array($portfolio->id, $task->tasksets->pluck('id'))  !== false ? 'selected="selected"' : '' ?>><?= $portfolio->name ?></option>
                 <? endforeach ?>
@@ -36,7 +36,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
         
         <label>
             <span><?= _('Tags:') ?></span><br>
-            <select name="tags" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
+            <select name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
                 <? foreach ($tags as $tag) : ?>
                 <option <?= in_array($tag->tag, $task->tags->pluck('tag'))  !== false ? 'selected="selected"' : '' ?>><?= $tag->tag ?></option>
                 <? endforeach ?>
@@ -63,8 +63,8 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 </div>
 <script>
     jQuery(document).ready(function() {
-        jQuery('select[name=sets]').chosen();
-        jQuery('select[name=tags]').chosen({
+        jQuery('select[name*=sets]').chosen();
+        jQuery('select[name*=tags]').chosen({
             create_option: true,
             skip_no_results: true,
             create_option_text: 'Tag erstellen'.toLocaleString()

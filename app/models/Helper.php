@@ -14,12 +14,24 @@ namespace Portfolio;
 
 class Helper
 {
-    static function pick(\SimpleCollection $collection, $data) {
-        if (!is_array($data)) {
+    /**
+     * This method returns a diff for the two passed array, listing added 
+     * and deleted elements
+     * 
+     * @param array   $previous  this is how the list looked before the change
+     * @param array   $current   this is how the list looks now
+     * 
+     * @return array  an array containing the removed elements at 'deleted'
+     *                and the added elements at 'added'
+     */
+    static function pick($previous, $current) {
+        if (!is_array($previous) || !is_array($current)) {
             return false;
         }
         
-        var_dump($collection->toArray(), $data);
-        var_dump(array_diff($collection, $data));
+        return array(
+            'deleted' => array_diff($previous, $current),
+            'added'    => array_diff($current, $previous)
+        );
     }
 }

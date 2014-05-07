@@ -27,8 +27,6 @@ class Admin_TaskController extends PortfolioPluginController
     
     public function index_action($portfolio_id)
     {
-        SimpleORMap::expireTableScheme();
-        
         $this->portfolio = Portfolio\Tasksets::find($portfolio_id);
         
         if (!$this->portfolio) {
@@ -81,6 +79,9 @@ class Admin_TaskController extends PortfolioPluginController
     
     public function update_action($portfolio_id, $task_id)
     {
+        $user_id = $this->container['user']->id;
+
+        // update task contents
         $task = Portfolio\Tasks::find($task_id);
         $task->setData(array(
             'user_id'     => 'global',
@@ -89,21 +90,29 @@ class Admin_TaskController extends PortfolioPluginController
             'allow_text'  => Request::option('allow_text') ? 1 : 0,
             'allow_files' => Request::option('allow_files') ? 1 : 0
         ));
-        
-        /*
-       foreach (Request::optionArray('sets') as $pid) {
-            $taskset_combo = Portfolio\Tasksets::find($pid);
-            $task->tasksets[] = $taskset_combo;
+
+
+        // update sets
+        $task->tasksets = array();
+
+        foreach (Request::optionArray('sets') as $set_id) {
+            $taskset = Portfolio\Tasksets::find($set_id);
+            $task->tasksets[] = $taskset;
         }
-         * 
-         */
 
-        $tags = $task->tags->pluck('tag');
+        
+        // update tags
+        $diff = Portfolio\Helper::pick($task->tags->pluck('tag'), Request::getArray('tags'));
 
-        Portfolio\Helper::pick($task->tags, Request::getArray('tags'));
+        foreach ($diff['deleted'] as $del_tag) {
+            foreach ($task->tags as $key => $tag) {
+                if ($del_tag == $tag['tag']) {
+                    unset($task->tags[$key]);
+                }
+            }
+        }
 
-        die;
-        foreach (Request::getArray('tags') as $tag_name) {
+        foreach ($diff['added'] as $tag_name) {
             if (!$tag = current(Portfolio\Tags::findBySQL('user_id = ? AND tag = ?', array($user_id, $tag_name)))) {
                 $data = array(
                     'user_id' => $user_id,
@@ -111,20 +120,10 @@ class Admin_TaskController extends PortfolioPluginController
                 );
                 $tag = Portfolio\Tags::create($data);
             }
-            
             $task->tags[] = $tag;
         }
         
-        die;
-
         $task->store();
-
-        /*
-        $this->portfolio_id = $portfolio_id;
-        $this->portfolios   = Portfolio\Tasksets::findBySQL('1 ORDER BY name DESC');
-        $this->tags         = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($GLOBALS['user']->id));
-         * 
-         */
         
         $this->redirect('admin/task/index/' . $portfolio_id);
     }

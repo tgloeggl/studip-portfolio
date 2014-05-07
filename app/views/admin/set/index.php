@@ -57,7 +57,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                     </td>
 
                     <td>
-                        <a href="<?= $controller->url_for('admin/set/delete/' . $portfolio['id']) ?>">
+                        <a href="<?= $controller->url_for('admin/set/delete/' . $portfolio['id']) ?>" class="confirm">
                             <?= Assets::img('icons/16/blue/trash.png') ?>
                         </a>
                     </td>
