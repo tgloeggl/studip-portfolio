@@ -4,6 +4,9 @@ var STUDIP = STUDIP || {};
 
     $(document).ready(function() {
        // $('#portfolio select.chosen').chosen();
+       $('a.confirm').bind('click', function() {
+           return confirm('Sind Sie sicher?'.toLocaleString());
+       })
     });
 
     STUDIP.Portfolio = {
