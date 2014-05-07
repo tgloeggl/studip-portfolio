@@ -13,7 +13,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 ?>
 
 <div id="portfolio">
-    <h1><?= $task->title ?></h1>
+    <h1><?= htmlReady($task->title) ?></h1>
     <form method="post" action="<?= $controller->url_for('admin/task/update/'. $portfolio_id .'/'. $task['id']) ?>">
         <label>
             <span><?= _('Titel:') ?></span><br>
@@ -29,7 +29,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Enthalten in Aufgabensets:') ?></span><br>
             <select name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
                 <? foreach ($portfolios as $portfolio) : ?>
-                    <option value="<?= $portfolio->id ?>" <?= in_array($portfolio->id, $task->tasksets->pluck('id'))  !== false ? 'selected="selected"' : '' ?>><?= $portfolio->name ?></option>
+                    <option value="<?= $portfolio->id ?>" <?= in_array($portfolio->id, $task->tasksets->pluck('id'))  !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
                 <? endforeach ?>
             </select>
         </label>
@@ -38,7 +38,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Tags:') ?></span><br>
             <select name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
                 <? foreach ($tags as $tag) : ?>
-                <option <?= in_array($tag->tag, $task->tags->pluck('tag'))  !== false ? 'selected="selected"' : '' ?>><?= $tag->tag ?></option>
+                <option <?= in_array($tag->tag, $task->tags->pluck('tag'))  !== false ? 'selected="selected"' : '' ?>><?= htmlReady($tag->tag) ?></option>
                 <? endforeach ?>
             </select>
         </label>        

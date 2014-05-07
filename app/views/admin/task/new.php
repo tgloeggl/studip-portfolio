@@ -29,7 +29,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Enthalten in Aufgabensets:') ?></span><br>
             <select id="sets" name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
                 <? foreach ($portfolios as $portfolio) : ?>
-                    <option value="<?= $portfolio->id ?>" <?= $portfolio->id == $portfolio_id ? 'selected="selected"' : '' ?>><?= $portfolio->name ?></option>
+                    <option value="<?= $portfolio->id ?>" <?= $portfolio->id == $portfolio_id ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
                 <? endforeach ?>
             </select>
         </label>
@@ -38,7 +38,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Tags:') ?></span><br>
             <select id="tags" name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
                 <? foreach ($tags as $tag) : ?>
-                <option><?= $tag->tag ?></option>
+                <option><?= htmlReady($tag->tag) ?></option>
                 <? endforeach ?>
             </select>
         </label>        

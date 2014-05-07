@@ -14,7 +14,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 ?>
 
 <div id="portfolio">
-    <h1><?= sprintf(_('Aufgaben im Set "%s"'), $portfolio->name) ?></h1>
+    <h1><?= sprintf(_('Aufgaben im Set "%s"'), htmlReady($portfolio->name)) ?></h1>
     <? if (!sizeof($portfolio->tasks)) : ?>
         <?= MessageBox::info(sprintf(_('Es sind bisher keine Aufgaben in diesem Aufgabensets vorhanden. %sLegen Sie eine neue Aufgabe an.%s'),
             '<a href="'. $controller->url_for('admin/task/new/' . $portfolio->id) .'">', '</a>')) ?>
