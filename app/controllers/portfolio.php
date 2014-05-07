@@ -57,6 +57,5 @@ class PortfolioController extends PortfolioPluginController
                 unset($this->portfolios[$pkey]);
             }
         }
-
     }
 }

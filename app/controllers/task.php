@@ -15,9 +15,32 @@
  */
 class TaskController extends PortfolioPluginController
 {
+    function before_filter(&$action, &$args)
+    {
+        parent::before_filter($action, $args);
+        
+        Navigation::activateItem('/profile/portfolio');
+    }
+
     public function index_action($portfolio_id)
     {
+        $this->portfolio = \Portfolio\Tasksets::find($portfolio_id);
         
+        // get tags
+        foreach ($this->portfolio->tasks as $task) {
+            $tags = $task->tags->pluck('tag');
+            foreach ($tags as $tag) {
+                foreach ($tags as $tag2) {
+                    if ($tag != $tag2) {
+                        $this->tags[$tag][] = $tag2;
+                    }
+                }
+            }
+        }
+        
+        if (Request::get('tag')) {
+            $this->filter = Request::get('tag');
+        }
     }
     
     public function new_action($portfolio_id)

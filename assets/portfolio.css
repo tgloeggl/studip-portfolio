@@ -3,3 +3,12 @@
 #portfolio form input[type=text], #portfolio form textarea { width: 80%; }
 #portfolio form textarea { height: 12em; }
 #portfolio form select { width: 80%; }
+#portfolio span.portfolio { display: block; float: left; margin-right: 30px; font-size: 10pt; font-weight: bold; width: 80px; max-height: 8em; overflow: hidden; color: black; }
+#portfolio span.portfolio:hover { opacity: 0.7; }
+#portfolio #tagcloud { margin-right: 10px; border: 1px solid black; padding: 5px; }
+#portfolio #tagcloud a { display: block; font-size: 12pt; margin-bottom: 5px; padding-left: 20px; }
+#portfolio #tagcloud a.closed { background-image: url("../../../../assets/images/icons/16/blue/arr_1right.png"); background-repeat: no-repeat; background-position: 0 2px; }
+#portfolio #tagcloud a.closed:hover { background-image: url("../../../../assets/images/icons/16/red/arr_1right.png"); }
+#portfolio #tagcloud a.open { background-image: url("../../../../assets/images/icons/16/blue/arr_1down.png"); background-repeat: no-repeat; background-position: 0 2px; }
+#portfolio #tagcloud a.open:hover { background-image: url("../../../../assets/images/icons/16/red/arr_1down.png"); }
+#portfolio #tagcloud .lvl2 { margin-left: 20px; }
