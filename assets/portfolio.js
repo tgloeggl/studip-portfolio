@@ -3,7 +3,6 @@ var STUDIP = STUDIP || {};
 (function ($) {
 
     $(document).ready(function() {
-       // $('#portfolio select.chosen').chosen();
        $('a.confirm').bind('click', function() {
            return confirm('Sind Sie sicher?'.toLocaleString());
        })
@@ -25,29 +24,35 @@ var STUDIP = STUDIP || {};
          * 
          * @returns {undefined}
          */
-        addCombo: function () {
+        addCombo: function (selected_elements) {
             // load the studycourse if they are not yet present
             if (STUDIP.Portfolio.studiengaenge === null) {
                 $.ajax(STUDIP.URLHelper.getURL('plugins.php/portfolio/admin/set/get_studycourses'), {
                     success: function(data) { 
                         STUDIP.Portfolio.studiengaenge = data;
-                        STUDIP.Portfolio.Admin.doAddCombo();
+                        STUDIP.Portfolio.Admin.doAddCombo(selected_elements);
                     }
                 });
             } else {
-                STUDIP.Portfolio.Admin.doAddCombo();
+                STUDIP.Portfolio.Admin.doAddCombo(selected_elements);
             }
 
         },
         
-        doAddCombo: function() {
+        doAddCombo: function(selected_elements) {
             var template = STUDIP.Portfolio.getTemplate('studycourse_template');
             var template_data = {
                 num: this.num,
                 options: STUDIP.Portfolio.studiengaenge
             }
-            
+
             $('div.studiengang_combos').append(template(template_data));
+
+            if (selected_elements !== undefined) {
+                for (var i = 0; i < selected_elements.length; i++) {
+                    $('select[data-studycourse-num=' + this.num + '] option[value=' + selected_elements[i] + ']').attr('selected', 'selected');
+                }
+            }
             
             $('div.studiengang_combos select').chosen();
             

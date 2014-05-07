@@ -46,6 +46,8 @@ class Tasksets extends \Portfolio_SimpleORMap
         $this->has_many['combos'] = array(
             'class_name'        => 'Portfolio\TasksetsStudiengangCombos',
             'assoc_foreign_key' => 'tasksets_id',
+            'on_delete'         => 'delete',
+            'on_store'          => 'store'
         );
 
         $this->has_and_belongs_to_many = array(

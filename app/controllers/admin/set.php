@@ -48,37 +48,62 @@ class Admin_SetController extends PortfolioPluginController
 
         foreach (Request::optionArray('studycourses') as $studycourses) {
 
-            $combo = Portfolio\TasksetsStudiengangCombos::create(array(
-                'tasksets_id' => $taskset->id
-            ));
+            $combo = new Portfolio\TasksetsStudiengangCombos();
 
             foreach ($studycourses as $ids) {
                 list($studiengang_id, $abschluss_id) = explode('_', $ids);
 
-                $study_combo = Portfolio\StudiengangCombos::create(array(
-                    'combo_id'       => $combo->id,
+                $study_combo = new Portfolio\StudiengangCombos();
+                $study_combo->setData(array(
                     'studiengang_id' => $studiengang_id,
                     'abschluss_id'   => $abschluss_id
                 ));
+
+                $combo->study_combos[] = $study_combo;
             }
+            
+            $taskset->combos[] = $combo;
         }
+        
+        $taskset->store();
         
         $this->redirect('admin/set/index');
     }
     
     public function edit_action($set_id)
     {
-        // get set
-        $this->set = Portfolio\Tasksets::find($set_id);
-        
-        // get combos
-        #var_dump($this->set);
-        
-        // $this->tags         = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($GLOBALS['user']->id));    
+        $this->taskset = Portfolio\Tasksets::find($set_id);
     }
     
     public function update_action($set_id)
     {
+        $taskset = Portfolio\Tasksets::find($set_id);
+
+        foreach ($taskset->combos as $key => $combo) {
+            unset($taskset->combos[$key]);
+        }
+        
+        foreach (Request::optionArray('studycourses') as $studycourses) {
+
+            $combo = new Portfolio\TasksetsStudiengangCombos();
+
+            foreach ($studycourses as $ids) {
+                list($studiengang_id, $abschluss_id) = explode('_', $ids);
+
+                $study_combo = new Portfolio\StudiengangCombos();
+                $study_combo->setData(array(
+                    'studiengang_id' => $studiengang_id,
+                    'abschluss_id'   => $abschluss_id
+                ));
+
+                $combo->study_combos[] = $study_combo;
+            }
+            
+            $taskset->combos[] = $combo;
+        }
+        
+        $taskset->store();
+
         $this->redirect('admin/set/index');
     }
     

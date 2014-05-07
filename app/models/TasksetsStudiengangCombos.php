@@ -30,6 +30,8 @@ class TasksetsStudiengangCombos extends \Portfolio_SimpleORMap
             'class_name'        => 'Portfolio\StudiengangCombos',
             'foreign_key'       => 'combo_id',
             'assoc_foreign_key' => 'combo_id',
+            'on_delete'         => 'delete',
+            'on_store'          => 'store'
         );
 
         parent::__construct($id);

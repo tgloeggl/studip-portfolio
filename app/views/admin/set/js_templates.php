@@ -1,6 +1,6 @@
 <script type="text/template" class="studycourse_template">
 <div data-studycourse-num="<%- num %>">
-    <select name="studycourses[<%- num %>][]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie bitte einen oder mehrere Studiengänge') ?>">
+    <select name="studycourses[<%- num %>][]" data-studycourse-num="<%- num %>" multiple class="chosen" data-placeholder="<?= _('Wählen Sie bitte einen oder mehrere Studiengänge') ?>">
         <% _.each(options, function(opt) { %>
         <option value="<%- opt.value %>"><%- opt.name %></option>
         <% }); %>
