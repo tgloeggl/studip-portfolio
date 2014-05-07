@@ -33,7 +33,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                 <tr>
                     <td>
                         <a href="<?= $controller->url_for('admin/task/index/' . $portfolio['id']) ?>">
-                            <?= $portfolio['name'] ?>
+                            <?= htmlReady($portfolio['name']) ?>
                         </a>
                     </td>
 
@@ -42,8 +42,8 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                             <? foreach ($portfolio->combos as $combo) : ?>
                                 <? foreach ($combo->study_combos as $study_combo) : ?>
                                 <li>
-                                    <?= $study_combo->studiengang->name ?> *
-                                    <?= $study_combo->abschluss->name ?>
+                                    <?= htmlReady($study_combo->studiengang->name) ?> *
+                                    <?= htmlReady($study_combo->abschluss->name) ?>
                                 </li>
                                 <? endforeach; ?>
                             <? endforeach; ?>

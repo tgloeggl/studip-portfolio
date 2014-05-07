@@ -14,7 +14,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 
 <div id="portfolio">
     <h1><?= $task->title ?></h1>
-    <form method="post" action="<?= $controller->url_for('admin/task/add') ?>">
+    <form method="post" action="<?= $controller->url_for('admin/task/update/'. $portfolio_id .'/'. $task['id']) ?>">
         <label>
             <span><?= _('Titel:') ?></span><br>
             <input type="text" name="title" required="required" value="<?= htmlReady($task->title) ?>"><br>

@@ -68,6 +68,17 @@ class Admin_SetController extends PortfolioPluginController
     
     public function edit_action($set_id)
     {
+        // get set
+        $this->set = Portfolio\Tasksets::find($set_id);
+        
+        // get combos
+        #var_dump($this->set);
+        
+        // $this->tags         = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($GLOBALS['user']->id));    
+    }
+    
+    public function update_action($set_id)
+    {
         $this->redirect('admin/set/index');
     }
     

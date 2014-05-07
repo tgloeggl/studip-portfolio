@@ -45,8 +45,6 @@ class Admin_TaskController extends PortfolioPluginController
     
     public function add_action($portfolio_id)
     {
-        SimpleORMap::expireTableScheme();
-
         $user_id = $this->container['user']->id;
 
         $data = array(
