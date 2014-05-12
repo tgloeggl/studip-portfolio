@@ -27,7 +27,7 @@ class Perm
      * @param string $user_id     the user to check for
      * @return boolean  true, if the user has the perms, false otherwise
      */
-    static function has($perm, $seminar_id, $user_id = null)
+    static function has($perm, $user_id = null)
     {
         static $permissions = array();
         
@@ -36,13 +36,8 @@ class Perm
             $user_id = $GLOBALS['user']->id;
         }
         
-        // get the status for the user in the passed seminar
-        if (!$permissions[$seminar_id][$user_id]) {
-            $permissions[$seminar_id][$user_id] = $GLOBALS['perm']->get_studip_perm($seminar_id, $user_id);
-        }
-        
-        $status = $permissions[$seminar_id][$user_id];
-        
+        $status = $GLOBALS['perm']->get_perm($seminar_id);
+
         // root and admins have all possible perms
         if (in_array($status, words('root admin')) !== false) {
             return true;
@@ -74,9 +69,9 @@ class Perm
      * 
      * @throws AccessDeniedException
      */
-    function check($perm, $seminar_id)
+    function check($perm)
     {
-        if (!self::has($perm, $seminar_id)) {
+        if (!self::has($perm)) {
             throw new \AccessDeniedException(sprintf(
                 _("Sie haben keine Berechtigung für diese Aktion! Benötigte Berechtigung: %s"),
                 $perm)
