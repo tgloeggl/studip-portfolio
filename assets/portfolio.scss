@@ -62,17 +62,20 @@
                 background-image: url('../../../../assets/images/icons/16/blue/arr_1down.png');
                 background-repeat: no-repeat;
                 background-position: 0 2px;
+                background-color: #DDDDFF;
                 
                 &:hover {
                    background-image: url('../../../../assets/images/icons/16/red/arr_1down.png');
                 }
             }
-            
+        
+            &.selected {
+                background-color: #DDDDFF;
+            }
             
         }
         
         .lvl2 {
-            margin-left: 20px;
         }
     }
 }

@@ -13,9 +13,69 @@ var STUDIP = STUDIP || {};
                 
         getTemplate: _.memoize(function(name) {
             return _.template(jQuery("script." + name).html());
-        })
-    }
+        }),
+    };
     
+    STUDIP.Portfolio.Homepage = {
+        tag1: null,
+        tag2: null,
+
+        init: function() {
+            $('#tagcloud a').bind('click', function() {
+                // alert($(this).attr('data-tag'));
+
+                if ($(this).parent().hasClass('lvl2')) {
+                    $(this).siblings().removeClass('selected');
+                    $(this).toggleClass('selected');
+                    
+                    STUDIP.Portfolio.Homepage.tag2 = $(this).hasClass('selected') ? $(this).attr('data-tag') : null;
+                } else {
+                    $(this).parent().siblings().find('.open').toggleClass('open', 'closed')
+                            .parent().find('.lvl2').hide().find('.selected').removeClass('selected');
+
+                    $(this).toggleClass('open', 'closed');
+                    $(this).parent().find('.lvl2').toggle();
+                    
+                    STUDIP.Portfolio.Homepage.tag1 = $(this).hasClass('open') ? null : $(this).attr('data-tag') ;
+                    STUDIP.Portfolio.Homepage.tag2 = null;
+                }
+                
+                STUDIP.Portfolio.Homepage.filter(STUDIP.Portfolio.Homepage.tag1, STUDIP.Portfolio.Homepage.tag2);
+            })
+        },
+        
+        filter: function(tag1, tag2) {
+            if (tag1 === null && tag2 === null) {
+                $('table[data-tag]').show('explode', 800);
+                return;
+            }
+
+            if (tag1 !== null) {
+                $('table[data-tag]').each(function() {
+                    if ($(this).attr('data-tag') === tag1) {
+                        $(this).show('fade', 1000);
+                    } else {
+                        $(this).hide('explode', 800);
+                    }
+                    // $(this).toggle($(this).attr('data-tag') === tag1);
+                    
+                    if (tag2 !== null && $(this).attr('data-tag') === tag1) {
+                        $(this).find('tr.task').each(function() {
+                            if ($.inArray(tag2, $(this).data('tags')) !== -1) {
+                                $(this).show('fade');
+                            } else {
+                                $(this).hide('fade');
+                            }
+                            // $(this).toggle($.inArray(tag2, $(this).data('tags')) !== -1);
+                        });
+                    } else if ($(this).attr('data-tag') === tag1) {
+                        $(this).find('tr.task').show('fade');
+                    }
+                });
+            }
+        }
+    };
+
     STUDIP.Portfolio.Admin = {
         num : 0,
         
@@ -67,5 +127,5 @@ var STUDIP = STUDIP || {};
         removeCombo: function(num) {
             $('div[data-studycourse-num=' + num + ']').remove();
         }
-    }
+    };
 }(jQuery));

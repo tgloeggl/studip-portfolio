@@ -25,11 +25,31 @@ class TaskController extends PortfolioPluginController
     public function index_action($portfolio_id)
     {
         $this->portfolio = \Portfolio\Tasksets::find($portfolio_id);
-        
+
+        $this->filter = false;
+        if (Request::getArray('tag')) {
+            $this->filter = Request::getArray('tag');
+        }
+
         // get tags
         foreach ($this->portfolio->tasks as $task) {
             $tags = $task->tags->pluck('tag');
+            // check if the task has all the filtered tags
+            $show = true;
+
+            if ($this->filter) {
+                foreach($this->filter as $ftag) {
+                    if (in_array($ftag, $tags) === false) {
+                        $show = false;
+                    }
+                }
+            }
+            
+            // collect all tag-combinations and group tasks by tags
             foreach ($tags as $tag) {
+                if ($show) {
+                    $this->tasks_by_tag[$tag][] = $task;
+                }
                 foreach ($tags as $tag2) {
                     if ($tag != $tag2) {
                         $this->tags[$tag][] = $tag2;
@@ -38,9 +58,8 @@ class TaskController extends PortfolioPluginController
             }
         }
         
-        if (Request::get('tag')) {
-            $this->filter = Request::get('tag');
-        }
+        
+        #var_dump($this->tasks_by_tag);
     }
     
     public function new_action($portfolio_id)

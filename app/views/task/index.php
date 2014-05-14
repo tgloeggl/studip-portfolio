@@ -17,72 +17,42 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 
     <table style="border-collapse: collapse; width: 100%">
         <tr>
-            <td style="width: 250px; vertical-align: top;">
+            <td style="width: 250px; vertical-align: top; vertical-align: top">
                 <?= $this->render_partial('task/_tagcloud') ?>
             </td>
 
-            <td>
-                <table class="default zebra">
-                <thead>
-                    <tr>
-                        <th><?= _('Aufgabe') ?></th>
-                        <th colspan="2" style="width: 5%"><?= _('Arbeit') ?></th>
-                        <th colspan="2" style="width: 5%"><?= _('Feedback') ?></th>
-                        <th colspan="2" style="width: 5%"><?= _('Aktionen') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <? foreach ($portfolio->tasks as $task) : ?>
-                    <? htmlReady(implode(', ', $task->tags->pluck('tag'))); ?>
-                    <tr>
-                        <td>
-                            <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->id) ?>">
-                                <?= htmlReady($task->title) ?>
-                            </a>
-                        </td>
+            <td style="vertical-align: top" id="tasks">
+                <? foreach ($tasks_by_tag as $tag => $tasks) : ?>
+                <? if(isset($filter[0]) && $filter[0] != $tag) continue; ?>
 
-                        <!-- Arbeit -->
-                        <td style="text-align: right">
-                            <?= Assets::img('icons/16/black/file-text.png', array(
-                                'title' => _('Antworttext')
-                            )) ?>
-                        </td>
-                        <td>
-                            <?= Assets::img('icons/16/black/file-generic.png', array(
-                                'title' => _('Hochgeladene Dateien')
-                            )) ?>
-                        </td>
+                <table class="default zebra" data-tag="<?= htmlReady($tag) ?>">
+                    <caption><?= htmlReady($tag) ?></caption>
+                    <thead>
+                        <tr>
+                            <th><?= _('Aufgabe') ?></th>
+                            <th colspan="2" style="width: 5%"><?= _('Arbeit') ?></th>
+                            <th colspan="2" style="width: 5%"><?= _('Feedback') ?></th>
+                            <th colspan="2" style="width: 5%"><?= _('Aktionen') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-
-                        <!-- Feedback -->
-                        <td style="text-align: right">
-                            <?= Assets::img('icons/16/black/file-text.png', array(
-                                'title' => _('Antworttext')
-                            )) ?>
-                        </td>
-                        <td>
-                            <?= Assets::img('icons/16/black/file-generic.png', array(
-                                'title' => _('Hochgeladene Dateien')
-                            )) ?>
-                        </td>
-
-                        <!-- Aktionen -->
-                        <td>
-                            <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->id) ?>">
-                                <?= Assets::img('icons/16/blue/edit.png') ?>
-                            </a>
-                        </td>
-
-                        <td>
-                            <a href="<?= $controller->url_for('admin/task/delete/' . $portfolio->id .'/'. $task->id) ?>">
-                                <?= Assets::img('icons/16/blue/trash.png') ?>
-                            </a>
-                        </td>                    
-                    </tr>
+                        <? foreach ($tasks as $task) : ?>
+                            <?= $this->render_partial('task/_task', compact('task')); ?>
+                        <? endforeach ?>
+                    </tbody>
+                </table>
                 <? endforeach ?>
-                </tbody>
-            </table>
+
             </td>
         </tr>    
     </table>
 </div>
+
+<script>
+    (function ($) {
+        $(document).ready(function() {
+            STUDIP.Portfolio.Homepage.init();
+        });
+    })(jQuery);
+</script>

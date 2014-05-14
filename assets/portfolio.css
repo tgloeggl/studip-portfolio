@@ -9,6 +9,6 @@
 #portfolio #tagcloud a { display: block; font-size: 12pt; margin-bottom: 5px; padding-left: 20px; }
 #portfolio #tagcloud a.closed { background-image: url("../../../../assets/images/icons/16/blue/arr_1right.png"); background-repeat: no-repeat; background-position: 0 2px; }
 #portfolio #tagcloud a.closed:hover { background-image: url("../../../../assets/images/icons/16/red/arr_1right.png"); }
-#portfolio #tagcloud a.open { background-image: url("../../../../assets/images/icons/16/blue/arr_1down.png"); background-repeat: no-repeat; background-position: 0 2px; }
+#portfolio #tagcloud a.open { background-image: url("../../../../assets/images/icons/16/blue/arr_1down.png"); background-repeat: no-repeat; background-position: 0 2px; background-color: #DDDDFF; }
 #portfolio #tagcloud a.open:hover { background-image: url("../../../../assets/images/icons/16/red/arr_1down.png"); }
-#portfolio #tagcloud .lvl2 { margin-left: 20px; }
+#portfolio #tagcloud a.selected { background-color: #DDDDFF; }
