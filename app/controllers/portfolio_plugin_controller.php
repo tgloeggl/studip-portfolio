@@ -20,6 +20,7 @@ class PortfolioPluginController extends StudipController
 
     public function __construct($dispatcher)
     {
+        SimpleORMap::expireTableScheme();
         parent::__construct($dispatcher);
         $this->plugin = $dispatcher->plugin;
         

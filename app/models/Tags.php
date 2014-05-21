@@ -32,7 +32,7 @@ class Tags extends \Portfolio_SimpleORMap
                 'class_name'     => 'Portfolio\Tasks',
                 'thru_table'     => 'portfolio_tags_tasks',
                 'thru_key'       => 'portfolio_tags_id',
-                'thru_assoc_key' => 'portfolio_task_users_id',
+                'thru_assoc_key' => 'portfolio_tasks_id',
                 'on_delete'      => 'delete',
                 'on_store'       => 'store'
             ),

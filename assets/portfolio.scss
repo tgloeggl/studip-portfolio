@@ -21,6 +21,11 @@
         }
     }
     
+    select option.heading, .chosen-drop li.heading {
+        font-weight: bold;
+        color: black;
+    }
+
     span.portfolio {
         display: block;
         float: left;

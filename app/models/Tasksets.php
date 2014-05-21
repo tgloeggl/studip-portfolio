@@ -63,4 +63,46 @@ class Tasksets extends \Portfolio_SimpleORMap
 
         parent::__construct($id);
     }
+    
+    
+    /**
+     * 
+     * @param type $studycourses
+     */
+    static function getTasksetsWithStudycourses($studycourses) {
+        // get all tasksets
+        $portfolios = \Portfolio\Tasksets::findBySQL('1');
+
+        // filter tasksets by studiengang-combos
+        foreach ($portfolios as $pkey => $portfolio) {
+            $remove_task = true;
+            
+            // check if combo if the user meets all requirements for one complete combo
+            foreach ($portfolio->combos as $combo) {
+                $has_studycourse = true;
+                
+                // check the studycourses for the current combo
+                foreach ($combo->study_combos as $study_combo) {
+                    $needle = array(
+                        $study_combo->studiengang->getId(),
+                        $study_combo->abschluss->getId()
+                    );
+
+                    if (in_array($needle, $studycourses) === false) {
+                        $has_studycourse = false;
+                    }
+                }
+                
+                if ($has_studycourse) {
+                    $remove_task = false;
+                }
+            }
+            
+            if ($remove_task) {
+                unset($portfolios[$pkey]);
+            }
+        }
+        
+        return $portfolios;
+    }
 }

@@ -89,18 +89,18 @@ class AddPortfolioTables extends DBMigration {
 
         $db->exec("
             CREATE  TABLE `portfolio_tags_tasks` (
-              `portfolio_task_users_id` INT NOT NULL ,
+              `portfolio_tasks_id` INT NOT NULL ,
               `portfolio_tags_id` INT NOT NULL ,
-              PRIMARY KEY (`portfolio_task_users_id`, `portfolio_tags_id`) ,
+              PRIMARY KEY (`portfolio_tasks_id`, `portfolio_tags_id`) ,
               INDEX `fk_portfolio_tags_tasks_portfolio_tags1_idx` (`portfolio_tags_id` ASC) )
         ");
 
         $db->exec("
             CREATE  TABLE `portfolio_permissions` (
-              `portfolio_task_users_id` INT NOT NULL ,
+              `portfolio_tasks_id` INT NOT NULL ,
               `user_id` VARCHAR(32) NULL ,
               `role` ENUM('supervisor','goal','fellow') NULL ,
-              PRIMARY KEY (`portfolio_task_users_id`, `user_id`) 
+              PRIMARY KEY (`portfolio_tasks_id`, `user_id`) 
             ) ENGINE = InnoDB;
         ");
 
@@ -115,11 +115,11 @@ class AddPortfolioTables extends DBMigration {
         ");
 
         $db->exec("
-            CREATE  TABLE `portfolio_portfolios_task_users` (
+            CREATE  TABLE `portfolio_portfolios_tasks` (
               `portfolio_portfolios_id` INT NOT NULL ,
-              `portfolio_task_users_id` INT NOT NULL ,
-              PRIMARY KEY (`portfolio_portfolios_id`, `portfolio_task_users_id`) ,
-              INDEX `fk_portfolio_portfolios_task_users_portfolio_task_users1_idx` (`portfolio_task_users_id` ASC) 
+              `portfolio_tasks_id` INT NOT NULL ,
+              PRIMARY KEY (`portfolio_portfolios_id`, `portfolio_tasks_id`) ,
+              INDEX `fk_portfolio_portfolios_tasks_portfolio_tasks1_idx` (`portfolio_tasks_id` ASC) 
             ) ENGINE = InnoDB;
         "); 
     }

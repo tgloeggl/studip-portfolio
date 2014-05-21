@@ -7,9 +7,12 @@ foreach ($tags as $key => $val) {
     <td>
         <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->id) ?>">
             <?= htmlReady($task->title) ?>
-            &bullet;
-            <?= htmlReady(implode(' &bullet; ', $task->tags->pluck('tag'))); ?>
         </a>
+    </td>
+    
+    <!-- Tags -->
+    <td>
+        <?= implode(' &bullet; ', array_filter($task->tags->pluck('tag'), function($element) { return htmlReady($element); })) ?>
     </td>
 
     <!-- Arbeit -->
@@ -39,14 +42,20 @@ foreach ($tags as $key => $val) {
 
     <!-- Aktionen -->
     <td style="vertical-align: top;">
-        <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->id) ?>">
+        <a href="<?= $controller->url_for('task/edit/' . $portfolio->id .'/'. $task->id) ?>">
             <?= Assets::img('icons/16/blue/edit.png') ?>
         </a>
     </td>
 
     <td style="vertical-align: top;">
-        <a href="<?= $controller->url_for('admin/task/delete/' . $portfolio->id .'/'. $task->id) ?>">
+        <? if ($task->tasksets) : ?>
+            <?= Assets::img('icons/16/grey/trash.png', array(
+                'title' => _('Diese Aufgabe kann nicht gelöscht werden, da es sich um eine Vorgabe handelt.')
+            )) ?>
+        <? else : ?>
+        <a href="<?= $controller->url_for('task/delete/' . $portfolio->id .'/'. $task->id) ?>">
             <?= Assets::img('icons/16/blue/trash.png') ?>
         </a>
+        <? endif ?>
     </td>                    
 </tr>

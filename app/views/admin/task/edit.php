@@ -67,6 +67,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
         jQuery('select[name*=tags]').chosen({
             create_option: true,
             skip_no_results: true,
+            persistent_create_option: true,
             create_option_text: 'Tag erstellen'.toLocaleString()
         });
     });

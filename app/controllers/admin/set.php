@@ -27,8 +27,6 @@ class Admin_SetController extends PortfolioPluginController
 
     public function index_action()
     {
-        SimpleORMap::expireTableScheme();
-
         $this->portfolios = Portfolio\Tasksets::findBySQL('1');
     }
 

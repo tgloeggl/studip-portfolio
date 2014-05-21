@@ -30,6 +30,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                     <thead>
                         <tr>
                             <th><?= _('Aufgabe') ?></th>
+                            <th><?= _('Tags') ?></th>
                             <th colspan="2" style="width: 5%"><?= _('Arbeit') ?></th>
                             <th colspan="2" style="width: 5%"><?= _('Feedback') ?></th>
                             <th colspan="2" style="width: 5%"><?= _('Aktionen') ?></th>

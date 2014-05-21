@@ -36,7 +36,7 @@ class Perm
             $user_id = $GLOBALS['user']->id;
         }
         
-        $status = $GLOBALS['perm']->get_perm($seminar_id);
+        $status = $GLOBALS['perm']->get_perm($user_id);
 
         // root and admins have all possible perms
         if (in_array($status, words('root admin')) !== false) {
