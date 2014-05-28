@@ -41,6 +41,7 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
         
         PageLayout::addStylesheet($this->getPluginURL().'/assets/vendor/chosen/chosen.min.css');
         PageLayout::addScript($this->getPluginURL().'/assets/vendor/chosen/chosen.jquery.min.js');
+        PageLayout::addScript($this->getPluginURL().'/assets/vendor/chosen/ajax-chosen.min.js');
     }
 
     public function getHomepageTemplate($user_id) {

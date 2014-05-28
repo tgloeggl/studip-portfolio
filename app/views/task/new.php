@@ -24,7 +24,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Aufgabenbeschreibung:') ?></span><br>
             <textarea name="content" required="required"></textarea><br>
         </label>
-        
+     
         <label>
             <span><?= _('Portfolios:') ?></span><br>
             <select id="sets" name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
@@ -49,7 +49,10 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                 <option><?= htmlReady($tag->tag) ?></option>
                 <? endforeach ?>
             </select>
-        </label>        
+        </label>
+        
+        <?= $this->render_partial('task/_permissions') ?>
+        <br>
 
         <div style="text-align: center">
             <div class="button-group">

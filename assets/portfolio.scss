@@ -21,6 +21,25 @@
         }
     }
     
+    .three-columns {
+        clear: both;
+        width: 80%;
+        
+        & > div {
+            width: 33%;
+            float: left;
+        }
+        
+        a.button {
+        margin: 0px;
+        }
+    }
+    
+    img.small {
+        max-height: 20px;
+        max-width: 20px;
+    }
+
     select option.heading, .chosen-drop li.heading {
         font-weight: bold;
         color: black;

@@ -5,7 +5,7 @@ foreach ($tags as $key => $val) {
 ?>
 <tr data-tags='["<?= implode('", "', $tags) ?>"]' class="task">
     <td>
-        <a href="<?= $controller->url_for('admin/task/edit/' . $portfolio->id .'/'. $task->id) ?>">
+        <a href="<?= $controller->url_for('task/edit/' . $portfolio->id .'/'. $task->id) ?>">
             <?= htmlReady($task->title) ?>
         </a>
     </td>
