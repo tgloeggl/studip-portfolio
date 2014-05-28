@@ -27,16 +27,17 @@ class Portfolios extends \Portfolio_SimpleORMap
     {
         $this->db_table = 'portfolio_portfolios';
 
-        $this->has_and_belongs_to_many = array(
-            'task_users' => array(
-                'class_name'     => 'Portfolio\TaskUsers',
-                'thru_table'     => 'portfolio_tags_task_users',
-                'thru_key'       => 'portfolio_portfolios_id',
-                'thru_assoc_key' => 'portfolio_task_users_id',
-                'on_delete'      => 'delete',
-                'on_store'       => 'store'
-            ),
+        /*
+        $this->has_and_belongs_to_many['tasks'] = array(
+            'class_name'     => 'Portfolio\Tasks',
+            'thru_table'     => 'portfolio_portfolios_tasks',
+            'thru_key'       => 'portfolio_portfolios_id',
+            'thru_assoc_key' => 'portfolio_tasks_id',
+            'on_delete'      => 'delete',
+            'on_store'       => 'store'
         );
+         * 
+         */
 
         parent::__construct($id);
     }

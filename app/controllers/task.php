@@ -91,11 +91,11 @@ class TaskController extends PortfolioPluginController
                     $task->portfolios[] = Portfolio\Portfolios::find($set->value);
                 }
             } else {
-                echo 'N: '. $set_json .'<br>';
-
-                // $portfolio =
-                // we hav a new (local) portfolio
-
+                // we have a new (local) portfolio
+                $task->portfolios[] = Portfolio\Portfolios::create(array(
+                    'name' => $set_json,
+                    'user_id' => $user_id
+                ));
             }
         }
 
@@ -161,10 +161,25 @@ class TaskController extends PortfolioPluginController
 
         // update sets
         $task->tasksets = array();
+        $task->portfolios = array();
 
-        foreach (Request::optionArray('sets') as $set_id) {
-            $taskset = Portfolio\Tasksets::find($set_id);
-            $task->tasksets[] = $taskset;
+        // add the task to the correct portfolio
+        foreach (Request::getArray('sets') as $set_json) {
+            if ($set = json_decode($set_json)) {
+                if ($set->type == 'global') {
+                    // add the global portfolio to the task
+                    $task->tasksets[] = Portfolio\Tasksets::find($set->value);
+                } else {
+                    // add the local portfolio to the task
+                    $task->portfolios[] = Portfolio\Portfolios::find($set->value);
+                }
+            } else {
+                // we have a new (local) portfolio
+                $task->portfolios[] = Portfolio\Portfolios::create(array(
+                    'name' => $set_json,
+                    'user_id' => $user_id
+                ));
+            }
         }
 
         

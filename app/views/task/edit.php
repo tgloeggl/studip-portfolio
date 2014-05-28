@@ -32,14 +32,14 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <select id="sets" name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
                 <option disabled="disabled" class="heading">Vorgegebene Portfolios</option>
                 <? foreach ($portfolios as $portfolio) : ?>
-                    <option value='{"type": "global", "value" : "<?= $portfolio->id ?>"}' <?= $portfolio->id == $portfolio_id ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
+                    <option value='{"type": "global", "value" : "<?= $portfolio->id ?>"}' <?= in_array($portfolio->id, $task_tasksets) !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
                 <? endforeach ?>
 
                 <option disabled="disabled" class="heading">Meine Portfolios</option>
                 <? /* $obj = null; $obj->id = 1; $obj->name = 'Testeintrag'; ?>
                 <? $my_portfolios[] = $obj; */ ?>
                 <? foreach ($my_portfolios as $portfolio) : ?>
-                    <option value='{"type": "local", "value" : "<?= $portfolio->id ?>"}' <?= $portfolio->id == $portfolio_id ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
+                    <option value='{"type": "local", "value" : "<?= $portfolio->id ?>"}' <?= in_array($portfolio->id, $task_portfolios) !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
                 <? endforeach ?>
             </select>
         </label>
