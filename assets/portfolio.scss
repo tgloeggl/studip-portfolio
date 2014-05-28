@@ -34,10 +34,17 @@
         margin: 0px;
         }
     }
+
+    span.chosen-error {
+        display: block;
+        color: #FF0000;
+        padding: 2px;
+    }
     
-    img.small {
-        max-height: 20px;
-        max-width: 20px;
+    #permission_list {
+        img.link {
+            cursor: pointer;
+        }
     }
 
     select option.heading, .chosen-drop li.heading {

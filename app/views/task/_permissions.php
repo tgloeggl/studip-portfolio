@@ -2,10 +2,17 @@
 <span>Zugriff gewähren</span>
 </label>
 
-<div class="three-columns">
+<div id="permission_list">
+    
+</div>
+
+<div class="three-columns" id="permissions">
     <div>
         <select name="search" data-placeholder="<?= _('Nach Nutzer suchen...') ?>">
         </select>
+        <span class="chosen-error" style="display: none">
+            <?= _('Bitte suchen Sie zuerst nach einem Nutzer, dem eine Berechtigung eingeräumt werden soll!') ?>
+        </span>
     </div>
 
     <div>
@@ -20,7 +27,7 @@
     </div>
     
     <div>
-        <?= \Studip\LinkButton::createAccept(_('Berechtigung hinzufügen')) ?>
+        <?= \Studip\LinkButton::createAccept(_('Berechtigung hinzufügen'), 'javascript:STUDIP.Portfolio.Homepage.addPermission()') ?>
     </div>
 </div>
 <br style="clear: both">

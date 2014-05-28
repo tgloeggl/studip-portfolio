@@ -28,7 +28,18 @@ class Tasks extends \Portfolio_SimpleORMap
 
         $this->has_many['task_users'] = array(
             'class_name'        => 'Portfolio\TaskUsers',
-            'assoc_foreign_key' => 'portfolio_tasks_id'
+            'assoc_foreign_key' => 'portfolio_tasks_id',
+            'on_delete'      => 'delete',
+            'on_store'       => 'store'
+            
+        );
+        
+        $this->has_many['perms'] = array(
+            'class_name'        => 'Portfolio\Permissions',
+            'assoc_foreign_key' => 'portfolio_tasks_id',
+            'on_delete'      => 'delete',
+            'on_store'       => 'store'
+            
         );
 
         $this->has_and_belongs_to_many['tasksets'] = array(
@@ -56,7 +67,7 @@ class Tasks extends \Portfolio_SimpleORMap
             'thru_assoc_key' => 'portfolio_portfolios_id',
             'on_delete'      => 'delete',
             'on_store'       => 'store'
-        );        
+        );
 
         parent::__construct($id);
     }

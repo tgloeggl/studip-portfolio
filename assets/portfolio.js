@@ -73,6 +73,28 @@ var STUDIP = STUDIP || {};
                     }
                 });
             }
+        },
+        
+        addPermission: function() {
+            var data = {
+                user: $('#permissions select[name=search]').val(),
+                fullname: $('#permissions select[name=search]').parent().find('.chosen-single').text(),
+                perm: $('#permissions select[name=permission]').val(),
+                permission: $('#permissions select[name=permission]').parent().find('.chosen-single').text()
+            };
+            
+            if (data.user === undefined || data.user === null) {
+                $('#permissions select[name=search]').siblings('.chosen-error').hide();
+                $('#permissions select[name=search]').siblings('.chosen-error').show('highlight');
+                return;
+            }
+            
+            $('#permissions select[name=search]').siblings('.chosen-error').hide();
+            
+            var template = STUDIP.Portfolio.getTemplate('permission');
+            $('#permission_list').append(template(data)).find('div:last-child img').click(function() {
+                $(this).parent().parent().remove();
+            });
         }
     };
 

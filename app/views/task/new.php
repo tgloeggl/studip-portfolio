@@ -12,6 +12,8 @@ $infobox_content[] = array(
 $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);    
 ?>
 
+<?= $this->render_partial('task/js_templates.php') ?>
+
 <div id="portfolio">
     <h1><?= _('Neue Aufgabe anlegen') ?></h1>
     <form method="post" action="<?= $controller->url_for('task/add/' . $portfolio_id) ?>">

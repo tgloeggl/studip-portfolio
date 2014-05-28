@@ -18,7 +18,7 @@ class TaskController extends PortfolioPluginController
     function before_filter(&$action, &$args)
     {
         parent::before_filter($action, $args);
-        
+
         Navigation::activateItem('/profile/portfolio');
     }
 
@@ -27,7 +27,7 @@ class TaskController extends PortfolioPluginController
         // TODO: check perms for portfolio
 
         $this->portfolio = \Portfolio\Tasksets::find($portfolio_id);
-        
+
         if (!$this->portfolio) {
             $this->redirect('portfolio');
         }
@@ -50,7 +50,7 @@ class TaskController extends PortfolioPluginController
                     }
                 }
             }
-            
+
             // collect all tag-combinations and group tasks by tags
             foreach ($tags as $tag) {
                 if ($show) {
@@ -64,18 +64,18 @@ class TaskController extends PortfolioPluginController
             }
         }
     }
-    
+
     public function new_action($portfolio_id)
     {
         // get all studycourses for user
         $studycourses = SimpleORMapCollection::createFromArray(
                 UserStudyCourse::findByUser($this->container['user']->id)
         )->pluck('studiengang_id abschluss_id');
-        
+
         $this->portfolios = \Portfolio\Tasksets::getTasksetsWithStudycourses($studycourses);
         $this->my_portfolios = \Portfolio\Portfolios::findByUser_Id($this->container['user']->id);
     }
-    
+
     public function add_action($portfolio_id)
     {
         $user_id = $this->container['user']->id;
@@ -102,18 +102,15 @@ class TaskController extends PortfolioPluginController
                 }
             } else {
                 echo 'N: '. $set_json .'<br>';
-                
-                // $portfolio = 
-                // we hav a new (local) portfolio
-                
-            }
-        }        
 
-        foreach (Request::optionArray('sets') as $pid) {
-            $taskset_combo = Portfolio\Tasksets::find($pid);
-            $task->tasksets[] = $taskset_combo;
+                // $portfolio =
+                // we hav a new (local) portfolio
+
+            }
         }
 
+
+        // set the tags for the task
         foreach (Request::getArray('tags') as $tag_name) {
             if (!$tag = current(Portfolio\Tags::findBySQL('user_id = ? AND tag = ?', array($user_id, $tag_name)))) {
                 $data = array(
@@ -122,41 +119,31 @@ class TaskController extends PortfolioPluginController
                 );
                 $tag = Portfolio\Tags::create($data);
             }
-            
+
             $task->tags[] = $tag;
         }
-        
-        $task->store();
-        
-        $this->redirect('admin/task/index/' . $portfolio_id);
-        
-        
-        
-        
-        
-        var_dump($_REQUEST);
-        foreach (Request::getArray('sets') as $set_json) {
-            if ($set = json_decode($set_json)) {
-                if ($set->type == 'global') {
-                    echo 'G: '. $set->value .'<br>';
-                } else {
-                    echo $set->value .'<br>';
-                }
-            } else {
-                echo 'N: '. $set_json .'<br>';
-                
-                // we hav a new (local) portfolio
-            }
+
+        // set the permissions for the task
+        foreach (Request::getArray('perms') as $username => $perm) {
+            $p = new Portfolio\Permissions();
+            $p->setData(array(
+                'user_id' => get_userid($username),
+                'role'    => $perm
+            ));
+
+            $task->perms[] = $p;
         }
-        die;
+
+        $task->store();
+
         $this->redirect('task/index/' . $portfolio_id);
     }
-    
+
     public function edit_action($portfolio_id, $task_id)
     {
         $this->redirect('task/index/' . $portfolio_id);
     }
-    
+
     public function delete_action($portfolio_id, $task_id)
     {
         $this->redirect('task/index/' . $portfolio_id);
