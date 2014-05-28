@@ -15,16 +15,16 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 <?= $this->render_partial('task/js_templates.php') ?>
 
 <div id="portfolio">
-    <h1><?= _('Neue Aufgabe anlegen') ?></h1>
-    <form method="post" action="<?= $controller->url_for('task/add/' . $portfolio_id) ?>">
+    <h1><?= _('Aufgabe bearbeiten') ?></h1>
+    <form method="post" action="<?= $controller->url_for('task/update/' . $portfolio_id .'/'. $task->id) ?>">
         <label>
             <span><?= _('Titel:') ?></span><br>
-            <input type="text" name="title" required="required"><br>
+            <input type="text" name="title" required="required" value="<?= htmlReady($task->title) ?>"><br>
         </label>
         
         <label>
             <span><?= _('Aufgabenbeschreibung:') ?></span><br>
-            <textarea name="content" required="required" class="add_toolbar"></textarea><br>
+            <textarea name="content" required="required" class="add_toolbar"><?= htmlReady($task->content) ?></textarea><br>
         </label>
      
         <label>
@@ -48,7 +48,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Tags:') ?></span><br>
             <select id="tags" name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
                 <? foreach ($tags as $tag) : ?>
-                <option><?= htmlReady($tag->tag) ?></option>
+                <option <?= in_array($tag->tag, $task_tags) === false ? '' : 'selected="selected"' ?>><?= htmlReady($tag->tag) ?></option>
                 <? endforeach ?>
             </select>
         </label>
@@ -58,7 +58,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 
         <div style="text-align: center">
             <div class="button-group">
-                <?= Studip\Button::createAccept(_('Aufgabe erstellen')) ?>
+                <?= Studip\Button::createAccept(_('Aufgabe speichern')) ?>
                 <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('task/index/' . $portfolio_id)) ?>
             </div>
         </div>
@@ -78,5 +78,16 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             skip_no_results: true,
             create_option_text: 'Tag erstellen'.toLocaleString()
         });
+        
+        <? foreach ($task->perms as $perm) : ?>
+        STUDIP.Portfolio.Homepage.addPermissionTemplate({
+            user: '<?= get_username($perm->user_id) ?>',
+            fullname: '<?= get_fullname($perm->user_id) ?>',
+            perm: '<?= $perm->role ?>',
+            permission: '<?= $perm->role == 'tutor' 
+                ? _('Betreuer') : $perm->role == 'student' 
+                ?  _('Kommilitone') :  _('Nachfolgebetreuer') ?>'
+        });
+        <? endforeach ?>
     });
 </script>

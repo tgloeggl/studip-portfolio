@@ -23,28 +23,15 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 
             <td style="vertical-align: top" id="tasks">
                 <? foreach ($tasks_by_tag as $tag => $tasks) : ?>
-                <? if(isset($filter[0]) && $filter[0] != $tag) continue; ?>
-
-                <table class="default zebra" data-tag="<?= htmlReady($tag) ?>">
-                    <caption><?= htmlReady($tag) ?></caption>
-                    <thead>
-                        <tr>
-                            <th><?= _('Aufgabe') ?></th>
-                            <th><?= _('Tags') ?></th>
-                            <th colspan="2" style="width: 5%"><?= _('Arbeit') ?></th>
-                            <th colspan="2" style="width: 5%"><?= _('Feedback') ?></th>
-                            <th colspan="2" style="width: 5%"><?= _('Aktionen') ?></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <? foreach ($tasks as $task) : ?>
-                            <?= $this->render_partial('task/_task', compact('task')); ?>
-                        <? endforeach ?>
-                    </tbody>
-                </table>
+                <?= $this->render_partial('task/_tasks', compact('tag', 'tasks')) ?>
                 <? endforeach ?>
 
+                <? if (!empty($tagless_tasks)) : ?>
+                <?= $this->render_partial('task/_tasks', array(
+                    'tasks' => $tagless_tasks,
+                    'tag'   => _('Aufgaben ohne Tags')
+                )) ?>
+                <? endif ?>
             </td>
         </tr>    
     </table>

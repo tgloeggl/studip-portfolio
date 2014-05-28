@@ -91,10 +91,15 @@ var STUDIP = STUDIP || {};
             
             $('#permissions select[name=search]').siblings('.chosen-error').hide();
             
+            STUDIP.Portfolio.Homepage.addPermissionTemplate(data);
+        },
+        
+        addPermissionTemplate: function(data) {
             var template = STUDIP.Portfolio.getTemplate('permission');
+
             $('#permission_list').append(template(data)).find('div:last-child img').click(function() {
                 $(this).parent().parent().remove();
-            });
+            });  
         }
     };
 

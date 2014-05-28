@@ -22,7 +22,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
         
         <label>
             <span><?= _('Aufgabenbeschreibung:') ?></span><br>
-            <textarea name="content" required="required"><?= htmlReady($task->content) ?></textarea><br>
+            <textarea name="content" required="required" class="add_toolbar"><?= htmlReady($task->content) ?></textarea><br>
         </label>
         
         <label>

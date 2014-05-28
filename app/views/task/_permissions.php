@@ -3,7 +3,7 @@
 </label>
 
 <div id="permission_list">
-    
+
 </div>
 
 <div class="three-columns" id="permissions">
