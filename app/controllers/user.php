@@ -20,7 +20,7 @@ class UserController extends PortfolioPluginController
     {
         $search_term = '%'. studip_utf8decode(urldecode(Request::get('term'))) .'%';
         
-        foreach (User::findBySQL("username LIKE ? OR Vorname LIKE ? OR Nachname LIKE ?", 
+        foreach (User::findBySQL("(username LIKE ? OR Vorname LIKE ? OR Nachname LIKE ?) AND " . get_vis_query(), 
                 array($search_term, $search_term, $search_term)) as $user) {
             $users[] = array(
                 'fullname' => get_fullname($user->id) .' ('. $user->username .')',
