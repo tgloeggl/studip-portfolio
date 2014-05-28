@@ -7,26 +7,27 @@ class AddPortfolioTables extends DBMigration {
 
     public function up () {
         $db = DBManager::get();
-        
+
         $db->exec("
-            CREATE  TABLE `portfolio_tasksets` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_portfolios` (
               `id` INT NOT NULL AUTO_INCREMENT ,
               `name` VARCHAR(255) NULL ,
               `user_id` VARCHAR(32) NULL COMMENT 'who created this set?' ,
-              `chdate` INT NULL ,              
+              `chdate` INT NULL ,
               `mkdate` INT NULL ,
+              `global` BOOL,
               PRIMARY KEY (`id`) )
         ");
 
         $db->exec("
-            CREATE  TABLE IF NOT EXISTS `portfolio_tasksets_tasks` (
-                `portfolio_tasksets_id` INT NOT NULL ,
+            CREATE  TABLE IF NOT EXISTS `portfolio_portfolios_tasks` (
+                `portfolio_portfolios_id` INT NOT NULL ,
                 `portfolio_tasks_id` VARCHAR(45) NOT NULL ,
-                PRIMARY KEY (`portfolio_tasksets_id`, `portfolio_tasks_id`) )
+                PRIMARY KEY (`portfolio_portfolios_id`, `portfolio_tasks_id`) )
         ");
 
         $db->exec("
-            CREATE  TABLE `portfolio_tasks` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_tasks` (
               `id` INT NOT NULL AUTO_INCREMENT ,
               `user_id` VARCHAR(32) NULL ,
               `title` VARCHAR(255) NULL ,
@@ -39,7 +40,7 @@ class AddPortfolioTables extends DBMigration {
         ");
 
         $db->exec("
-            CREATE  TABLE `portfolio_task_users` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_task_users` (
               `id` INT NOT NULL AUTO_INCREMENT ,
               `portfolio_tasks_id` INT NULL ,
               `user_id` VARCHAR(32) NULL ,
@@ -49,11 +50,11 @@ class AddPortfolioTables extends DBMigration {
               `visible` TINYINT(1) NULL DEFAULT 1 ,
               `chdate` INT NULL ,
               `mkdate` INT NULL ,
-              PRIMARY KEY (`id`) ) 
+              PRIMARY KEY (`id`) )
         ");
 
         $db->exec("
-            CREATE  TABLE `portfolio_task_user_files` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_task_user_files` (
               `id` INT NOT NULL AUTO_INCREMENT ,
               `portfolio_task_users_id` INT NULL ,
               `user_id` VARCHAR(32) NULL ,
@@ -64,14 +65,14 @@ class AddPortfolioTables extends DBMigration {
         ");
 
         $db->exec("
-            CREATE  TABLE `portfolio_tasksets_studiengang_combos` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_tasksets_studiengang_combos` (
               `combo_id` INT NOT NULL AUTO_INCREMENT ,
               `tasksets_id` INT NOT NULL,
               PRIMARY KEY (`combo_id`) )
         ");
 
         $db->exec("
-            CREATE  TABLE `portfolio_studiengang_combos` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_studiengang_combos` (
               `combo_id` INT NOT NULL ,
               `studiengang_id` VARCHAR(32) NOT NULL ,
               `abschluss_id` VARCHAR(32) NOT NULL ,
@@ -79,7 +80,7 @@ class AddPortfolioTables extends DBMigration {
         ");
 
         $db->exec("
-            CREATE  TABLE `portfolio_tags` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_tags` (
               `id` INT NOT NULL AUTO_INCREMENT ,
               `user_id` VARCHAR(32) NULL ,
               `tag` VARCHAR(255) NULL ,
@@ -88,7 +89,7 @@ class AddPortfolioTables extends DBMigration {
 
 
         $db->exec("
-            CREATE  TABLE `portfolio_tags_tasks` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_tags_tasks` (
               `portfolio_tasks_id` INT NOT NULL ,
               `portfolio_tags_id` INT NOT NULL ,
               PRIMARY KEY (`portfolio_tasks_id`, `portfolio_tags_id`) ,
@@ -96,34 +97,17 @@ class AddPortfolioTables extends DBMigration {
         ");
 
         $db->exec("
-            CREATE  TABLE `portfolio_permissions` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_permissions` (
               `portfolio_tasks_id` INT NOT NULL ,
               `user_id` VARCHAR(32) NULL ,
               `role` ENUM('tutor','followup-tutor','student') NULL ,
-              PRIMARY KEY (`portfolio_tasks_id`, `user_id`) 
+              PRIMARY KEY (`portfolio_tasks_id`, `user_id`)
             ) ENGINE = InnoDB;
         ");
 
-
-        $db->exec("
-            CREATE  TABLE `portfolio_portfolios` (
-              `id` INT NOT NULL AUTO_INCREMENT ,
-              `name` VARCHAR(255) NULL ,
-              `user_id` VARCHAR(32) NULL ,
-              PRIMARY KEY (`id`)
-            ) ENGINE = InnoDB;
-        ");
-
-        $db->exec("
-            CREATE  TABLE `portfolio_portfolios_tasks` (
-              `portfolio_portfolios_id` INT NOT NULL ,
-              `portfolio_tasks_id` INT NOT NULL ,
-              PRIMARY KEY (`portfolio_portfolios_id`, `portfolio_tasks_id`) ,
-              INDEX `fk_portfolio_portfolios_tasks_portfolio_tasks1_idx` (`portfolio_tasks_id` ASC) 
-            ) ENGINE = InnoDB;
-        "); 
+        SimpleORMap::expireTableScheme();
     }
-    
+
     public function down () {
         $db = DBManager::get();
         $db->exec("DROP TABLE IF EXISTS portfolio_portfolios_task_users");
@@ -136,8 +120,7 @@ class AddPortfolioTables extends DBMigration {
         $db->exec("DROP TABLE IF EXISTS portfolio_task_user_files");
         $db->exec("DROP TABLE IF EXISTS portfolio_task_users");
         $db->exec("DROP TABLE IF EXISTS portfolio_tasks");
-        $db->exec("DROP TABLE IF EXISTS portfolio_tasksets_tasks");
-        $db->exec("DROP TABLE IF EXISTS portfolio_tasksets");
-        
+
+        SimpleORMap::expireTableScheme();
     }
 }
