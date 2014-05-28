@@ -17,9 +17,11 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 
     <table style="border-collapse: collapse; width: 100%">
         <tr>
+            <? if (!empty($tags)) : ?>
             <td style="width: 250px; vertical-align: top; vertical-align: top">
                 <?= $this->render_partial('task/_tagcloud') ?>
             </td>
+            <? endif ?>
 
             <td style="vertical-align: top" id="tasks">
                 <? foreach ($tasks_by_tag as $tag => $tasks) : ?>
