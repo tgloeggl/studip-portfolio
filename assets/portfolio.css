@@ -25,5 +25,12 @@
 #portfolio td.tags > div a.open:hover { background-image: url("../../../../assets/images/icons/16/red/arr_1down.png"); }
 #portfolio td.tags > div a.selected { background-color: #DDDDFF; }
 #portfolio #tasks { vertical-align: top; border-left: 1px dashed #1E3E70; padding-left: 10px; }
+#portfolio .mark { background-color: #E1E4E5; padding: 5px; }
+#portfolio #files_to_upload { min-width: 500px; width: auto; }
+#portfolio #files_to_upload tr td:nth-child(1) { width: 100px; }
+#portfolio #files_to_upload tr td:nth-child(1) img { max-width: 90px; max-height: 60px; }
+#portfolio #files_to_upload tr td:nth-child(2) { padding: 3px 10px; }
+#portfolio #files_to_upload tr td:nth-child(3) { padding: 3px 10px; width: 100px; }
+#portfolio #files_to_upload span.file_error { display: block; background-color: #FFCCCC; padding: 2px; }
 
 span[disabled] { color: #6E6E6E; }

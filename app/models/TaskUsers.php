@@ -18,9 +18,9 @@ class TaskUsers extends \Portfolio_SimpleORMap
 {
     /**
      * creates new task_user, sets up relations
-     * 
+     *
      * @param string $id
-     */    
+     */
     public function __construct($id = null)
     {
         $this->db_table = 'portfolio_task_users';
@@ -29,24 +29,13 @@ class TaskUsers extends \Portfolio_SimpleORMap
             'class_name'  => 'Portfolio\TaskUserFiles',
             'assoc_foreign_key' => 'portfolio_task_users_id',
         );
-      
+
         $this->belongs_to['task'] = array(
             'class_name'  => 'Portfolio\Tasks',
             'foreign_key' => 'portfolio_tasks_id',
         );
-        
-        $this->has_and_belongs_to_many = array(
-            'portfolios' => array(
-                'class_name'     => 'Portfolio\Portfolios',
-                'thru_table'     => 'portfolio_portfolios_task_users',
-                'thru_key'       => 'portfolio_task_users_id',
-                'thru_assoc_key' => 'portfolio_portfolios_id',
-                'on_delete'      => 'delete',
-                'on_store'       => 'store'
-            ),
-        );        
 
         parent::__construct($id);
-        
+
     }
 }

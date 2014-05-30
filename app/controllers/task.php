@@ -20,12 +20,13 @@ class TaskController extends PortfolioPluginController
         parent::before_filter($action, $args);
 
         Navigation::activateItem('/profile/portfolio');
+
+        $this->user = $this->container['user'];
     }
 
     public function index_action($portfolio_id)
     {
         $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
-        $this->user = $this->container['user'];
 
         if (!$this->portfolio) {
             $this->redirect('portfolio');
@@ -111,14 +112,25 @@ class TaskController extends PortfolioPluginController
 
     public function edit_action($portfolio_id, $task_id)
     {
-        $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
+        $user_id = $this->container['user']->id;
+        $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($user_id);
 
         $this->portfolio_id = $portfolio_id;
         $this->task = Portfolio\Tasks::find($task_id);
-        $this->tags = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($this->container['user']->id));
+        $this->tags = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($user_id));
 
         $this->task_tags = $this->task->tags->pluck('tag');
         $this->task_portfolios = $this->task->portfolios->pluck('id');
+
+        // make sure we have an user-entry for the current task
+        if (!$this->task_user = current(Portfolio\TaskUsers::findBySQL('user_id = ? AND portfolio_tasks_id = ?', array($user_id, $task_id)))) {
+            $this->task_user = Portfolio\TaskUsers::create(array(
+                'user_id'            => $user_id,
+                'portfolio_tasks_id' => $task_id
+            ));
+        }
+
+        $this->perms = Portfolio\Perm::get($user_id, $this->task);
     }
     
     public function update_action($portfolio_id, $task_id)
@@ -127,49 +139,105 @@ class TaskController extends PortfolioPluginController
 
         // update task contents
         $task = Portfolio\Tasks::find($task_id);
-        $task->setData(array(
-            'title'       => Request::get('title'),
-            'content'     => Request::get('content')
-        ));
 
-        // update sets
-        $task->portfolios = array();
+        $perms = Portfolio\Perm::get($user_id, $this->task);
 
-        // add the task to the correct portfolio
-        foreach (Request::getArray('sets') as $id) {
-            $task->portfolios[] = Portfolio\Portfolios::find($id);
+        if ($perms['edit_task']) {
+            $task->setData(array(
+                'title'       => Request::get('title'),
+                'content'     => Request::get('content')
+            ));
         }
 
-        
-        // update tags
-        $diff = Portfolio\Helper::pick($task->tags->pluck('tag'), Request::getArray('tags'));
-
-        foreach ($diff['deleted'] as $del_tag) {
-            foreach ($task->tags as $key => $tag) {
-                if ($del_tag == $tag['tag']) {
-                    unset($task->tags[$key]);
+        if ($perms['edit_settings']) {
+            // update sets
+            foreach ($task->portfolios as $key => $portfolio) {
+                if (!$portfolio->global) {
+                    unset($task->portfolios[$key]);
                 }
             }
-        }
 
-        foreach ($diff['added'] as $tag_name) {
-            if (!$tag = current(Portfolio\Tags::findBySQL('user_id = ? AND tag = ?', array($user_id, $tag_name)))) {
-                $data = array(
-                    'user_id' => $user_id,
-                    'tag'     => $tag_name
-                );
-                $tag = Portfolio\Tags::create($data);
+            // add the task to the correct portfolio
+            foreach (Request::getArray('sets') as $id) {
+                $task->portfolios[] = Portfolio\Portfolios::find($id);
             }
-            $task->tags[] = $tag;
+
+
+            // update tags
+            $diff = Portfolio\Helper::pick($task->tags->pluck('tag'), Request::getArray('tags'));
+
+            foreach ($diff['deleted'] as $del_tag) {
+                foreach ($task->tags as $key => $tag) {
+                    if ($del_tag == $tag['tag'] && $tag['user_id'] != 'global') {
+                        unset($task->tags[$key]);
+                    }
+                }
+            }
+
+            foreach ($diff['added'] as $tag_name) {
+                if (!$tag = current(Portfolio\Tags::findBySQL('user_id = ? AND tag = ?', array($user_id, $tag_name)))) {
+                    $data = array(
+                        'user_id' => $user_id,
+                        'tag'     => $tag_name
+                    );
+                    $tag = Portfolio\Tags::create($data);
+                }
+                $task->tags[] = $tag;
+            }
+
+            // update the permissions for the task
+            foreach (Request::getArray('perms') as $username => $perm) {
+                $new_perms[] = array(get_userid($username), $perm);
+            }
+
+            $diff = Portfolio\Helper::pick($task->perms->pluck('user_id role'), $new_perms);
+
+            foreach ($diff['deleted'] as $del) {
+                foreach ($task->perms as $key => $perm) {
+                    if ($perm->user_id == $del[0] && $perm->role == $del[1]) {
+                        unset($task->perms[$key]);
+                    }
+                }
+            }
+
+            foreach ($diff['added'] as $add) {
+                $perm = new Portfolio\Permissions();
+                $perm->setData(array(
+                    'user_id' => $add[0],
+                    'role'    => $add[1]
+                ));
+                $task->perms[] = $perm;
+            }
+
+            $task->store();
         }
 
-        $task->store();
+        // update user-related data
+        $task_user = current(Portfolio\TaskUsers::findBySQL('user_id = ? AND portfolio_tasks_id = ?', array($user_id, $task_id)));
+
+        $data = Request::getArray('task_user');
+
+        if ($perms['edit_answer']) {
+            $task_user->answer = $data['answer'];
+        }
+
+        if ($perms['edit_feedback']) {
+            $task_user->feedback = $data['feedback'];
+        }
+
+        $task_user->store();
 
         $this->redirect('task/index/' . $portfolio_id);
     }
 
     public function delete_action($portfolio_id, $task_id)
     {
+        $task = Portfolio\Tasks::find($task_id);
+
+        if ($task->user_id == $this->container['user']->id) {
+            $task->delete();
+        }
+
         $this->redirect('task/index/' . $portfolio_id);
     }
 }

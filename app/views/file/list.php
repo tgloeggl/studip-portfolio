@@ -12,9 +12,9 @@
     </thead>
     <tbody <?= $edit ? 'id="uploaded_files"' : '' ?>>
 <? if(!empty($files)) foreach($files as $file) : ?>
-    <tr data-fileid="<?= $file->getId() ?>">
+    <tr data-fileid="<?= $file->id ?>">
         <td>
-            <a href="<?= GetDownloadLink($file->document->getId(), $file->document->name)?>" target="_blank">
+            <a href="<?= GetDownloadLink($file->document->id, $file->document->name)?>" target="_blank">
                 <?= $file->document->name ?>
             </a>
         </td>
@@ -23,8 +23,8 @@
         
         <? if ($edit) : ?>
         <td>
-            <? if ($GLOBALS['user']->id == $file->document->user_id) : ?>
-            <a href="javascript:STUDIP.epp.removeFile('<?= $seminar_id ?>', '<?= $file->getId() ?>')">
+            <? if ($user->id == $file->document->user_id) : ?>
+            <a href="javascript:STUDIP.Portfolio.File.removeFile('<?= $seminar_id ?>', '<?= $file->id ?>')">
                 <?= Assets::img('icons/16/blue/trash.png') ?>
             </a>
             <? endif ?>
@@ -37,5 +37,5 @@
 <br>
 
 <? if ($edit) : ?>
-    <?= $this->render_partial('index/_file_upload', compact('task_user')) ?>
+    <?= $this->render_partial('file/upload', compact('type')) ?>
 <? endif ?>

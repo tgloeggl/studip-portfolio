@@ -57,10 +57,8 @@ class AddPortfolioTables extends DBMigration {
             CREATE  TABLE IF NOT EXISTS `portfolio_task_user_files` (
               `id` INT NOT NULL AUTO_INCREMENT ,
               `portfolio_task_users_id` INT NULL ,
-              `user_id` VARCHAR(32) NULL ,
-              `file_id` VARCHAR(32) NULL ,
-              `chdate` INT NULL ,
-              `mkdate` INT NULL ,
+              `dokument_id` varchar(32) NOT NULL,
+              `type` enum('answer','feedback') NOT NULL DEFAULT 'answer',
               PRIMARY KEY (`id`) )
         ");
 

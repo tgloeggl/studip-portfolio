@@ -1,26 +1,23 @@
 <!-- multi file upload -->
-<? 
-$art = $GLOBALS['SessSemName']["art_num"];
-if (!$GLOBALS['UPLOAD_TYPES'][$art]) $art = 'default';
-
-$max = $GLOBALS['UPLOAD_TYPES'][$art]["file_sizes"][$GLOBALS['perm']->get_studip_perm($GLOBALS['SessSemName'][1])]
-?>
-
 <script>
-    STUDIP.epp.maxFilesize = <?= $max ?>;
+    $(document).ready(function() {
+        STUDIP.Portfolio.File.maxFilesize = <?= $max = $GLOBALS['UPLOAD_TYPES']['default']["file_sizes"][$user->perms] ?>;
+    });
 </script>
+
+<!-- Workaround for broken jquery.widget & jquery.metadata. data-url at #fileupload gets wrongly interpreted as regexp and fails -->
+<input type="hidden" name="upload_url" value="<?= $controller->url_for('file/post_files/' . $task->id .'/'. $type) ?>">
 
 <div style="position: relative; display: inline-block;">
     <a class="button" style="overflow: hidden; position: relative;">
         <?= _('Datei(en) hinzufügen') ?>
-        <input id="fileupload" type="file" multiple name="file" 
-            data-url="<?= $controller->url_for('index/post_files/' . $task_user->id .'/'. $type) ?>"
+        <input id="fileupload" type="file" multiple name="file"
             data-sequential-uploads="true"
             style="opacity: 0; position: absolute; left: -2px; top: -2px; height: 105%; cursor: pointer;">
     </a>
 </div>
 
-<?= \Studip\LinkButton::create(_('Datei(en) hochladen'), "javascript:STUDIP.epp.upload()", 
+<?= \Studip\LinkButton::create(_('Datei(en) hochladen'), "javascript:STUDIP.Portfolio.File.upload()",
         array('id' => 'upload_button', 'class' => 'disabled')) ?>
 
 <b><?= _('Maximal erlaubte Größe pro Datei') ?>: <?= round($max / 1024 / 1024, 2) ?> MB</b><br>

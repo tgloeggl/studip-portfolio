@@ -16,12 +16,12 @@ namespace Portfolio;
 
 class Perm
 {
-    
+
     /**
      * Check, if the a user has the passed permission in a seminar.
      * Possible permissions are:
      *   admin     - Create new portfolios and tasks<br>
-     * 
+     *
      * @param string $perm        one of the modular permissions
      * @param string $seminar_id  the seminar to check for
      * @param string $user_id     the user to check for
@@ -30,12 +30,12 @@ class Perm
     static function has($perm, $user_id = null)
     {
         static $permissions = array();
-        
+
         // if no user-id is passed, use the current user (for your convenience)
         if (!$user_id) {
             $user_id = $GLOBALS['user']->id;
         }
-        
+
         $status = $GLOBALS['perm']->get_perm($user_id);
 
         // root and admins have all possible perms
@@ -44,15 +44,15 @@ class Perm
         }
 
         // check the status and the passed permission
-        if (($status == 'dozent' || $status == 'tutor') && in_array($perm,            
+        if (($status == 'dozent' || $status == 'tutor') && in_array($perm,
             words('new_task')
         ) !== false) {
             return true;
-        } else if (($status == 'autor' || $status == 'user') && in_array($perm, 
+        } else if (($status == 'autor' || $status == 'user') && in_array($perm,
             words('')) !== false) {
             return true;
         }
-        
+
         // user has no permission
         return false;
     }
@@ -62,11 +62,11 @@ class Perm
      * is thrown.
      * An optional topic_id can be passed which is checked against the passed
      * seminar if the topic_id belongs to that seminar
-     * 
+     *
      * @param string $perm        for the list of possible perms and their function see @ForumPerm::hasPerm()
      * @param string $seminar_id  the seminar to check for
      * @param string $topic_id    if passed, this topic_id is checked if it belongs to the passed seminar
-     * 
+     *
      * @throws AccessDeniedException
      */
     function check($perm)
@@ -77,5 +77,89 @@ class Perm
                 $perm)
             );
         }
+    }
+
+    /**
+     * get permissions for passed user for the passed task
+     * returns a permission matrix of the following style:
+     *  array(
+     *     'edit_task' =>
+     *     'edit_answer']   =>
+     *     'edit_feedback'] =>
+     *     'edit_goal']     =>
+     *     'close_task']    =>
+     *     'view_answer']   =>
+     *     'view_feedback'] =>
+     *     'view_goal']     =>
+     * )
+     *
+     * @param string $user_id
+     * @param object $task
+     *
+     * @return array
+     */
+    static function get($user_id, $task) {
+        $perms = array(
+            'edit_task'     => false,
+            'edit_settings' => true,
+            'edit_answer'   => true,
+            'edit_feedback' => false,
+            'edit_goal'     => false,
+            'close_task'    => false,
+            'view_answer'   => true,
+            'view_feedback' => true,
+            'view_goal'     => true
+        );
+
+         // as owner of a task, one may administer the task, but not the feedback
+        if ($user_id == $task->user_id) {
+            $perms['edit_task'] = true;
+
+        // for non-owners get role-specific perms
+        } else {
+            $perms['edit_task'] = false;
+
+            foreach($task->perms as $perm) {
+                if ($perm->user_id == $user_id) {
+                    switch($perm->role) {
+                        case 'tutor':
+                            $perms['edit_settings'] = false;
+                            $perms['edit_answer']   = false;
+                            $perms['edit_feedback'] = true;
+                            $perms['edit_goal']     = true;
+                            $perms['close_task']    = true;
+                            $perms['view_answer']   = true;
+                            $perms['view_feedback'] = true;
+                            $perms['view_goal']     = true;
+                        break;
+
+                        case 'followup-tutor':
+                            $perms['edit_settings'] = false;
+                            $perms['edit_answer']   = false;
+                            $perms['edit_feedback'] = false;
+                            $perms['edit_goal']     = false;
+                            $perms['close_task']    = false;
+                            $perms['view_answer']   = false;
+                            $perms['view_feedback'] = false;
+                            $perms['view_goal']     = true;
+
+                        break;
+
+                        case 'student':
+                            $perms['edit_settings'] = false;
+                            $perms['edit_answer']   = false;
+                            $perms['edit_feedback'] = false;
+                            $perms['edit_goal']     = false;
+                            $perms['close_task']    = false;
+                            $perms['view_answer']   = true;
+                            $perms['view_feedback'] = true;
+                            $perms['view_goal']     = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $perms;
     }
 }

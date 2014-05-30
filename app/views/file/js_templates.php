@@ -16,7 +16,7 @@
     </td>
     <td style="width: 10%"><%- size %> kb</td>
     <td style="width: 10%">
-        <a href="javascript:STUDIP.epp.removeUploadFile(<%- id %>)">
+        <a href="javascript:STUDIP.Portfolio.File.removeUploadFile(<%- id %>)">
             <?= Assets::img('icons/16/blue/trash.png') ?>
         </a>
     </td>
@@ -34,7 +34,7 @@
     <td><%- size %> kb</td>
     <td><%- date %></td>
     <td>
-        <a href="javascript:STUDIP.epp.removeFile('<%- seminar %>', '<%- id %>')">
+        <a href="javascript:STUDIP.Portfolio.File.removeFile('<%- seminar %>', '<%- id %>')">
             <?= Assets::img('icons/16/blue/trash.png') ?>
         </a>
     </td>
@@ -58,7 +58,7 @@
         </div>
         <div class="buttons">
             <a class="accept button" href="<%- confirm %>"><?= _('Ja') ?></a>
-            <?= Studip\LinkButton::createCancel(_('Nein'), 'javascript:STUDIP.epp.closeQuestion()') ?>
+            <?= Studip\LinkButton::createCancel(_('Nein'), 'javascript:STUDIP.Portfolio.File.closeQuestion()') ?>
         </div>
     </div>    
 </div>

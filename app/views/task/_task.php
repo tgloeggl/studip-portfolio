@@ -53,7 +53,8 @@ foreach ($tags as $key => $val) {
                 'title' => _('Diese Aufgabe kann nicht gelöscht werden, da es sich um eine Vorgabe handelt.')
             )) ?>
         <? else : ?>
-        <a href="<?= $controller->url_for('task/delete/' . $portfolio->id .'/'. $task->id) ?>">
+        <a href="<?= $controller->url_for('task/delete/' . $portfolio->id .'/'. $task->id) ?>"
+           class="confirm" title="<?= _('Diese Aufgabe löschen') ?>">
             <?= Assets::img('icons/16/blue/trash.png') ?>
         </a>
         <? endif ?>

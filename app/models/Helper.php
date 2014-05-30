@@ -28,10 +28,15 @@ class Helper
         if (!is_array($previous) || !is_array($current)) {
             return false;
         }
-        
+
         return array(
-            'deleted' => array_diff($previous, $current),
-            'added'    => array_diff($current, $previous)
+            'deleted' => array_unique(array_udiff($previous, $current, array('self', 'udiff_compare'))),
+            'added'    => array_unique(array_udiff($current, $previous, array('self', 'udiff_compare')))
         );
+    }
+
+    private static function udiff_compare($a, $b)
+    {
+        return strcmp(serialize($a), serialize($b));
     }
 }
