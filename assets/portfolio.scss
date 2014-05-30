@@ -59,13 +59,41 @@
         font-size: 10pt;
         font-weight: bold;
         width: 80px;
+        min-height: 80px;
         max-height: 8em;
         overflow: hidden;
         color: black;
 
+        background-image: url('images/icons/64/blue/literature2.png');
+        background-repeat: no-repeat;
+        padding-top: 68px;
+
         &:hover {
             opacity: 0.7;
         }
+    }
+
+    span.add_portfolio {
+        background-image: url('images/icons/64/blue/add/literature2.png');
+        cursor: pointer;
+    }
+
+    span.edit_portfolio {
+        display: inline-block;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+        background-image: url('../../../../assets/images/icons/20/grey/edit.png');
+
+        &:hover {
+            background-image: url('../../../../assets/images/icons/20/blue/edit.png');
+        }
+    }
+
+    input.portfolio {
+        font-size: 20pt;
+        width: 20em;
     }
 
     td.tags {
@@ -123,4 +151,8 @@
         border-left: 1px dashed #1E3E70;
         padding-left: 10px;
     }
+}
+
+span[disabled] {
+    color: #6E6E6E;
 }

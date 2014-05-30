@@ -20,7 +20,7 @@ class Portfolios extends \Portfolio_SimpleORMap
 {
     /**
      * creates a new portfolios, sets up relations
-     * 
+     *
      * @param string $id
      */
     public function __construct($id = null)
@@ -41,14 +41,22 @@ class Portfolios extends \Portfolio_SimpleORMap
             'thru_assoc_key' => 'portfolio_tasks_id',
             'on_delete'      => 'delete',
             'on_store'       => 'store'
-        );        
+        );
+
+        $this->registerCallback('before_delete',  'destroyRelations');
 
         parent::__construct($id);
     }
-    
+
+    function destroyRelations()
+    {
+        $this->tasks = array();
+        $this->store();
+    }
+
     static function getPortfoliosForUser($user_id)
     {
-        
+
         // get all studycourses for user
         $studycourses = \SimpleORMapCollection::createFromArray(
                 \UserStudyCourse::findByUser($user_id)
@@ -59,9 +67,9 @@ class Portfolios extends \Portfolio_SimpleORMap
             self::findByUser_Id($user_id)
         );
     }
-    
+
     /**
-     * 
+     *
      * @param type $studycourses
      */
     static function getPortfoliosWithStudycourses($studycourses)
@@ -72,11 +80,11 @@ class Portfolios extends \Portfolio_SimpleORMap
         // filter portfolios by studiengang-combos
         foreach ($portfolios as $pkey => $portfolio) {
             $remove_task = true;
-            
+
             // check if combo if the user meets all requirements for one complete combo
             foreach ($portfolio->combos as $combo) {
                 $has_studycourse = true;
-                
+
                 // check the studycourses for the current combo
                 foreach ($combo->study_combos as $study_combo) {
                     $needle = array(
@@ -88,17 +96,17 @@ class Portfolios extends \Portfolio_SimpleORMap
                         $has_studycourse = false;
                     }
                 }
-                
+
                 if ($has_studycourse) {
                     $remove_task = false;
                 }
             }
-            
+
             if ($remove_task) {
                 unset($portfolios[$pkey]);
             }
         }
-        
+
         return $portfolios;
     }
 }

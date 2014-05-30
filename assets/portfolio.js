@@ -3,9 +3,41 @@ var STUDIP = STUDIP || {};
 (function ($) {
 
     $(document).ready(function() {
-       $('a.confirm').bind('click', function() {
-           return confirm('Sind Sie sicher?'.toLocaleString());
-       })
+        $('a.confirm').bind('click', function() {
+            return confirm('Sind Sie sicher?'.toLocaleString());
+        })
+
+        // add a new portfolio
+        $('span.add_portfolio').bind('click', function() {
+            window.location = STUDIP.URLHelper.getURL('plugins.php/portfolio/portfolio/add');
+        });
+
+        // edit the title of a portfolio
+        $('span.edit_portfolio').bind('click', function() {
+            // the current name of the portfolio
+            var current_text = $(this).parent().find(':first-child');
+
+            // add an edit element
+            $(current_text).parent().prepend(
+                $('<input class="portfolio" type="text">')
+                    .val($(current_text).text())
+                    .blur(function() {
+                        $(this).parent().prepend($('<span>').text($(this).val()));
+
+                        $.post(STUDIP.URLHelper.getURL('plugins.php/portfolio/portfolio/update/'
+                            + $(this).parent().attr('data-id')), {
+                                name:  $(this).val()
+                            });
+                        $(this).remove();
+                    })
+            );
+
+            // focus on the new edit-element
+            $(current_text).parent().find('input').focus();
+
+            // remove the obsolete span
+            $(current_text).remove();
+        });
     });
 
     STUDIP.Portfolio = {

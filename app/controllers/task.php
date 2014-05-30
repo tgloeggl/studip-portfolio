@@ -25,6 +25,7 @@ class TaskController extends PortfolioPluginController
     public function index_action($portfolio_id)
     {
         $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
+        $this->user = $this->container['user'];
 
         if (!$this->portfolio) {
             $this->redirect('portfolio');

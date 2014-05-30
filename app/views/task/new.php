@@ -9,7 +9,7 @@ $infobox_content[] = array(
     )
 );
 
-$infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);    
+$infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 ?>
 
 <?= $this->render_partial('task/js_templates.php') ?>
@@ -21,12 +21,12 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Titel:') ?></span><br>
             <input type="text" name="title" required="required"><br>
         </label>
-        
+
         <label>
             <span><?= _('Aufgabenbeschreibung:') ?></span><br>
             <textarea name="content" required="required" class="add_toolbar"></textarea><br>
         </label>
-     
+
         <label>
             <span><?= _('Zugeordnete Portfolios:') ?></span><br>
             <select id="sets" name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
@@ -36,7 +36,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             </select>
             <?= tooltipIcon('Neue Portfolios können Sie auf der Übersichtsseite erstellen.') ?>
         </label>
-        
+
         <label>
             <span><?= _('Tags:') ?></span><br>
             <select id="tags" name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
@@ -45,7 +45,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                 <? endforeach ?>
             </select>
         </label>
-        
+
         <?= $this->render_partial('task/_permissions') ?>
         <br>
 

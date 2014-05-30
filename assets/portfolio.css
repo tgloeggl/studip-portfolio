@@ -9,8 +9,12 @@
 #portfolio span.chosen-error { display: block; color: #FF0000; padding: 2px; }
 #portfolio #permission_list img.link { cursor: pointer; }
 #portfolio select option.heading, #portfolio .chosen-drop li.heading { font-weight: bold; color: black; }
-#portfolio span.portfolio { display: block; float: left; margin-right: 30px; font-size: 10pt; font-weight: bold; width: 80px; max-height: 8em; overflow: hidden; color: black; }
+#portfolio span.portfolio { display: block; float: left; margin-right: 30px; font-size: 10pt; font-weight: bold; width: 80px; min-height: 80px; max-height: 8em; overflow: hidden; color: black; background-image: url("images/icons/64/blue/literature2.png"); background-repeat: no-repeat; padding-top: 68px; }
 #portfolio span.portfolio:hover { opacity: 0.7; }
+#portfolio span.add_portfolio { background-image: url("images/icons/64/blue/add/literature2.png"); cursor: pointer; }
+#portfolio span.edit_portfolio { display: inline-block; cursor: pointer; width: 20px; height: 20px; margin-left: 10px; background-image: url("../../../../assets/images/icons/20/grey/edit.png"); }
+#portfolio span.edit_portfolio:hover { background-image: url("../../../../assets/images/icons/20/blue/edit.png"); }
+#portfolio input.portfolio { font-size: 20pt; width: 20em; }
 #portfolio td.tags { width: 250px; vertical-align: top; }
 #portfolio td.tags > div { margin-right: 10px; height: 100%; }
 #portfolio td.tags > div span { font-weight: bold; font-size: 1.1em; margin: 5px 0; }
@@ -21,3 +25,5 @@
 #portfolio td.tags > div a.open:hover { background-image: url("../../../../assets/images/icons/16/red/arr_1down.png"); }
 #portfolio td.tags > div a.selected { background-color: #DDDDFF; }
 #portfolio #tasks { vertical-align: top; border-left: 1px dashed #1E3E70; padding-left: 10px; }
+
+span[disabled] { color: #6E6E6E; }

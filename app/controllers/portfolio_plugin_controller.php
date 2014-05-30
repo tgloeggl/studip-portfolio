@@ -13,7 +13,7 @@
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GPL version 3
  * @category    Stud.IP
  */
-class PortfolioPluginController extends StudipController 
+class PortfolioPluginController extends StudipController
 {
 
     var $container;
@@ -23,7 +23,7 @@ class PortfolioPluginController extends StudipController
         SimpleORMap::expireTableScheme();
         parent::__construct($dispatcher);
         $this->plugin = $dispatcher->plugin;
-        
+
         if (file_exists('assets/images/sidebar/schedule-sidebar.png')) {
             $this->infobox_picture = 'sidebar/schedule-sidebar.png';
         } else {
@@ -33,13 +33,11 @@ class PortfolioPluginController extends StudipController
 
     public function before_filter(&$action, &$args)
     {
-        $this->validate_args($args, array('option', 'option'));
-        
         parent::before_filter($action, $args);
 
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
         PageLayout::setTitle('Portfolio');
-        
+
         $this->container['user'] = $GLOBALS['user'];
     }
 
@@ -59,5 +57,5 @@ class PortfolioPluginController extends StudipController
         $args[0] = $to;
 
         return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
-    } 
+    }
 }
