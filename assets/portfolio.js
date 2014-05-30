@@ -21,7 +21,7 @@ var STUDIP = STUDIP || {};
         tag2: null,
 
         init: function() {
-            $('#tagcloud a').bind('click', function() {
+            $('td.tags a').bind('click', function() {
                 // alert($(this).attr('data-tag'));
 
                 if ($(this).parent().hasClass('lvl2')) {

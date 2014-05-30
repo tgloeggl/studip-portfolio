@@ -1,4 +1,9 @@
-<div id="tagcloud">
+<h3 style="margin: 5px 0;">
+    <?= _('Tags:') ?>
+</h3>
+
+
+<div>
 <? foreach ($tags as $name => $combo) : ?>
     <!-- <a href="<?= $controller->url_for('task/index/' . $portfolio['id'] .'?tag[]=' . $name) ?>" class="closed"> -->
     <section>

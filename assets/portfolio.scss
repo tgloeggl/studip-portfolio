@@ -11,25 +11,25 @@
         input[type=text], textarea {
             width: 80%;
         }
-        
+
         textarea {
             height: 12em;
         }
-        
+
         select {
             width: 80%;
         }
     }
-    
+
     .three-columns {
         clear: both;
         width: 80%;
-        
+
         & > div {
             width: 33%;
             float: left;
         }
-        
+
         a.button {
         margin: 0px;
         }
@@ -40,7 +40,7 @@
         color: #FF0000;
         padding: 2px;
     }
-    
+
     #permission_list {
         img.link {
             cursor: pointer;
@@ -62,51 +62,65 @@
         max-height: 8em;
         overflow: hidden;
         color: black;
-        
+
         &:hover {
             opacity: 0.7;
         }
     }
-    
-    #tagcloud {
-        margin-right: 10px;
-        border: 1px solid black;
-        padding: 5px;
 
-        a {
-            display: block;
-            font-size: 12pt;
-            margin-bottom: 5px;
-            padding-left: 20px;
-            
-            &.closed {
-                background-image: url('../../../../assets/images/icons/16/blue/arr_1right.png');
-                background-repeat: no-repeat;
-                background-position: 0 2px;
-                
-                &:hover {
-                    background-image: url('../../../../assets/images/icons/16/red/arr_1right.png');
+    td.tags {
+        width: 250px;
+        vertical-align: top;
+
+        & > div {
+            margin-right: 10px;
+            height: 100%;
+
+            span {
+                font-weight: bold;
+                font-size: 1.1em;
+                margin: 5px 0;
+            }
+
+            a {
+                display: block;
+                font-size: 12pt;
+                margin-bottom: 5px;
+                padding-left: 20px;
+
+                &.closed {
+                    background-image: url('../../../../assets/images/icons/16/blue/arr_1right.png');
+                    background-repeat: no-repeat;
+                    background-position: 0 2px;
+
+                    &:hover {
+                        background-image: url('../../../../assets/images/icons/16/red/arr_1right.png');
+                    }
                 }
-            }
-            
-            &.open {
-                background-image: url('../../../../assets/images/icons/16/blue/arr_1down.png');
-                background-repeat: no-repeat;
-                background-position: 0 2px;
-                background-color: #DDDDFF;
-                
-                &:hover {
-                   background-image: url('../../../../assets/images/icons/16/red/arr_1down.png');
+
+                &.open {
+                    background-image: url('../../../../assets/images/icons/16/blue/arr_1down.png');
+                    background-repeat: no-repeat;
+                    background-position: 0 2px;
+                    background-color: #DDDDFF;
+
+                    &:hover {
+                       background-image: url('../../../../assets/images/icons/16/red/arr_1down.png');
+                    }
                 }
+
+                &.selected {
+                    background-color: #DDDDFF;
+                }
+
             }
-        
-            &.selected {
-                background-color: #DDDDFF;
-            }
-            
         }
-        
-        .lvl2 {
-        }
+    }
+
+
+    #tasks {
+        vertical-align: top;
+        border-left: 1px dashed #1E3E70;
+        padding-left: 10px;
     }
 }
