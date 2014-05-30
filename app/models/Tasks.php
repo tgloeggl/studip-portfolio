@@ -42,15 +42,6 @@ class Tasks extends \Portfolio_SimpleORMap
             
         );
 
-        $this->has_and_belongs_to_many['tasksets'] = array(
-            'class_name'  => 'Portfolio\Tasksets',
-            'thru_table'  => 'portfolio_tasksets_tasks',
-            'thru_key'    => 'portfolio_tasks_id',
-            'thru_assoc_key' => 'portfolio_tasksets_id',
-            'on_delete'      => 'delete',
-            'on_store'       => 'store'
-        );
-
         $this->has_and_belongs_to_many['tags'] = array(
             'class_name'     => 'Portfolio\Tags',
             'thru_table'     => 'portfolio_tags_tasks',

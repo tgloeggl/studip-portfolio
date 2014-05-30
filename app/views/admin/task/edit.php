@@ -29,7 +29,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Enthalten in Aufgabensets:') ?></span><br>
             <select name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
                 <? foreach ($portfolios as $portfolio) : ?>
-                    <option value="<?= $portfolio->id ?>" <?= in_array($portfolio->id, $task->tasksets->pluck('id'))  !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
+                    <option value="<?= $portfolio->id ?>" <?= in_array($portfolio->id, $task->portfolios->pluck('id'))  !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
                 <? endforeach ?>
             </select>
         </label>

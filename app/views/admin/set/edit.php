@@ -15,11 +15,11 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 <div id="portfolio">
     <?= $this->render_partial('admin/set/js_templates') ?>
 
-    <h1><?= htmlReady($taskset->name) ?></h1>
-    <form method="post" action="<?= $controller->url_for('admin/set/update/' . $taskset->id) ?>">
+    <h1><?= htmlReady($portfolio->name) ?></h1>
+    <form method="post" action="<?= $controller->url_for('admin/set/update/' . $portfolio->id) ?>">
         <label>
             <span class="label"><?= _('Name des Sets:') ?></span><br>
-            <input type="text" name="name" value="<?= htmlReady($taskset->name) ?>"><br>
+            <input type="text" name="name" value="<?= htmlReady($portfolio->name) ?>"><br>
         </label>
         <br>
         <span class="label"><?= _('Freigeben für Studiengänge:') ?></span><br>
@@ -39,7 +39,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 
 <script>
     jQuery(document).ready(function() {
-        <? foreach ($taskset->combos as $combo) :
+        <? foreach ($portfolio->combos as $combo) :
             $ids = array();
             
             foreach ($combo->study_combos as $scomb) :

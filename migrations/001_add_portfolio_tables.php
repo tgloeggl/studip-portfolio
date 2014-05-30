@@ -65,9 +65,9 @@ class AddPortfolioTables extends DBMigration {
         ");
 
         $db->exec("
-            CREATE  TABLE IF NOT EXISTS `portfolio_tasksets_studiengang_combos` (
+            CREATE  TABLE IF NOT EXISTS `portfolio_portfolios_studiengang_combos` (
               `combo_id` INT NOT NULL AUTO_INCREMENT ,
-              `tasksets_id` INT NOT NULL,
+              `portfolios_id` INT NOT NULL,
               PRIMARY KEY (`combo_id`) )
         ");
 
@@ -116,7 +116,7 @@ class AddPortfolioTables extends DBMigration {
         $db->exec("DROP TABLE IF EXISTS portfolio_tags_tasks");
         $db->exec("DROP TABLE IF EXISTS portfolio_tags");
         $db->exec("DROP TABLE IF EXISTS portfolio_studiengang_combos");
-        $db->exec("DROP TABLE IF EXISTS portfolio_tasksets_studiengang_combos");
+        $db->exec("DROP TABLE IF EXISTS portfolio_portfolios_studiengang_combos");
         $db->exec("DROP TABLE IF EXISTS portfolio_task_user_files");
         $db->exec("DROP TABLE IF EXISTS portfolio_task_users");
         $db->exec("DROP TABLE IF EXISTS portfolio_tasks");

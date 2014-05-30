@@ -24,7 +24,7 @@ class TaskController extends PortfolioPluginController
 
     public function index_action($portfolio_id)
     {
-        $this->portfolio = \Portfolio\Tasksets::find($portfolio_id);
+        $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
 
         if (!$this->portfolio) {
             $this->redirect('portfolio');
@@ -53,15 +53,9 @@ class TaskController extends PortfolioPluginController
 
     public function new_action($portfolio_id)
     {
-        // get all studycourses for user
-        $studycourses = SimpleORMapCollection::createFromArray(
-                UserStudyCourse::findByUser($this->container['user']->id)
-        )->pluck('studiengang_id abschluss_id');
+        $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
 
-        $this->portfolios = \Portfolio\Tasksets::getTasksetsWithStudycourses($studycourses);
-        $this->my_portfolios = \Portfolio\Portfolios::findByUser_Id($this->container['user']->id);
-
-        $this->tags = \Portfolio\Tags::findByUser_id($this->container['user']->id);
+        $this->tags = Portfolio\Tags::findByUser_id($this->container['user']->id);
 
         $this->portfolio_id = $portfolio_id;
     }
@@ -81,24 +75,9 @@ class TaskController extends PortfolioPluginController
         $task = Portfolio\Tasks::create($data);
 
         // add the task to the correct portfolio
-        foreach (Request::getArray('sets') as $set_json) {
-            if ($set = json_decode($set_json)) {
-                if ($set->type == 'global') {
-                    // add the global portfolio to the task
-                    $task->tasksets[] = Portfolio\Tasksets::find($set->value);
-                } else {
-                    // add the local portfolio to the task
-                    $task->portfolios[] = Portfolio\Portfolios::find($set->value);
-                }
-            } else {
-                // we have a new (local) portfolio
-                $task->portfolios[] = Portfolio\Portfolios::create(array(
-                    'name' => $set_json,
-                    'user_id' => $user_id
-                ));
-            }
+        foreach (Request::getArray('sets') as $id) {
+            $task->portfolios[] = Portfolio\Portfolios::find($id);
         }
-
 
         // set the tags for the task
         foreach (Request::getArray('tags') as $tag_name) {
@@ -131,20 +110,13 @@ class TaskController extends PortfolioPluginController
 
     public function edit_action($portfolio_id, $task_id)
     {
-        // get all studycourses for user
-        $studycourses = SimpleORMapCollection::createFromArray(
-                UserStudyCourse::findByUser($this->container['user']->id)
-        )->pluck('studiengang_id abschluss_id');
-
-        $this->portfolios = \Portfolio\Tasksets::getTasksetsWithStudycourses($studycourses);
-        $this->my_portfolios = \Portfolio\Portfolios::findByUser_Id($this->container['user']->id);
+        $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
 
         $this->portfolio_id = $portfolio_id;
         $this->task = Portfolio\Tasks::find($task_id);
         $this->tags = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($this->container['user']->id));
 
         $this->task_tags = $this->task->tags->pluck('tag');
-        $this->task_tasksets = $this->task->tasksets->pluck('id');
         $this->task_portfolios = $this->task->portfolios->pluck('id');
     }
     
@@ -160,26 +132,11 @@ class TaskController extends PortfolioPluginController
         ));
 
         // update sets
-        $task->tasksets = array();
         $task->portfolios = array();
 
         // add the task to the correct portfolio
-        foreach (Request::getArray('sets') as $set_json) {
-            if ($set = json_decode($set_json)) {
-                if ($set->type == 'global') {
-                    // add the global portfolio to the task
-                    $task->tasksets[] = Portfolio\Tasksets::find($set->value);
-                } else {
-                    // add the local portfolio to the task
-                    $task->portfolios[] = Portfolio\Portfolios::find($set->value);
-                }
-            } else {
-                // we have a new (local) portfolio
-                $task->portfolios[] = Portfolio\Portfolios::create(array(
-                    'name' => $set_json,
-                    'user_id' => $user_id
-                ));
-            }
+        foreach (Request::getArray('sets') as $id) {
+            $task->portfolios[] = Portfolio\Portfolios::find($id);
         }
 
         

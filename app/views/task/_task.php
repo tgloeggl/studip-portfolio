@@ -48,7 +48,7 @@ foreach ($tags as $key => $val) {
     </td>
 
     <td style="vertical-align: top;">
-        <? if ($task->tasksets) : ?>
+        <? if ($task->user_id != $user->id) : ?>
             <?= Assets::img('icons/16/grey/trash.png', array(
                 'title' => _('Diese Aufgabe kann nicht gelöscht werden, da es sich um eine Vorgabe handelt.')
             )) ?>

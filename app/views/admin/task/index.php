@@ -41,7 +41,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                         <ul style="margin: 0px; padding-left: 0px;">
                             <?= implode(', ', array_map(function($data) use ($controller) { 
                                 return '<a href="'. $controller->url_for('admin/task/index/' . $data['id']) .'">'. htmlReady($data['name']) .'</a>';
-                            } , $task->tasksets->toArray())); ?>
+                            } , $task->portfolios->toArray())); ?>
                         </ul>                        
                     </td>
                     <td>

@@ -27,7 +27,7 @@ class Admin_SetController extends PortfolioPluginController
 
     public function index_action()
     {
-        $this->portfolios = Portfolio\Tasksets::findBySQL('1');
+        $this->portfolios = Portfolio\Portfolios::findBySQL('1');
     }
 
     public function new_action()
@@ -39,14 +39,15 @@ class Admin_SetController extends PortfolioPluginController
     {
         $data = array(
             'name'    => Request::get('name'),
-            'user_id' => $GLOBALS['user']->id
+            'user_id' => $GLOBALS['user']->id,
+            'global'  => 1
         );
 
-        $taskset = Portfolio\Tasksets::create($data);
+        $portfolio = Portfolio\Portfolios::create($data);
 
         foreach (Request::optionArray('studycourses') as $studycourses) {
 
-            $combo = new Portfolio\TasksetsStudiengangCombos();
+            $combo = new Portfolio\PortfoliosStudiengangCombos();
 
             foreach ($studycourses as $ids) {
                 list($studiengang_id, $abschluss_id) = explode('_', $ids);
@@ -60,30 +61,35 @@ class Admin_SetController extends PortfolioPluginController
                 $combo->study_combos[] = $study_combo;
             }
             
-            $taskset->combos[] = $combo;
+            $portfolio->combos[] = $combo;
         }
         
-        $taskset->store();
+        $portfolio->store();
         
         $this->redirect('admin/set/index');
     }
     
     public function edit_action($set_id)
     {
-        $this->taskset = Portfolio\Tasksets::find($set_id);
+        $this->portfolio = Portfolio\Portfolios::find($set_id);
     }
     
     public function update_action($set_id)
     {
-        $taskset = Portfolio\Tasksets::find($set_id);
+        $portfolio = Portfolio\Portfolios::find($set_id);
+        
+        $portfolio->setData(array(
+            'name'   => Request::get('name'),
+            'global' => 1
+        ));
 
-        foreach ($taskset->combos as $key => $combo) {
-            unset($taskset->combos[$key]);
+        foreach ($portfolio->combos as $key => $combo) {
+            unset($portfolio->combos[$key]);
         }
         
         foreach (Request::optionArray('studycourses') as $studycourses) {
 
-            $combo = new Portfolio\TasksetsStudiengangCombos();
+            $combo = new Portfolio\PortfoliosStudiengangCombos();
 
             foreach ($studycourses as $ids) {
                 list($studiengang_id, $abschluss_id) = explode('_', $ids);
@@ -97,10 +103,10 @@ class Admin_SetController extends PortfolioPluginController
                 $combo->study_combos[] = $study_combo;
             }
             
-            $taskset->combos[] = $combo;
+            $portfolio->combos[] = $combo;
         }
         
-        $taskset->store();
+        $portfolio->store();
 
         $this->redirect('admin/set/index');
     }
@@ -108,8 +114,8 @@ class Admin_SetController extends PortfolioPluginController
     public function delete_action($set_id)
     {
         
-        $taskset = Portfolio\Tasksets::find($set_id);
-        $taskset->delete();
+        $portfolio = Portfolio\Portfolios::find($set_id);
+        $portfolio->delete();
         
         $this->redirect('admin/set/index');
     }

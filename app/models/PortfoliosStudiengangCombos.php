@@ -1,6 +1,6 @@
 <?php
 /**
- * TasksetsStudiengangCombos - a combo for a tasksets
+ * PortfoliosStudiengangCombos - a study-combo for portfolio
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -15,16 +15,16 @@
 
 namespace Portfolio;
 
-class TasksetsStudiengangCombos extends \Portfolio_SimpleORMap
+class PortfoliosStudiengangCombos extends \Portfolio_SimpleORMap
 {
     /**
-     * creates a new studiengang-combo for a taskset, sets up relations
+     * creates a new studiengang-combo for a portfolio, sets up relations
      * 
      * @param string $id
      */
     public function __construct($id = null)
     {
-        $this->db_table = 'portfolio_tasksets_studiengang_combos';
+        $this->db_table = 'portfolio_portfolios_studiengang_combos';
 
         $this->has_many['study_combos'] = array(
             'class_name'        => 'Portfolio\StudiengangCombos',

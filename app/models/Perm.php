@@ -20,7 +20,7 @@ class Perm
     /**
      * Check, if the a user has the passed permission in a seminar.
      * Possible permissions are:
-     *   admin     - Create new tasksets and taks<br>
+     *   admin     - Create new portfolios and tasks<br>
      * 
      * @param string $perm        one of the modular permissions
      * @param string $seminar_id  the seminar to check for

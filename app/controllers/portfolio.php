@@ -20,12 +20,6 @@ class PortfolioController extends PortfolioPluginController
     {
         Navigation::activateItem('/profile/portfolio');
 
-        // get all studycourses for user
-        $studycourses = SimpleORMapCollection::createFromArray(
-                UserStudyCourse::findByUser($this->container['user']->id)
-        )->pluck('studiengang_id abschluss_id');
-        
-        $this->portfolios = \Portfolio\Tasksets::getTasksetsWithStudycourses($studycourses);
-        
+        $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
     }
 }

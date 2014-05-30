@@ -28,20 +28,13 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
         </label>
      
         <label>
-            <span><?= _('Portfolios:') ?></span><br>
+            <span><?= _('Zugeordnete Portfolios:') ?></span><br>
             <select id="sets" name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
-                <option disabled="disabled" class="heading">Vorgegebene Portfolios</option>
                 <? foreach ($portfolios as $portfolio) : ?>
-                    <option value='{"type": "global", "value" : "<?= $portfolio->id ?>"}' <?= in_array($portfolio->id, $task_tasksets) !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
-                <? endforeach ?>
-
-                <option disabled="disabled" class="heading">Meine Portfolios</option>
-                <? /* $obj = null; $obj->id = 1; $obj->name = 'Testeintrag'; ?>
-                <? $my_portfolios[] = $obj; */ ?>
-                <? foreach ($my_portfolios as $portfolio) : ?>
-                    <option value='{"type": "local", "value" : "<?= $portfolio->id ?>"}' <?= in_array($portfolio->id, $task_portfolios) !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
+                    <option value="<?= $portfolio->id ?>" <?= in_array($portfolio->id, $task_portfolios) !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
                 <? endforeach ?>
             </select>
+            <?= tooltipIcon('Neue Portfolios können Sie auf der Übersichtsseite erstellen.') ?>
         </label>
         
         <label>
@@ -67,9 +60,6 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 <script>
     jQuery(document).ready(function() {
         jQuery('#sets').chosen({
-            create_option: true,
-            persistent_create_option: true,
-            skip_no_results: true,
             create_option_text: 'Portfolio erstellen'.toLocaleString()
         });
         jQuery('#tags').chosen({

@@ -1,6 +1,6 @@
 <?php
 /**
- * Portfolios - Short description for file
+ * Portfolios - a collection of predefined and user-defined portfolios
  *
  * Long description for file (if any)...
  *
@@ -19,7 +19,7 @@ namespace Portfolio;
 class Portfolios extends \Portfolio_SimpleORMap
 {
     /**
-     * creates new portfolios, sets up relations
+     * creates a new portfolios, sets up relations
      * 
      * @param string $id
      */
@@ -27,7 +27,13 @@ class Portfolios extends \Portfolio_SimpleORMap
     {
         $this->db_table = 'portfolio_portfolios';
 
-        /*
+        $this->has_many['combos'] = array(
+            'class_name'        => 'Portfolio\PortfoliosStudiengangCombos',
+            'assoc_foreign_key' => 'portfolios_id',
+            'on_delete'         => 'delete',
+            'on_store'          => 'store'
+        );
+
         $this->has_and_belongs_to_many['tasks'] = array(
             'class_name'     => 'Portfolio\Tasks',
             'thru_table'     => 'portfolio_portfolios_tasks',
@@ -35,10 +41,64 @@ class Portfolios extends \Portfolio_SimpleORMap
             'thru_assoc_key' => 'portfolio_tasks_id',
             'on_delete'      => 'delete',
             'on_store'       => 'store'
-        );
-         * 
-         */
+        );        
 
         parent::__construct($id);
+    }
+    
+    static function getPortfoliosForUser($user_id)
+    {
+        
+        // get all studycourses for user
+        $studycourses = \SimpleORMapCollection::createFromArray(
+                \UserStudyCourse::findByUser($user_id)
+        )->pluck('studiengang_id abschluss_id');
+
+        return array_merge(
+            self::getPortfoliosWithStudycourses($studycourses),
+            self::findByUser_Id($user_id)
+        );
+    }
+    
+    /**
+     * 
+     * @param type $studycourses
+     */
+    static function getPortfoliosWithStudycourses($studycourses)
+    {
+        // get all portfolios
+        $portfolios = \Portfolio\Portfolios::findBySQL('1');
+
+        // filter portfolios by studiengang-combos
+        foreach ($portfolios as $pkey => $portfolio) {
+            $remove_task = true;
+            
+            // check if combo if the user meets all requirements for one complete combo
+            foreach ($portfolio->combos as $combo) {
+                $has_studycourse = true;
+                
+                // check the studycourses for the current combo
+                foreach ($combo->study_combos as $study_combo) {
+                    $needle = array(
+                        $study_combo->studiengang->getId(),
+                        $study_combo->abschluss->getId()
+                    );
+
+                    if (in_array($needle, $studycourses) === false) {
+                        $has_studycourse = false;
+                    }
+                }
+                
+                if ($has_studycourse) {
+                    $remove_task = false;
+                }
+            }
+            
+            if ($remove_task) {
+                unset($portfolios[$pkey]);
+            }
+        }
+        
+        return $portfolios;
     }
 }
