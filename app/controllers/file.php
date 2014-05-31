@@ -39,7 +39,7 @@ class FileController extends PortfolioPluginController
         $user_id = $this->user->id;
         $task_user = new Portfolio\TaskUsers($task_user_id);
         $task      = new Portfolio\Tasks($task_user->portfolio_tasks_id);
-        $perms = Portfolio\Perm::get($user_id, $task);
+        $perms = Portfolio\Perm::get($user_id, $task_user);
 
         if (!$task->allow_files) {
             throw new AccessDeniedException(_('Für diese Aufgabe dürfen keine Dateien hochgeladen werden.'));

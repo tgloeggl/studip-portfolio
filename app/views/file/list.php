@@ -2,9 +2,10 @@
 <table class="default zebra files">
     <thead>
         <tr>
-            <th style="width:60%"><?= _('Datei') ?></th>
+            <th style="width:50%"><?= _('Datei') ?></th>
             <th style="width:10%"><?= _('Größe') ?></th>
             <th style="width:20%"><?= _('Datum') ?></th>
+            <th style="width:10%"><?= _('Ersteller') ?></th>
             <? if ($edit) : ?>
             <th style="width:10%"><?= _('Aktionen') ?></th>
             <? endif ?>
@@ -20,11 +21,13 @@
         </td>
         <td><?= round((($file->document->filesize / 1024) * 100) / 100, 2) ?> kb</td>
         <td><?= strftime($timeformat, $file->document->mkdate) ?></td>
+
+        <td><?= get_fullname($file->document->user_id) ?></td>
         
         <? if ($edit) : ?>
         <td>
             <? if ($user->id == $file->document->user_id) : ?>
-            <a href="javascript:STUDIP.Portfolio.File.removeFile('<?= $seminar_id ?>', '<?= $file->id ?>')">
+            <a href="javascript:STUDIP.Portfolio.File.removeFile('<?= $file->id ?>')">
                 <?= Assets::img('icons/16/blue/trash.png') ?>
             </a>
             <? endif ?>

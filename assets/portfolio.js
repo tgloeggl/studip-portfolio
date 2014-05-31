@@ -171,9 +171,9 @@ var STUDIP = STUDIP || {};
             jQuery('#files_to_upload tr[data-fileid=' + id + ']').remove();
         },
 
-        removeFile: function(seminar_id, id) {
-            jQuery.ajax(STUDIP.ABSOLUTE_URI_STUDIP + "plugins.php.Portfolio.Filelugin/index"
-                    + "/remove_file/" + id + "?cid=" + seminar_id, {
+        removeFile: function(id) {
+            jQuery.ajax(STUDIP.ABSOLUTE_URI_STUDIP + "plugins.php/portfolio/file"
+                    + "/remove_file/" + id, {
                 dataType: 'json',
                 success : function() {
                     jQuery('#uploaded_files tr[data-fileid=' + id + ']').remove();
