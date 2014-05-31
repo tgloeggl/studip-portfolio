@@ -164,7 +164,7 @@ class TaskController extends PortfolioPluginController
 
 
             // update tags
-            $diff = Portfolio\Helper::pick($task->tags->pluck('tag'), Request::getArray('tags'));
+            $diff = Portfolio\Helper::pick($task->tags->pluck('tag'), array_unique(Request::getArray('tags')));
 
             foreach ($diff['deleted'] as $del_tag) {
                 foreach ($task->tags as $key => $tag) {

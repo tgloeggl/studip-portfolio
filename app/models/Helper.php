@@ -25,13 +25,12 @@ class Helper
      *                and the added elements at 'added'
      */
     static function pick($previous, $current) {
-        if (!is_array($previous) || !is_array($current)) {
-            return false;
-        }
+        $previous = $previous ?: array();
+        $current  = $current ?: array();
 
         return array(
-            'deleted' => array_unique(array_udiff($previous, $current, array('self', 'udiff_compare'))),
-            'added'    => array_unique(array_udiff($current, $previous, array('self', 'udiff_compare')))
+            'deleted' => array_udiff($previous, $current, array('self', 'udiff_compare')),
+            'added'   => array_udiff($current, $previous, array('self', 'udiff_compare'))
         );
     }
 
