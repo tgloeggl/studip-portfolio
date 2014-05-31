@@ -22,7 +22,7 @@
 
 <b><?= _('Maximal erlaubte Größe pro Datei') ?>: <?= round($max / 1024 / 1024, 2) ?> MB</b><br>
 
-<table class="default zebra">
+<table class="default zebra files">
     <tbody id="files_to_upload">
         
     </tbody>
