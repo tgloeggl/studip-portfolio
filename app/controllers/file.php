@@ -75,8 +75,7 @@ class FileController extends PortfolioPluginController
                 $document['name'] = $document['filename'] = studip_utf8decode(strtolower($file['name']));
                 $document['user_id'] = $user_id;
                 $document['author_name'] = get_fullname($user_id);
-                $document['seminar_id'] = $$user_id; // use the user_id here, prevents showing
-                                                                // the file under "all files" while preserving downloadibility
+                $document['seminar_id'] = $user_id; // use the user_id here, preserves downloadibility
                 $document['range_id'] = null;
                 $document['filesize'] = $file['size'];
 
