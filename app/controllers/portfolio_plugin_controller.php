@@ -39,6 +39,7 @@ class PortfolioPluginController extends StudipController
         PageLayout::setTitle('Portfolio');
 
         $this->container['user'] = $GLOBALS['user'];
+        $this->timeformat = '%d.%m.%Y, %R';
     }
 
     // customized #url_for for plugins
