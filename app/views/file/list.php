@@ -1,5 +1,5 @@
 <!-- files already there -->
-<table class="default zebra">
+<table class="default zebra files">
     <thead>
         <tr>
             <th style="width:60%"><?= _('Datei') ?></th>

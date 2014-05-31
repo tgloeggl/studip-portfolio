@@ -1,3 +1,5 @@
+$form-width: 80%;
+
 #portfolio {
     form {
         label {
@@ -9,7 +11,7 @@
             }
         }
         input[type=text], textarea {
-            width: 80%;
+            width: $form-width;
         }
 
         textarea {
@@ -17,13 +19,13 @@
         }
 
         select {
-            width: 80%;
+            width: $form-width;
         }
     }
 
     .three-columns {
         clear: both;
-        width: 80%;
+        width: $form-width;
 
         & > div {
             width: 33%;
@@ -155,6 +157,7 @@
     .mark {
         background-color: #E1E4E5;
         padding: 5px;
+        width: $form-width;
     }
     
     #files_to_upload {
@@ -185,6 +188,10 @@
             background-color: #FFCCCC;
             padding: 2px;
         }
+    }
+    
+    table.files {
+        width: $form-width;
     }
     
 }
