@@ -43,7 +43,10 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <span><?= _('Zugeordnete Portfolios:') ?></span><br>
             <select id="sets" name="sets[]" required multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
                 <? foreach ($portfolios as $portfolio) : ?>
-                    <option <?= $portfolio->global ? 'disabled' : '' ?> value="<?= $portfolio->id ?>" <?= in_array($portfolio->id, $task_portfolios) !== false ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
+                    <option <?= $portfolio->global ? 'disabled' : '' ?> value="<?= $portfolio->id ?>"
+                            <?= in_array($portfolio->id, $task_portfolios) !== false ? 'selected="selected"' : '' ?>>
+                        <?= htmlReady($portfolio->name) ?>
+                    </option>
                 <? endforeach ?>
             </select>
             <?= tooltipIcon('Neue Portfolios können Sie auf der Übersichtsseite erstellen.') ?>
@@ -162,7 +165,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             create_option_text: 'Tag erstellen'.toLocaleString()
         });
         
-        <? foreach ($task->perms as $perm) : ?>
+        <? foreach ($task_user->perms as $perm) : ?>
         STUDIP.Portfolio.Homepage.addPermissionTemplate({
             user: '<?= get_username($perm->user_id) ?>',
             fullname: '<?= get_fullname($perm->user_id) ?>',

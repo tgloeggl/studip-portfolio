@@ -33,14 +33,6 @@ class Tasks extends \Portfolio_SimpleORMap
             'on_store'       => 'store'
             
         );
-        
-        $this->has_many['perms'] = array(
-            'class_name'        => 'Portfolio\Permissions',
-            'assoc_foreign_key' => 'portfolio_tasks_id',
-            'on_delete'      => 'delete',
-            'on_store'       => 'store'
-            
-        );
 
         $this->has_and_belongs_to_many['tags'] = array(
             'class_name'     => 'Portfolio\Tags',

@@ -96,7 +96,7 @@ class AddPortfolioTables extends DBMigration {
 
         $db->exec("
             CREATE  TABLE IF NOT EXISTS `portfolio_permissions` (
-              `portfolio_tasks_id` INT NOT NULL ,
+              `portfolio_task_users_id` INT NOT NULL ,
               `user_id` VARCHAR(32) NULL ,
               `role` ENUM('tutor','followup-tutor','student') NULL ,
               PRIMARY KEY (`portfolio_tasks_id`, `user_id`)

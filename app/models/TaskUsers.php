@@ -30,6 +30,14 @@ class TaskUsers extends \Portfolio_SimpleORMap
             'assoc_foreign_key' => 'portfolio_task_users_id',
         );
 
+        $this->has_many['perms'] = array(
+            'class_name'        => 'Portfolio\Permissions',
+            'assoc_foreign_key' => 'portfolio_task_users_id',
+            'on_delete'      => 'delete',
+            'on_store'       => 'store'
+
+        );
+
         $this->belongs_to['task'] = array(
             'class_name'  => 'Portfolio\Tasks',
             'foreign_key' => 'portfolio_tasks_id',

@@ -98,7 +98,7 @@ class Perm
      *
      * @return array
      */
-    static function get($user_id, $task) {
+    static function get($user_id, $task_user) {
         $perms = array(
             'edit_task'     => false,
             'edit_settings' => true,
@@ -119,7 +119,7 @@ class Perm
         } else {
             $perms['edit_task'] = false;
 
-            foreach($task->perms as $perm) {
+            foreach($task_user->perms as $perm) {
                 if ($perm->user_id == $user_id) {
                     switch($perm->role) {
                         case 'tutor':

@@ -74,7 +74,11 @@ class TaskController extends PortfolioPluginController
             'allow_files' => 1
         );
 
-        $task = Portfolio\Tasks::create($data);
+        $task      = Portfolio\Tasks::create($data);
+        $task_user = Portfolio\TaskUsers::create(array(
+            'user_id'            => $user_id,
+            'portfolio_tasks_id' => $task->id
+        ));
 
         // add the task to the correct portfolio
         foreach (Request::getArray('sets') as $id) {
@@ -102,7 +106,7 @@ class TaskController extends PortfolioPluginController
                 'role'    => $perm
             ));
 
-            $task->perms[] = $p;
+            $task_user->perms[] = $p;
         }
 
         $task->store();
@@ -130,7 +134,7 @@ class TaskController extends PortfolioPluginController
             ));
         }
 
-        $this->perms = Portfolio\Perm::get($user_id, $this->task);
+        $this->perms = Portfolio\Perm::get($user_id, $this->task_user);
     }
     
     public function update_action($portfolio_id, $task_id)
@@ -138,9 +142,10 @@ class TaskController extends PortfolioPluginController
         $user_id = $this->container['user']->id;
 
         // update task contents
-        $task = Portfolio\Tasks::find($task_id);
+        $task      = Portfolio\Tasks::find($task_id);
+        $task_user = current(Portfolio\TaskUsers::findBySQL('user_id = ? AND portfolio_tasks_id = ?', array($user_id, $task_id)));
 
-        $perms = Portfolio\Perm::get($user_id, $this->task);
+        $perms = Portfolio\Perm::get($user_id, $task_user);
 
         if ($perms['edit_task']) {
             $task->setData(array(
@@ -190,12 +195,12 @@ class TaskController extends PortfolioPluginController
                 $new_perms[] = array(get_userid($username), $perm);
             }
 
-            $diff = Portfolio\Helper::pick($task->perms->pluck('user_id role'), $new_perms);
+            $diff = Portfolio\Helper::pick($task_user->perms->pluck('user_id role'), $new_perms);
 
             foreach ($diff['deleted'] as $del) {
-                foreach ($task->perms as $key => $perm) {
+                foreach ($task_user->perms as $key => $perm) {
                     if ($perm->user_id == $del[0] && $perm->role == $del[1]) {
-                        unset($task->perms[$key]);
+                        unset($task_user->perms[$key]);
                     }
                 }
             }
@@ -206,14 +211,11 @@ class TaskController extends PortfolioPluginController
                     'user_id' => $add[0],
                     'role'    => $add[1]
                 ));
-                $task->perms[] = $perm;
+                $task_user->perms[] = $perm;
             }
 
             $task->store();
         }
-
-        // update user-related data
-        $task_user = current(Portfolio\TaskUsers::findBySQL('user_id = ? AND portfolio_tasks_id = ?', array($user_id, $task_id)));
 
         $data = Request::getArray('task_user');
 
