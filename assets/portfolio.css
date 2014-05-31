@@ -1,8 +1,9 @@
 #portfolio form label { display: block; margin-top: 1em; }
-#portfolio form label span { font-weight: bold; }
+#portfolio form label span:first-child { font-weight: bold; }
 #portfolio form input[type=text], #portfolio form textarea { width: 80%; }
 #portfolio form textarea { height: 12em; }
 #portfolio form select { width: 80%; }
+#portfolio span.empty_text { display: block; font-style: italic; margin: 10px 0px; }
 #portfolio .three-columns { clear: both; width: 80%; }
 #portfolio .three-columns > div { width: 33%; float: left; }
 #portfolio .three-columns a.button { margin: 0px; }

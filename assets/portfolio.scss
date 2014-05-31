@@ -6,7 +6,7 @@ $form-width: 80%;
             display: block;
             margin-top: 1em;
 
-            span {
+            span:first-child {
                 font-weight: bold;
             }
         }
@@ -21,6 +21,12 @@ $form-width: 80%;
         select {
             width: $form-width;
         }
+    }
+    
+    span.empty_text {
+        display: block;
+        font-style: italic;
+        margin: 10px 0px;
     }
 
     .three-columns {

@@ -73,7 +73,9 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <? if ($perms['edit_answer']) : ?>
             <textarea name="task_user[answer]" class="add_toolbar"><?= htmlReady($task_user->answer) ?></textarea><br>
             <? else : ?>
-            <?= formatReady($task_user->answer) ?>
+            <?= $task_user->answer
+                    ? formatReady($task_user->answer)
+                    : '<span class="empty_text">' . _('Es wurde bisher keine Antwort eingegeben.') .'</span>' ?>
             <? endif ?>
         </label>
         <? endif ?>
@@ -95,7 +97,9 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <? if ($perms['edit_feedback']) : ?>
             <textarea name="task_user[feedback]" class="add_toolbar"><?= htmlReady($task_user->feedback) ?></textarea><br>
             <? else : ?>
-            <?= formatReady($task_user->feedback) ?>
+            <?= $task_user->feedback
+                    ? formatReady($task_user->feedback)
+                    : '<span class="empty_text">' . _('Es wurde bisher kein Feedback eingegeben.') .'</span>' ?>
             <? endif ?>
         </label>
 
@@ -108,6 +112,21 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             'edit' => $perms['edit_feedback']
         )) ?>
         <br>
+        <? endif ?>
+
+        <? if ($perms['view_goal']) : ?>
+        <br>
+        <label <?= ($perms['edit_goal']) ? '' : 'class="mark"' ?>>
+            <span><?= _('Zielvereinbarung:') ?></span><br>
+
+            <? if ($perms['edit_goal']) : ?>
+            <textarea name="task_user[goal]" class="add_toolbar"><?= htmlReady($task_user->goal) ?></textarea><br>
+            <? else : ?>
+            <?= $task_user->goal
+                    ? formatReady($task_user->goal)
+                    : '<span class="empty_text">' . _('Es wurde bisher keine Zielvereinbarung eingegeben.') .'</span>' ?>
+            <? endif ?>
+        </label>
         <? endif ?>
 
         <div style="text-align: center">

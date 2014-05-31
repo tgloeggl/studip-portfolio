@@ -225,6 +225,10 @@ class TaskController extends PortfolioPluginController
             $task_user->feedback = $data['feedback'];
         }
 
+        if ($perms['edit_goal']) {
+            $task_user->goal = $data['goal'];
+        }
+
         $task_user->store();
 
         $this->redirect('task/index/' . $portfolio_id);
