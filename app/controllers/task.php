@@ -44,6 +44,10 @@ class TaskController extends PortfolioPluginController
                 foreach ($tags as $tag) {
                     $this->tasks_by_tag[$tag][] = $task;
 
+                    if (!$this->tags[$tag]) {
+                        $this->tags[$tag] = array();
+                    }
+
                     foreach ($tags as $tag2) {
                         if ($tag != $tag2) {
                             $this->tags[$tag][] = $tag2;

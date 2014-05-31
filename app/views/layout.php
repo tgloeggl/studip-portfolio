@@ -8,7 +8,7 @@
                 $breadcrumb[] = '<a href="'. $controller->url_for($step[0]) .'">'
                               . htmlReady($step[1]) . '</a>';
             } else {
-                $breadcrumb[] = $step;
+                $breadcrumb[] = htmlReady($step);
             }
         endforeach; ?>
 
