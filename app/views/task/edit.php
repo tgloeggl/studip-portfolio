@@ -18,6 +18,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 <div id="portfolio">
     <h1><?= _('Aufgabe bearbeiten') ?></h1>
     <form method="post" action="<?= $controller->url_for('task/update/' . $portfolio_id .'/'. $task->id) ?>">
+        <!-- Task -->
         <label <?= ($perms['edit_task'] ? '' : 'class="mark"') ?>>
             <span><?= _('Titel:') ?></span><br>
             <? if ($perms['edit_task']): ?>
@@ -36,6 +37,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <? endif ?>
         </label>
 
+        <!-- Settings -->
         <? if ($perms['edit_settings']) : ?>
         <label>
             <span><?= _('Zugeordnete Portfolios:') ?></span><br>
@@ -66,54 +68,62 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
         <br>
         <? endif ?>
 
-        <? if ($task->allow_text) : ?>
-        <label <?= ($perms['edit_answer']) ? '' : 'class="mark"' ?>>
-            <span><?= _('Antworttext:') ?></span><br>
+        <!-- Answer -->
+        <? if ($perms['view_answer']) : ?>
+            <? if ($task->allow_text) : ?>
+            <label <?= ($perms['edit_answer']) ? '' : 'class="mark"' ?>>
+                <span><?= _('Antworttext:') ?></span><br>
 
-            <? if ($perms['edit_answer']) : ?>
-            <textarea name="task_user[answer]" class="add_toolbar"><?= htmlReady($task_user->answer) ?></textarea><br>
-            <? else : ?>
-            <?= $task_user->answer
-                    ? formatReady($task_user->answer)
-                    : '<span class="empty_text">' . _('Es wurde bisher keine Antwort eingegeben.') .'</span>' ?>
+                <? if ($perms['edit_answer']) : ?>
+                <textarea name="task_user[answer]" class="add_toolbar"><?= htmlReady($task_user->answer) ?></textarea><br>
+                <? else : ?>
+                <?= $task_user->answer
+                        ? formatReady($task_user->answer)
+                        : '<span class="empty_text">' . _('Es wurde bisher keine Antwort eingegeben.') .'</span>' ?>
+                <? endif ?>
+            </label>
             <? endif ?>
-        </label>
-        <? endif ?>
 
-        <br>
+            <br>
 
-        <? if ($task->allow_files) : ?>
-        <?= $this->render_partial('file/list', array(
-            'files' => $task_user->files->findBy('type', 'answer'),
-            'type' => 'answer',
-            'edit' => $perms['edit_answer']
-        )) ?>
-        <br>
-        <? endif ?>
-
-        <label <?= ($perms['edit_feedback']) ? '' : 'class="mark"' ?>>
-            <span><?= _('Feedback:') ?></span><br>
-
-            <? if ($perms['edit_feedback']) : ?>
-            <textarea name="task_user[feedback]" class="add_toolbar"><?= htmlReady($task_user->feedback) ?></textarea><br>
-            <? else : ?>
-            <?= $task_user->feedback
-                    ? formatReady($task_user->feedback)
-                    : '<span class="empty_text">' . _('Es wurde bisher kein Feedback eingegeben.') .'</span>' ?>
+            <? if ($task->allow_files) : ?>
+            <?= $this->render_partial('file/list', array(
+                'files' => $task_user->files->findBy('type', 'answer'),
+                'type' => 'answer',
+                'edit' => $perms['edit_answer']
+            )) ?>
+            <br>
             <? endif ?>
-        </label>
-
-        <br>
-
-        <? if ($task->allow_files) : ?>
-        <?= $this->render_partial('file/list', array(
-            'files' => $task_user->files->findBy('type', 'feedback'),
-            'type' => 'feedback',
-            'edit' => $perms['edit_feedback']
-        )) ?>
-        <br>
         <? endif ?>
 
+        <!-- Feedback -->
+        <? if ($perms['view_feedback']) : ?>
+            <label <?= ($perms['edit_feedback']) ? '' : 'class="mark"' ?>>
+                <span><?= _('Feedback:') ?></span><br>
+
+                <? if ($perms['edit_feedback']) : ?>
+                <textarea name="task_user[feedback]" class="add_toolbar"><?= htmlReady($task_user->feedback) ?></textarea><br>
+                <? else : ?>
+                <?= $task_user->feedback
+                        ? formatReady($task_user->feedback)
+                        : '<span class="empty_text">' . _('Es wurde bisher kein Feedback eingegeben.') .'</span>' ?>
+                <? endif ?>
+            </label>
+
+            <br>
+
+            <? if ($task->allow_files) : ?>
+            <?= $this->render_partial('file/list', array(
+                'files' => $task_user->files->findBy('type', 'feedback'),
+                'type' => 'feedback',
+                'edit' => $perms['edit_feedback']
+            )) ?>
+            <br>
+            <? endif ?>
+        <? endif ?>
+
+
+        <!-- Goal -->
         <? if ($perms['view_goal']) : ?>
         <br>
         <label <?= ($perms['edit_goal']) ? '' : 'class="mark"' ?>>
@@ -129,6 +139,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
         </label>
         <? endif ?>
 
+        <!-- Form-Buttons -->
         <div style="text-align: center">
             <div class="button-group">
                 <?= Studip\Button::createAccept(_('Aufgabe speichern')) ?>
