@@ -27,7 +27,7 @@ $form-width: 80%;
             width: $form-width;
         }
     }
-    
+
     span.empty_text {
         display: block;
         font-style: italic;
@@ -164,13 +164,23 @@ $form-width: 80%;
         border-left: 1px dashed #1E3E70;
         padding-left: 10px;
     }
-    
+
+    table.tasks tr {
+        td:nth-child(1n+3) {
+            white-space: nowrap;
+        }
+
+        td:nth-child(4) {
+            padding-right: 25px;
+        }
+    }
+
     .mark {
         background-color: #E1E4E5;
         padding: 5px;
         width: $form-width;
     }
-    
+
     #files_to_upload {
         min-width: 500px;
         width: auto;
@@ -200,11 +210,11 @@ $form-width: 80%;
             padding: 2px;
         }
     }
-    
+
     table.files {
         width: $form-width;
     }
-    
+
 }
 
 span[disabled] {

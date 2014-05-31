@@ -1,4 +1,6 @@
 <? $tags = $task->tags->pluck('tag');
+$task_user = $task->task_users->findOneBy('user_id', $user->id);
+
 foreach ($tags as $key => $val) {
     $tags[$key] = htmlReady($val);
 }
@@ -17,11 +19,13 @@ foreach ($tags as $key => $val) {
 
     <!-- Arbeit -->
     <td style="text-align: right; vertical-align: top;">
+        <?= (!$task_user || $task_user->answer === null) ? '0' : strlen($task_user->answer) ?>
         <?= Assets::img('icons/16/black/file-text.png', array(
             'title' => _('Antworttext')
         )) ?>
     </td>
     <td style="vertical-align: top;">
+        <?= $task_user ? sizeof($task_user->files->findBy('type', 'answer')) : 0 ?>
         <?= Assets::img('icons/16/black/file-generic.png', array(
             'title' => _('Hochgeladene Dateien')
         )) ?>
@@ -30,11 +34,13 @@ foreach ($tags as $key => $val) {
 
     <!-- Feedback -->
     <td style="text-align: right; vertical-align: top;">
+        <?= (!$task_user || $task_user->feedback === null) ? '0' : strlen($task_user->feedback) ?>
         <?= Assets::img('icons/16/black/file-text.png', array(
             'title' => _('Antworttext')
         )) ?>
     </td>
     <td style="vertical-align: top;">
+        <?= $task_user ? sizeof($task_user->files->findBy('type', 'feedback')) : 0 ?>
         <?= Assets::img('icons/16/black/file-generic.png', array(
             'title' => _('Hochgeladene Dateien')
         )) ?>

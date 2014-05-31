@@ -1,4 +1,4 @@
-<table class="default zebra" data-tag="<?= htmlReady($tag) ?>">
+<table class="default zebra tasks" data-tag="<?= htmlReady($tag) ?>">
     <colgroup>
         <col style="width: 44%">
         <col style="width: 50%">
