@@ -28,43 +28,50 @@ $infobox_content[] = array(
 );
 
 $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
+
+$path = array(
+    array(
+        'portfolio/index',
+        _('Übersicht')
+    ),
+    $portfolio->name
+);
 ?>
-<div id="portfolio">
-    <h1 data-id="<?= $portfolio->id ?>">
-        <span><?= htmlReady($portfolio['name']) ?></span>
-        <? if ($portfolio->user_id == $user->id) : ?>
-        <span class="edit_portfolio"></span>
+
+<h1 data-id="<?= $portfolio->id ?>">
+    <span><?= htmlReady($portfolio['name']) ?></span>
+    <? if ($portfolio->user_id == $user->id) : ?>
+    <span class="edit_portfolio"></span>
+    <? endif ?>
+</h1>
+
+<table style="border-collapse: collapse; width: 100%">
+    <tr>
+        <? if (!empty($tags)) : ?>
+        <td class="tags">
+            <?= $this->render_partial('task/_tagcloud') ?>
+        </td>
         <? endif ?>
-    </h1>
 
-    <table style="border-collapse: collapse; width: 100%">
-        <tr>
-            <? if (!empty($tags)) : ?>
-            <td class="tags">
-                <?= $this->render_partial('task/_tagcloud') ?>
-            </td>
-            <? endif ?>
+        <td id="tasks">
+            <? if (empty($tasks_by_tag) && empty($tagless_tasks)) : ?>
+                <?= MessageBox::info(sprintf(_('Es sind bisher keine Aufgaben in diesem Portfolio vorhanden. %sLegen Sie eine neue Aufgabe an.%s'),
+                    '<a href="'. $controller->url_for('task/new/' . $portfolio->id) .'">', '</a>')) ?>
+            <? else : ?>
+                <? foreach ($tasks_by_tag as $tag => $tasks) : ?>
+                <?= $this->render_partial('task/_tasks', compact('tag', 'tasks')) ?>
+                <? endforeach ?>
 
-            <td id="tasks">
-                <? if (empty($tasks_by_tag) && empty($tagless_tasks)) : ?>
-                    <?= MessageBox::info(sprintf(_('Es sind bisher keine Aufgaben in diesem Portfolio vorhanden. %sLegen Sie eine neue Aufgabe an.%s'),
-                        '<a href="'. $controller->url_for('task/new/' . $portfolio->id) .'">', '</a>')) ?>
-                <? else : ?>
-                    <? foreach ($tasks_by_tag as $tag => $tasks) : ?>
-                    <?= $this->render_partial('task/_tasks', compact('tag', 'tasks')) ?>
-                    <? endforeach ?>
-
-                    <? if (!empty($tagless_tasks)) : ?>
-                    <?= $this->render_partial('task/_tasks', array(
-                        'tasks' => $tagless_tasks,
-                        'tag'   => _('Aufgaben ohne Tags')
-                    )) ?>
-                    <? endif ?>
+                <? if (!empty($tagless_tasks)) : ?>
+                <?= $this->render_partial('task/_tasks', array(
+                    'tasks' => $tagless_tasks,
+                    'tag'   => _('Aufgaben ohne Tags')
+                )) ?>
                 <? endif ?>
-            </td>
-        </tr>
-    </table>
-</div>
+            <? endif ?>
+        </td>
+    </tr>
+</table>
 
 <script>
     (function ($) {

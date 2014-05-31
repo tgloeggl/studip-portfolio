@@ -10,6 +10,18 @@ $infobox_content[] = array(
 );
 
 $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
+
+$path = array(
+    array(
+        'portfolio/index',
+        _('Übersicht')
+    ),
+    array(
+        'task/index/' . $portfolio->id,
+        $portfolio->name
+    ),
+    _('Neue Aufgabe anlegen')
+);
 ?>
 
 <?= $this->render_partial('task/js_templates.php') ?>

@@ -20,6 +20,8 @@ class PortfolioController extends PortfolioPluginController
     {
         Navigation::activateItem('/profile/portfolio');
 
+        $this->set_layout('layout');
+
         $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
     }
 

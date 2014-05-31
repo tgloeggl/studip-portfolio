@@ -22,6 +22,7 @@ class TaskController extends PortfolioPluginController
         Navigation::activateItem('/profile/portfolio');
 
         $this->user = $this->container['user'];
+        $this->set_layout('layout');
     }
 
     public function index_action($portfolio_id)
@@ -55,6 +56,7 @@ class TaskController extends PortfolioPluginController
 
     public function new_action($portfolio_id)
     {
+        $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
         $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
 
         $this->tags = Portfolio\Tags::findByUser_id($this->container['user']->id);
@@ -117,6 +119,8 @@ class TaskController extends PortfolioPluginController
     public function edit_action($portfolio_id, $task_id)
     {
         $user_id = $this->container['user']->id;
+
+        $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
         $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($user_id);
 
         $this->portfolio_id = $portfolio_id;

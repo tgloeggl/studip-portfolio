@@ -1,3 +1,4 @@
+#portfolio span.breadcrumb { display: block; margin: 0 0 1em 10px; }
 #portfolio form label { display: block; margin-top: 1em; }
 #portfolio form label span:first-child { font-weight: bold; }
 #portfolio form input[type=text], #portfolio form textarea { width: 80%; }

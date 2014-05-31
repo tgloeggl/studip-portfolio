@@ -1,6 +1,11 @@
 $form-width: 80%;
 
 #portfolio {
+    span.breadcrumb {
+        display: block;
+        margin: 0 0 1em 10px;
+    }
+
     form {
         label {
             display: block;
