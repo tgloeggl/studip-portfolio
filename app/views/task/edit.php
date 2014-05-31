@@ -103,7 +103,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 
         <? if ($task->allow_files) : ?>
         <?= $this->render_partial('file/list', array(
-            'files' => $task_user->files->findByType('feedback'),
+            'files' => $task_user->files->findBy('type', 'feedback'),
             'type' => 'feedback',
             'edit' => $perms['edit_feedback']
         )) ?>
