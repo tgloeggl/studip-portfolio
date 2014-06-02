@@ -56,10 +56,10 @@ $path[] = $task->title;
     <label>
         <span><?= _('Zugeordnete Portfolios:') ?></span><br>
         <select id="sets" name="sets[]" required multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
-            <? foreach ($portfolios as $portfolio) : ?>
-                <option <?= $portfolio->global ? 'disabled' : '' ?> value="<?= $portfolio->id ?>"
-                        <?= in_array($portfolio->id, $task_portfolios) !== false ? 'selected="selected"' : '' ?>>
-                    <?= htmlReady($portfolio->name) ?>
+            <? foreach ($portfolios as $l_portfolio) : ?>
+                <option <?= $l_portfolio->global ? 'disabled' : '' ?> value="<?= $l_portfolio->id ?>"
+                        <?= in_array($l_portfolio->id, $task_portfolios) !== false ? 'selected="selected"' : '' ?>>
+                    <?= htmlReady($l_portfolio->name) ?>
                 </option>
             <? endforeach ?>
         </select>
