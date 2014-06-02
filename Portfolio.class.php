@@ -61,12 +61,6 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
     }
 
     private function setupAutoload() {
-        if (class_exists("StudipAutoloader")) {
-            StudipAutoloader::addAutoloadPath(__DIR__ . '/app/models');
-        } else {
-            spl_autoload_register(function ($class) {
-                include_once __DIR__ . $class . '.php';
-            });
-        }
+        Portfolio_StudipAutoloader::addAutoloadPath(__DIR__ . '/app/models');
     }
 }
