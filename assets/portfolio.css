@@ -14,8 +14,8 @@
 #portfolio span.portfolio { display: block; float: left; margin-right: 30px; font-size: 10pt; font-weight: bold; width: 80px; min-height: 80px; max-height: 8em; overflow: hidden; color: black; background-image: url("images/icons/64/blue/literature2.png"); background-repeat: no-repeat; padding-top: 68px; }
 #portfolio span.portfolio:hover { opacity: 0.7; }
 #portfolio span.add_portfolio { background-image: url("images/icons/64/blue/add/literature2.png"); cursor: pointer; }
-#portfolio span.edit_portfolio { display: inline-block; cursor: pointer; width: 20px; height: 20px; margin-left: 10px; background-image: url("../../../../assets/images/icons/20/grey/edit.png"); }
-#portfolio span.edit_portfolio:hover { background-image: url("../../../../assets/images/icons/20/blue/edit.png"); }
+#portfolio span.edit_portfolio { display: inline-block; cursor: pointer; width: 16px; height: 16px; margin-left: 10px; background-image: url("../../../../assets/images/icons/16/grey/edit.png"); }
+#portfolio span.edit_portfolio:hover { background-image: url("../../../../assets/images/icons/16/blue/edit.png"); }
 #portfolio input.portfolio { font-size: 20pt; width: 20em; }
 #portfolio td.tags { width: 250px; vertical-align: top; }
 #portfolio td.tags > div { margin-right: 10px; height: 100%; }
@@ -37,5 +37,6 @@
 #portfolio #files_to_upload tr td:nth-child(3) { padding: 3px 10px; width: 100px; }
 #portfolio #files_to_upload span.file_error { display: block; background-color: #FFCCCC; padding: 2px; }
 #portfolio table.files { width: 80%; }
+#portfolio table.default caption { background-color: transparent; color: #444; font-size: 1.4em; text-align: left; }
 
 span[disabled] { color: #6E6E6E; }
