@@ -102,7 +102,7 @@ class Portfolios extends \Portfolio_SimpleORMap
                 }
             }
 
-            if ($remove_task) {
+            if ($remove_task && $portfolio->id != 1) {
                 unset($portfolios[$pkey]);
             }
         }

@@ -7,6 +7,19 @@ require 'bootstrap.php';
  * @author  Till Glöggler <tgloeggl@uos.de>
  * @version 0.1a
  */
+
+require_once 'app/models/Abschluss.php';
+require_once 'app/models/Helper.php';
+require_once 'app/models/Perm.php';
+require_once 'app/models/Permissions.php';
+require_once 'app/models/Portfolios.php';
+require_once 'app/models/PortfoliosStudiengangCombos.php';
+require_once 'app/models/StudiengangCombos.php';
+require_once 'app/models/Tags.php';
+require_once 'app/models/TaskUserFiles.php';
+require_once 'app/models/TaskUsers.php';
+require_once 'app/models/Tasks.php';
+
 class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
 {
 
@@ -42,6 +55,10 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
         PageLayout::addStylesheet($this->getPluginURL().'/assets/vendor/chosen/chosen.min.css');
         PageLayout::addScript($this->getPluginURL().'/assets/vendor/chosen/chosen.jquery.min.js');
         PageLayout::addScript($this->getPluginURL().'/assets/vendor/chosen/ajax-chosen.min.js');
+
+        if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.0", '<=')) {
+            PageLayout::addScript($this->getPluginURL().'/assets/vendor/fileupload/jquery.fileupload.js');
+        }
     }
 
     public function getHomepageTemplate($user_id) {
@@ -49,7 +66,7 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
     }
 
     public function perform($unconsumed_path) {
-        $this->setupAutoload();
+        #$this->setupAutoload();
         $dispatcher = new Trails_Dispatcher(
             $this->getPluginPath() . '/app',
             rtrim(PluginEngine::getLink($this, array(), null), '/'),
@@ -60,6 +77,7 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
         $dispatcher->dispatch($unconsumed_path);
     }
 
+    /*
     private function setupAutoload() {
         spl_autoload_register(function ($class) {
             include_once Portfolio::findFile(__DIR__ .'/app/models', $class);
@@ -88,4 +106,6 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
             return $base . '.php';
         }
     }
+     *
+     */
 }

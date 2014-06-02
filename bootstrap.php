@@ -28,6 +28,7 @@ if (version_compare($GLOBALS['SOFTWARE_VERSION'], "2.5", '<=')) {
     require_once 'compat/2.5/Portfolio_SimpleORMap.php';
     require_once 'compat/2.5/Portfolio_StudipDocument.php';
     require_once 'compat/2.5/Portfolio_StudyCourse.php';
+    require_once 'compat/2.5/UserStudyCourse.php';
 }
 
 require_once 'vendor/trails/trails.php';

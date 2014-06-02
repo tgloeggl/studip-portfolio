@@ -39,65 +39,67 @@ var STUDIP = STUDIP || {};
             $(current_text).remove();
         });
 
-        $('#fileupload').fileupload({
-            url: $('input[name=upload_url]').val(),
-            dataType: 'json',
-            add: function (e, data) {
-                STUDIP.Portfolio.File.file_id += 1;
-                data.id = STUDIP.Portfolio.File.file_id;
-                STUDIP.Portfolio.File.addFile(e, data);
-            },
-            done: function (e, data) {
-                var files = data.result;
+        if ($("#fileupload").length > 0){
+            $('#fileupload').fileupload({
+                url: $('input[name=upload_url]').val(),
+                dataType: 'json',
+                add: function (e, data) {
+                    STUDIP.Portfolio.File.file_id += 1;
+                    data.id = STUDIP.Portfolio.File.file_id;
+                    STUDIP.Portfolio.File.addFile(e, data);
+                },
+                done: function (e, data) {
+                    var files = data.result;
 
-                if (typeof files.errors === "object") {
-                    var errorTemplateData = {
-                        message: json.errors.join("\n")
-                    }
-                    $('#files_to_upload').before(STUDIP.Portfolio.File.errorTemplate(errorTemplateData));
-                } else {
-                    _.each(files, function(file) {
-                        var id = $('#files_to_upload tr:first-child').attr('data-fileid');
-                        $('#files_to_upload tr[data-fileid=' + id + ']').remove();
-
-                        var templateData = {
-                            id     : file.id,
-                            url    : file.url,
-                            name   : file.name,
-                            size   : Math.round((file.size / 1024) * 100) / 100,
-                            date   : file.date,
-                            seminar: file.seminar_id
+                    if (typeof files.errors === "object") {
+                        var errorTemplateData = {
+                            message: json.errors.join("\n")
                         }
+                        $('#files_to_upload').before(STUDIP.Portfolio.File.errorTemplate(errorTemplateData));
+                    } else {
+                        _.each(files, function(file) {
+                            var id = $('#files_to_upload tr:first-child').attr('data-fileid');
+                            $('#files_to_upload tr[data-fileid=' + id + ']').remove();
 
-                        $('#uploaded_files').append(STUDIP.Portfolio.File.uploadedFileTemplate(templateData));
-                    });
+                            var templateData = {
+                                id     : file.id,
+                                url    : file.url,
+                                name   : file.name,
+                                size   : Math.round((file.size / 1024) * 100) / 100,
+                                date   : file.date,
+                                seminar: file.seminar_id
+                            }
+
+                            $('#uploaded_files').append(STUDIP.Portfolio.File.uploadedFileTemplate(templateData));
+                        });
+                    }
+                },
+
+                progress: function (e, data) {
+                    var kbs = parseInt(data._progress.bitrate / 8 / 1024);
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    var id = $('#files_to_upload tr:first-child').attr('data-fileid');
+                    $('#files_to_upload tr[data-fileid=' + id + '] progress').val(progress);
+                    $('#files_to_upload tr[data-fileid=' + id + '] .kbs').html(kbs);
+                },
+
+                error: function(xhr, data) {
+                    var id = $('#files_to_upload tr:first-child').attr('data-fileid');
+                    $('#files_to_upload tr[data-fileid=' + id + '] td:nth-child(3)')
+                                .html('Fehler beim Upload (' + xhr.status  + ': ' + xhr.statusText + ')');
+                    $('#files_to_upload tr[data-fileid=' + id + '] td:nth-child(4)').html('');
+                    $('#files_to_upload tr[data-fileid=' + id + '] td:nth-child(5)').html('');
+                    $('#files_to_upload tr[data-fileid=' + id + '] td:nth-child(6)').html('');
+
+                    $('#files_to_upload').append($('#files_to_upload tr[data-fileid=' + id + ']').remove());
                 }
-            },
+            });
 
-            progress: function (e, data) {
-                var kbs = parseInt(data._progress.bitrate / 8 / 1024);
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                var id = $('#files_to_upload tr:first-child').attr('data-fileid');
-                $('#files_to_upload tr[data-fileid=' + id + '] progress').val(progress);
-                $('#files_to_upload tr[data-fileid=' + id + '] .kbs').html(kbs);
-            },
-
-            error: function(xhr, data) {
-                var id = $('#files_to_upload tr:first-child').attr('data-fileid');
-                $('#files_to_upload tr[data-fileid=' + id + '] td:nth-child(3)')
-                            .html('Fehler beim Upload (' + xhr.status  + ': ' + xhr.statusText + ')');
-                $('#files_to_upload tr[data-fileid=' + id + '] td:nth-child(4)').html('');
-                $('#files_to_upload tr[data-fileid=' + id + '] td:nth-child(5)').html('');
-                $('#files_to_upload tr[data-fileid=' + id + '] td:nth-child(6)').html('');
-
-                $('#files_to_upload').append($('#files_to_upload tr[data-fileid=' + id + ']').remove());
-            }
-        });
-
-        // load templates
-        STUDIP.Portfolio.File.fileTemplate         = _.template($("script.file_template").html());
-        STUDIP.Portfolio.File.uploadedFileTemplate = _.template($("script.uploaded_file_template").html());
-        STUDIP.Portfolio.File.errorTemplate        = _.template($("script.error_template").html());
+            // load templates
+            STUDIP.Portfolio.File.fileTemplate         = _.template($("script.file_template").html());
+            STUDIP.Portfolio.File.uploadedFileTemplate = _.template($("script.uploaded_file_template").html());
+            STUDIP.Portfolio.File.errorTemplate        = _.template($("script.error_template").html());
+        }
     });
 
 
