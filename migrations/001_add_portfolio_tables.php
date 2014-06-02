@@ -99,7 +99,7 @@ class AddPortfolioTables extends DBMigration {
               `portfolio_task_users_id` INT NOT NULL ,
               `user_id` VARCHAR(32) NULL ,
               `role` ENUM('tutor','followup-tutor','student') NULL ,
-              PRIMARY KEY (`portfolio_tasks_id`, `user_id`)
+              PRIMARY KEY (`portfolio_task_users_id`, `user_id`)
             ) ENGINE = InnoDB;
         ");
 
