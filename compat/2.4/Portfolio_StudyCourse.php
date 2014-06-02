@@ -12,11 +12,16 @@
  * @copyright   2013 Stud.IP Core-Group
  * @license     http://www.gnu.org/licenses/gpl-2.0.html GPL version 2
  * @category    Stud.IP
- * 
+ *
+ * @property string studiengang_id database column
+ * @property string id alias column for studiengang_id
+ * @property string name database column
+ * @property string beschreibung database column
+ * @property string mkdate database column
+ * @property string chdate database column
  */
-class Portfolio_StudyCourse extends Portfolio_SimpleORMap
+class Portfolio_StudyCourse extends SimpleORMap
 {
-
     function __construct($id = null)
     {
         $this->db_table = 'studiengaenge';
