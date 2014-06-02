@@ -19,10 +19,9 @@ $path = array(
 </span>
 
 <br style="clear: both">
-<h1><?= _('Für mich freigegebene Aufgaben') ?></h1>
-
 <? if (!empty($tasks_by_tag) || !empty($tagless_tasks)) : ?>
-<?= $this->render_partial('task/_task_list') ?>
+    <h1><?= _('Für mich freigegebene Aufgaben') ?></h1>
+    <?= $this->render_partial('task/_task_list') ?>
 <? endif ?>
 
 <script>
