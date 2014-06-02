@@ -59,4 +59,15 @@ class PortfolioPluginController extends StudipController
 
         return PluginEngine::getURL($this->dispatcher->plugin, $params, join('/', $args));
     }
+
+    /**
+     * render given data as json, data is converted to utf-8
+     *
+     * @param unknown $data
+     */
+    function render_json($data)
+    {
+        $this->set_content_type('application/json;charset=utf-8');
+        return $this->render_text(json_encode(studip_utf8encode($data)));
+    }
 }
