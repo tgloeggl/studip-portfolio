@@ -28,7 +28,7 @@ $path = array(
 
 <div id="portfolio">
     <h1><?= _('Neue Aufgabe anlegen') ?></h1>
-    <form method="post" action="<?= $controller->url_for('task/add/' . $portfolio_id) ?>">
+    <form method="post" action="<?= $controller->url_for('task/add/' . $portfolio->id) ?>">
         <label>
             <span><?= _('Titel:') ?></span><br>
             <input type="text" name="title" required="required"><br>
@@ -43,7 +43,7 @@ $path = array(
             <span><?= _('Zugeordnete Portfolios:') ?></span><br>
             <select id="sets" name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
                 <? foreach ($portfolios as $portfolio) : ?>
-                    <option value="<?= $portfolio->id ?>" <?= $portfolio->id == $portfolio_id ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
+                    <option value="<?= $portfolio->id ?>" <?= $portfolio->id == $portfolio->id ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
                 <? endforeach ?>
             </select>
             <?= tooltipIcon('Neue Portfolios können Sie auf der Übersichtsseite erstellen.') ?>
@@ -64,7 +64,7 @@ $path = array(
         <div style="text-align: center">
             <div class="button-group">
                 <?= Studip\Button::createAccept(_('Aufgabe erstellen')) ?>
-                <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('task/index/' . $portfolio_id)) ?>
+                <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('task/index/' . $portfolio->id)) ?>
             </div>
         </div>
     </form>

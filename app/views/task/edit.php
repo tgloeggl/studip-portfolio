@@ -11,24 +11,27 @@ $infobox_content[] = array(
 
 $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 
-$path = array(
-    array(
-        'portfolio/index',
-        _('Übersicht')
-    ),
-    array(
+$path = array();
+$path[] = array(
+    'portfolio/index',
+    _('Übersicht')
+);
+
+if ($portfolio->name) :
+    $path[] = array(
         'task/index/' . $portfolio->id,
         $portfolio->name
-    ),
-    $task->title
-);
+    );
+endif;
+
+$path[] = $task->title;
 ?>
 
 <?= $this->render_partial('task/js_templates.php') ?>
 <?= $this->render_partial('file/js_templates.php') ?>
 
 <h1><?= _('Aufgabe bearbeiten') ?></h1>
-<form method="post" action="<?= $controller->url_for('task/update/' . $portfolio_id .'/'. $task->id) ?>">
+<form method="post" action="<?= $controller->url_for('task/update/' . $portfolio->id .'/'. $task_user->id) ?>">
     <!-- Task -->
     <label <?= ($perms['edit_task'] ? '' : 'class="mark"') ?>>
         <span><?= _('Titel:') ?></span><br>
@@ -157,7 +160,7 @@ $path = array(
     <div style="text-align: center">
         <div class="button-group">
             <?= Studip\Button::createAccept(_('Aufgabe speichern')) ?>
-            <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('task/index/' . $portfolio_id)) ?>
+            <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('task/index/' . $portfolio->id)) ?>
         </div>
     </div>
 </form>

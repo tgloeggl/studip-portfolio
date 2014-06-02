@@ -33,28 +33,8 @@ class TaskController extends PortfolioPluginController
             $this->redirect('portfolio');
         }
 
-        // get tags
-        foreach ($this->portfolio->tasks as $task) {
-            $tags = $task->tags->pluck('tag');
-
-            if (empty($tags)) {
-                $this->tagless_tasks[] = $task;
-            } else {
-                // collect all tag-combinations and group tasks by tags
-                foreach ($tags as $tag) {
-                    $this->tasks_by_tag[$tag][] = $task;
-
-                    if (!$this->tags[$tag]) {
-                        $this->tags[$tag] = array();
-                    }
-
-                    foreach ($tags as $tag2) {
-                        if ($tag != $tag2) {
-                            $this->tags[$tag][] = $tag2;
-                        }
-                    }
-                }
-            }
+        foreach (Portfolio\Helper::sortTasksByTags($this->portfolio->tasks) as $key => $data) {
+            $this->$key = $data;
         }
     }
 
@@ -64,8 +44,6 @@ class TaskController extends PortfolioPluginController
         $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
 
         $this->tags = Portfolio\Tags::findByUser_id($this->container['user']->id);
-
-        $this->portfolio_id = $portfolio_id;
     }
 
     public function add_action($portfolio_id)
@@ -120,38 +98,49 @@ class TaskController extends PortfolioPluginController
         $this->redirect('task/index/' . $portfolio_id);
     }
 
-    public function edit_action($portfolio_id, $task_id)
+    public function edit_action($portfolio_id, $task_id, $task_user_id = null)
     {
         $user_id = $this->container['user']->id;
 
-        $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
-        $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($user_id);
+        if ($portfolio_id == 0) {
+            $this->portfolio->id = 0;
+        } else {
+            $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
+        }
 
-        $this->portfolio_id = $portfolio_id;
         $this->task = Portfolio\Tasks::find($task_id);
-        $this->tags = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($user_id));
 
         $this->task_tags = $this->task->tags->pluck('tag');
         $this->task_portfolios = $this->task->portfolios->pluck('id');
 
         // make sure we have an user-entry for the current task
-        if (!$this->task_user = current(Portfolio\TaskUsers::findBySQL('user_id = ? AND portfolio_tasks_id = ?', array($user_id, $task_id)))) {
-            $this->task_user = Portfolio\TaskUsers::create(array(
-                'user_id'            => $user_id,
-                'portfolio_tasks_id' => $task_id
-            ));
+        if ($task_user_id) {
+            $this->task_user = Portfolio\TaskUsers::find($task_user_id);
+        } else {
+            if (!$this->task_user = current(Portfolio\TaskUsers::findBySQL('user_id = ? AND portfolio_tasks_id = ?', array($user_id, $task_id)))) {
+                $this->task_user = Portfolio\TaskUsers::create(array(
+                    'user_id'            => $user_id,
+                    'portfolio_tasks_id' => $task_id
+                ));
+            }
         }
 
         $this->perms = Portfolio\Perm::get($user_id, $this->task_user);
+
+        // this stuff is only available, if the user is owner of the current task(_user)
+        if ($this->task_user->user_id == $user_id) {
+            $this->tags = Portfolio\Tags::findBySQL('user_id = ? ORDER BY tag ASC', array($user_id));
+            $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($user_id);
+        }
     }
     
-    public function update_action($portfolio_id, $task_id)
+    public function update_action($portfolio_id, $task_user_id)
     {
         $user_id = $this->container['user']->id;
 
         // update task contents
-        $task      = Portfolio\Tasks::find($task_id);
-        $task_user = current(Portfolio\TaskUsers::findBySQL('user_id = ? AND portfolio_tasks_id = ?', array($user_id, $task_id)));
+        $task_user = Portfolio\TaskUsers::find($task_user_id);
+        $task      = $task_user->task;
 
         $perms = Portfolio\Perm::get($user_id, $task_user);
 
@@ -212,6 +201,9 @@ class TaskController extends PortfolioPluginController
                     }
                 }
             }
+
+            // store to delete old ones before trying to add new ones
+            $task_user->store();
 
             foreach ($diff['added'] as $add) {
                 $perm = new Portfolio\Permissions();

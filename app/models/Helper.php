@@ -38,4 +38,82 @@ class Helper
     {
         return strcmp(serialize($a), serialize($b));
     }
+
+
+    static function sortTasksByTags($tasks)
+    {
+        $tasks_by_tag = $tagless_tasks = $tags = array();
+
+        // get tags
+        foreach ($tasks as $task) {
+            $ttags = $task->tags->pluck('tag');
+
+            if (empty($ttags)) {
+                $tagless_tasks[] = $task;
+            } else {
+                // collect all tag-combinations and group tasks by tags
+                foreach ($ttags as $tag) {
+                    $tasks_by_tag[$tag][] = $task;
+
+                    if (!$tags[$tag]) {
+                        $tags[$tag] = array();
+                    }
+
+                    foreach ($tags as $tag2) {
+                        if ($tag != $tag2) {
+                            $tags[$tag][] = $tag2;
+                        }
+                    }
+                }
+            }
+        }
+
+        return compact('tasks_by_tag', 'tagless_tasks', 'tags');
+    }
+
+    static function sortTaskUsersByTags($task_users)
+    {
+        $tasks_by_tag = $tagless_tasks = $tags = array();
+
+        // get tags
+        foreach ($task_users as $task_user) {
+            $task = $task_user->task;
+
+            $ttags = $task->tags->pluck('tag');
+
+            if (empty($ttags)) {
+                $tagless_tasks[] = $task;
+            } else {
+                // collect all tag-combinations and group tasks by tags
+                foreach ($ttags as $tag) {
+                    $tasks_by_tag[$tag][] = $task;
+
+                    if (!$tags[$tag]) {
+                        $tags[$tag] = array();
+                    }
+
+                    foreach ($tags as $tag2) {
+                        if ($tag != $tag2) {
+                            $tags[$tag][] = $tag2;
+                        }
+                    }
+                }
+            }
+        }
+
+        return compact('tasks_by_tag', 'tagless_tasks', 'tags');
+    }
+
+    static function getForeignTasksForUser($user_id)
+    {
+        $task_users = array();
+
+        $perms = Permissions::findByUser_id($user_id);
+
+        foreach ($perms as $perm) {
+            $task_users[] = $perm->task_user;
+        }
+
+        return $task_users;
+    }
 }

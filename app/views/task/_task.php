@@ -1,13 +1,11 @@
-<? $tags = $task->tags->pluck('tag');
-$task_user = $task->task_users->findOneBy('user_id', $user->id);
-
+<?
 foreach ($tags as $key => $val) {
     $tags[$key] = htmlReady($val);
 }
 ?>
 <tr data-tags='["<?= implode('", "', $tags) ?>"]' class="task">
     <td>
-        <a href="<?= $controller->url_for('task/edit/' . $portfolio->id .'/'. $task->id) ?>">
+        <a href="<?= $controller->url_for('task/edit/' . $portfolio->id .'/'. $task->id .'/'. $task_user->id) ?>">
             <?= htmlReady($task->title) ?>
         </a>
     </td>
@@ -16,6 +14,12 @@ foreach ($tags as $key => $val) {
     <td>
         <?= implode(' &bullet; ', array_filter($task->tags->pluck('tag'), function($element) { return htmlReady($element); })) ?>
     </td>
+
+    <? if ($show_creator) : ?>
+    <td>
+        <?= get_fullname($task_user->user_id) ?>
+    </td>
+    <? endif ?>
 
     <!-- Arbeit -->
     <td style="text-align: right; vertical-align: top;">

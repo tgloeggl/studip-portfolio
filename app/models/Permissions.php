@@ -28,7 +28,7 @@ class Permissions extends \Portfolio_SimpleORMap
         $this->db_table = 'portfolio_permissions';
 
         $this->belongs_to['task_user'] = array(
-            'class_name'  => 'EPP\TaskUsers',
+            'class_name'  => 'Portfolio\TaskUsers',
             'foreign_key' => 'portfolio_task_users_id',
         );
 

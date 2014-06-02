@@ -23,6 +23,14 @@ class PortfolioController extends PortfolioPluginController
         $this->set_layout('layout');
 
         $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
+
+        $this->task_users = Portfolio\Helper::getForeignTasksForUser($this->container['user']->id);
+
+        $this->portfolio->id = 0;
+
+        foreach (Portfolio\Helper::sortTaskUsersByTags($this->task_users) as $key => $data) {
+            $this->$key = $data;
+        }
     }
 
     public function add_action($name)
@@ -51,6 +59,7 @@ class PortfolioController extends PortfolioPluginController
 
         $this->render_nothing();
     }
+
     public function delete_action($portfolio_id)
     {
         $portfolio = Portfolio\Portfolios::find($portfolio_id);

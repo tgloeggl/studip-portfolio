@@ -19,4 +19,16 @@ $path = array(
 </span>
 
 <br style="clear: both">
-<h1>Andere Portfolios</h1>
+<h1><?= _('Für mich freigegebene Aufgaben') ?></h1>
+
+<? if (!empty($tasks_by_tag) || !empty($tagless_tasks)) : ?>
+<?= $this->render_partial('task/_task_list') ?>
+<? endif ?>
+
+<script>
+    (function ($) {
+        $(document).ready(function() {
+            STUDIP.Portfolio.Homepage.init();
+        });
+    })(jQuery);
+</script>
