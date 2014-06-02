@@ -61,6 +61,31 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
     }
 
     private function setupAutoload() {
-        Portfolio_StudipAutoloader::addAutoloadPath(__DIR__ . '/app/models');
+        spl_autoload_register(function ($class) {
+            include_once Portfolio::findFile(__DIR__ .'/app/models', $class);
+        });
+        // Portfolio_StudipAutoloader::addAutoloadPath(__DIR__ . '/app/models');
+    }
+
+    static function findFile($path, $class, $handle_namespace = true)
+    {
+        // Handle possible namespace
+        if ($handle_namespace && strpos($class, '\\') !== false) {
+            // Convert namespace into directory structure
+            $namespaced = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+            $namespaced = strtolower(dirname($namespaced)) . DIRECTORY_SEPARATOR . basename($namespaced);
+            $class = basename($namespaced);
+
+            if ($filename = self::findFile($namespaced, false)) {
+                return $filename;
+            }
+        }
+
+        $base =  $path . DIRECTORY_SEPARATOR . $class;
+        if (file_exists($base . '.class.php')) {
+            return $base . '.class.php';
+        } elseif (file_exists($base . '.php')) {
+            return $base . '.php';
+        }
     }
 }

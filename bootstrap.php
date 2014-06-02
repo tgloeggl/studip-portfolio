@@ -21,7 +21,6 @@ if (version_compare($GLOBALS['SOFTWARE_VERSION'], "2.5", '<=')) {
     require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_SimpleORMap.php';
     require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_StudipDocument.php';
     require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_StudyCourse.php';
-    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_StudipAutoloader.php';
 } else {
     // for versions newer than 2.5 use the same stub
     require_once 'compat/2.5/Portfolio_SimpleCollection.php';
@@ -29,7 +28,6 @@ if (version_compare($GLOBALS['SOFTWARE_VERSION'], "2.5", '<=')) {
     require_once 'compat/2.5/Portfolio_SimpleORMap.php';
     require_once 'compat/2.5/Portfolio_StudipDocument.php';
     require_once 'compat/2.5/Portfolio_StudyCourse.php';
-    require_once 'compat/2.5/Portfolio_StudipAutoloader.php';
 }
 
 require_once 'vendor/trails/trails.php';
