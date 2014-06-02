@@ -42,8 +42,8 @@ $path = array(
         <label>
             <span><?= _('Zugeordnete Portfolios:') ?></span><br>
             <select id="sets" name="sets[]" multiple class="chosen" data-placeholder="<?= _('Wählen Sie Zuordnungen aus') ?>">
-                <? foreach ($portfolios as $portfolio) : ?>
-                    <option value="<?= $portfolio->id ?>" <?= $portfolio->id == $portfolio->id ? 'selected="selected"' : '' ?>><?= htmlReady($portfolio->name) ?></option>
+                <? foreach ($portfolios as $l_portfolio) : ?>
+                    <option value="<?= $l_portfolio->id ?>" <?= $l_portfolio->id == $portfolio->id ? 'selected="selected"' : '' ?>><?= htmlReady($l_portfolio->name) ?></option>
                 <? endforeach ?>
             </select>
             <?= tooltipIcon('Neue Portfolios können Sie auf der Übersichtsseite erstellen.') ?>
