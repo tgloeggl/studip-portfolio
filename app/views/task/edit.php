@@ -87,6 +87,9 @@ $path[] = $task->title;
 
     <!-- Answer -->
     <? if ($perms['view_answer']) : ?>
+        <? if ($task_user->user_id == $user->id && $task_user->closed) : ?>
+        <span style="font-weight: bold; color: #CC0000;"><?= _('Diese Aufgabe wurde vom Betreuer geschlossen und kann deshalb nicht mehr bearbeitet werden!') ?></span>
+        <? endif ?>
         <? if ($task->allow_text) : ?>
         <label <?= ($perms['edit_answer']) ? '' : 'class="mark"' ?>>
             <span><?= _('Antworttext:') ?></span><br>
@@ -155,6 +158,11 @@ $path[] = $task->title;
         <? endif ?>
     </label>
     <? endif ?>
+
+    <label>
+        <input type="checkbox" name="close" value="1" <?= $task_user->closed ? 'checked="checked"' : '' ?>>
+        <span style="font-weight: bold"><?= _('Aufgabe schließen?') ?></span>
+    </label>
 
     <!-- Form-Buttons -->
     <div style="text-align: center">

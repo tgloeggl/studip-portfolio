@@ -160,6 +160,11 @@ class Perm
             }
         }
 
+        // closed tasks get fewer edit-perms
+        if ($task_user->closed) {
+            $perms['edit_answer'] = false;
+        }
+
         return $perms;
     }
 }

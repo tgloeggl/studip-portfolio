@@ -133,7 +133,7 @@ class TaskController extends PortfolioPluginController
             $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($user_id);
         }
     }
-    
+
     public function update_action($portfolio_id, $task_user_id)
     {
         $user_id = $this->container['user']->id;
@@ -149,6 +149,11 @@ class TaskController extends PortfolioPluginController
                 'title'       => Request::get('title'),
                 'content'     => Request::get('content')
             ));
+        }
+
+
+        if ($perms['close_task']) {
+            $task_user->closed = Request::option('close') ? 1 : 0;
         }
 
         if ($perms['edit_settings']) {
