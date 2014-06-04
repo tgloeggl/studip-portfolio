@@ -189,7 +189,10 @@ class TaskController extends PortfolioPluginController
 
             // update the permissions for the task
             foreach (Request::getArray('perms') as $username => $perm) {
-                $new_perms[] = array(get_userid($username), $perm);
+                // only add permissions for users other than the current one (the owner)
+                if ($username != $this->container['user']->username) {
+                    $new_perms[] = array(get_userid($username), $perm);
+                }
             }
 
             $diff = Portfolio\Helper::pick($task_user->perms->pluck('user_id role'), $new_perms);
