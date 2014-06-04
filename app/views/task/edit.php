@@ -159,10 +159,12 @@ $path[] = $task->title;
     </label>
     <? endif ?>
 
+    <? if ($perms['close_task']) : ?>
     <label>
         <input type="checkbox" name="close" value="1" <?= $task_user->closed ? 'checked="checked"' : '' ?>>
         <span style="font-weight: bold"><?= _('Aufgabe schließen?') ?></span>
     </label>
+    <? endif ?>
 
     <!-- Form-Buttons -->
     <div style="text-align: center">
