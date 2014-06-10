@@ -24,6 +24,7 @@ if (version_compare($version, "3.0", '<=')) {
     require_once 'compat/'. $version .'/Portfolio_SimpleORMap.php';
     require_once 'compat/'. $version .'/Portfolio_StudipDocument.php';
     require_once 'compat/'. $version .'/Portfolio_StudyCourse.php';
+    require_once 'compat/'. $version .'/UserStudyCourse.php';
 } else {
     // for versions newer than 3.0 use the same stub
     require_once 'compat/3.0/Portfolio_SimpleCollection.php';
