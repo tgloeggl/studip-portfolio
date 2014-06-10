@@ -13,22 +13,24 @@ if (!class_exists('SkipLinks')) {
     }
 }
 
+$version = substr($GLOBALS['SOFTWARE_VERSION'], 0, 3);
+
 // load code for older Stud.IP-Versions
-if (version_compare($GLOBALS['SOFTWARE_VERSION'], "2.5", '<=')) {
-    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/StudipArrayObject.php';
-    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_SimpleCollection.php';
-    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_SimpleORMapCollection.php';
-    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_SimpleORMap.php';
-    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_StudipDocument.php';
-    require_once 'compat/'. $GLOBALS['SOFTWARE_VERSION'] .'/Portfolio_StudyCourse.php';
+if (version_compare($version, "3.0", '<=')) {
+
+    require_once 'compat/'. $version .'/StudipArrayObject.php';
+    require_once 'compat/'. $version .'/Portfolio_SimpleCollection.php';
+    require_once 'compat/'. $version .'/Portfolio_SimpleORMapCollection.php';
+    require_once 'compat/'. $version .'/Portfolio_SimpleORMap.php';
+    require_once 'compat/'. $version .'/Portfolio_StudipDocument.php';
+    require_once 'compat/'. $version .'/Portfolio_StudyCourse.php';
 } else {
-    // for versions newer than 2.5 use the same stub
-    require_once 'compat/2.5/Portfolio_SimpleCollection.php';
-    require_once 'compat/2.5/Portfolio_SimpleORMapCollection.php';
-    require_once 'compat/2.5/Portfolio_SimpleORMap.php';
-    require_once 'compat/2.5/Portfolio_StudipDocument.php';
-    require_once 'compat/2.5/Portfolio_StudyCourse.php';
-    require_once 'compat/2.5/UserStudyCourse.php';
+    // for versions newer than 3.0 use the same stub
+    require_once 'compat/3.0/Portfolio_SimpleCollection.php';
+    require_once 'compat/3.0/Portfolio_SimpleORMapCollection.php';
+    require_once 'compat/3.0/Portfolio_SimpleORMap.php';
+    require_once 'compat/3.0/Portfolio_StudipDocument.php';
+    require_once 'compat/3.0/Portfolio_StudyCourse.php';
 }
 
 require_once 'vendor/trails/trails.php';
