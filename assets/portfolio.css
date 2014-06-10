@@ -37,6 +37,7 @@
 #portfolio #files_to_upload tr td:nth-child(3) { padding: 3px 10px; width: 100px; }
 #portfolio #files_to_upload span.file_error { display: block; background-color: #FFCCCC; padding: 2px; }
 #portfolio table.files { width: 80%; }
-#portfolio table.default caption { background-color: transparent; color: #444; font-size: 1.4em; text-align: left; }
+#portfolio table.default caption { background-color: transparent; color: #444; font-size: 1.4em; text-align: left; margin-top: 15px; }
+#portfolio table.default:first-child caption { margin-top: 0px; }
 
 span[disabled] { color: #6E6E6E; }

@@ -223,6 +223,13 @@ $form-width: 80%;
             color: #444;
             font-size: 1.4em;
             text-align: left;
+            margin-top: 15px;
+        }
+
+        &:first-child {
+            caption {
+                margin-top: 0px;
+            }
         }
     }
 }
