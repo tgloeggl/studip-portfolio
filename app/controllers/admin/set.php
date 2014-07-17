@@ -27,7 +27,7 @@ class Admin_SetController extends PortfolioPluginController
 
     public function index_action()
     {
-        $this->portfolios = Portfolio\Portfolios::findBySQL('1');
+        $this->portfolios = Portfolio\Portfolios::findBySQL('global = 1');
     }
 
     public function new_action()

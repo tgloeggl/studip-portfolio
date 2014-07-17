@@ -33,7 +33,11 @@ class TaskController extends PortfolioPluginController
             $this->redirect('portfolio');
         }
 
-        foreach (Portfolio\Helper::sortTasksByTags($this->portfolio->tasks) as $key => $data) {
+        foreach (Portfolio\Helper::sortTasksByTags($this->portfolio->tasks->filter(function($entry) {
+                if (in_array($entry->user_id, words('global ' . $this->user->id)) !== false) {
+                    return $entry;
+                }
+            })) as $key => $data) {
             $this->$key = $data;
         }
     }
