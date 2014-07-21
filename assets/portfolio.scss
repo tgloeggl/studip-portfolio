@@ -13,8 +13,23 @@ $form-width: 80%;
 
             span:first-child {
                 font-weight: bold;
+                margin-bottom: 5px;
+                display: inline-block;
+            }
+
+            span.title {
+                font-size: 1.2em;
+            }
+
+            .task-description {
+                font-size: 1.2em;
             }
         }
+
+        h1 input {
+            font-size: 16pt;
+        }
+
         input[type=text], textarea {
             width: $form-width;
         }
@@ -176,7 +191,7 @@ $form-width: 80%;
     }
 
     .mark {
-        background-color: #E1E4E5;
+        background-color: #F1F1F1;
         padding: 5px;
         width: $form-width;
     }

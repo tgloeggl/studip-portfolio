@@ -30,24 +30,26 @@ $path[] = $task->title;
 <?= $this->render_partial('task/js_templates.php') ?>
 <?= $this->render_partial('file/js_templates.php') ?>
 
-<h1><?= _('Aufgabe bearbeiten') ?></h1>
 <form method="post" action="<?= $controller->url_for('task/update/' . $portfolio->id .'/'. $task_user->id) ?>" class="warn-on-unload">
     <!-- Task -->
-    <label <?= ($perms['edit_task'] ? '' : 'class="mark"') ?>>
-        <span><?= _('Titel:') ?></span><br>
-        <? if ($perms['edit_task']): ?>
-        <input type="text" name="title" required="required" value="<?= htmlReady($task->title) ?>"><br>
-        <? else : ?>
-        <?= htmlReady($task->title) ?>
-        <? endif ?>
-    </label>
+    <h1>
+        <label>
+            <? if ($perms['edit_task']): ?>
+            <input type="text" name="title" required="required" value="<?= htmlReady($task->title) ?>"><br>
+            <? else : ?>
+            <?= htmlReady($task->title) ?>
+            <? endif ?>
+        </label>
+    </h1>
 
     <label <?= ($perms['edit_task'] ? '' : 'class="mark"') ?>>
-        <span><?= _('Aufgabenbeschreibung:') ?></span><br>
+        <span class="title"><?= _('Aufgabenbeschreibung:') ?></span><br>
         <? if ($perms['edit_task']): ?>
         <textarea name="content" required="required" class="add_toolbar"><?= htmlReady($task->content) ?></textarea><br>
         <? else : ?>
-        <?= formatReady($task->content) ?>
+        <span class="task-description">
+            <?= formatReady($task->content) ?>
+        </span>
         <? endif ?>
     </label>
 

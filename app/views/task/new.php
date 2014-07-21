@@ -26,12 +26,12 @@ $path = array(
 
 <?= $this->render_partial('task/js_templates.php') ?>
 
-<h1><?= _('Neue Aufgabe anlegen') ?></h1>
 <form method="post" action="<?= $controller->url_for('task/add/' . $portfolio->id) ?>" class="warn-on-unload">
-    <label>
-        <span><?= _('Titel:') ?></span><br>
-        <input type="text" name="title" required="required"><br>
-    </label>
+    <h1>
+        <label>
+            <input type="text" name="title" required="required" placeholder="<?= _('Titel der neuen Aufgabe') ?>"><br>
+        </label>
+    </h1>
 
     <label>
         <span><?= _('Aufgabenbeschreibung:') ?></span><br>
