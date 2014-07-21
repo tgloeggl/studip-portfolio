@@ -39,5 +39,6 @@
 #portfolio table.files { width: 80%; }
 #portfolio table.default caption { background-color: transparent; color: #444; font-size: 1.4em; text-align: left; margin-top: 15px; }
 #portfolio table.default:first-child caption { margin-top: 0px; }
+#portfolio .portfolio-buttons { text-align: center; width: 80%; }
 
 span[disabled] { color: #6E6E6E; }

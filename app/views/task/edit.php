@@ -95,7 +95,8 @@ $path[] = $task->title;
             <span><?= _('Antworttext:') ?></span><br>
 
             <? if ($perms['edit_answer']) : ?>
-            <textarea name="task_user[answer]" class="add_toolbar"><?= htmlReady($task_user->answer) ?></textarea><br>
+                <textarea name="task_user[answer]" class="add_toolbar"><?= htmlReady($task_user->answer) ?></textarea><br>
+                <?= $this->render_partial('task/_edit_form_buttons') ?>
             <? else : ?>
             <?= $task_user->answer
                     ? formatReady($task_user->answer)
@@ -122,7 +123,8 @@ $path[] = $task->title;
             <span><?= _('Feedback:') ?></span><br>
 
             <? if ($perms['edit_feedback']) : ?>
-            <textarea name="task_user[feedback]" class="add_toolbar"><?= htmlReady($task_user->feedback) ?></textarea><br>
+                <textarea name="task_user[feedback]" class="add_toolbar"><?= htmlReady($task_user->feedback) ?></textarea><br>
+                <?= $this->render_partial('task/_edit_form_buttons') ?>
             <? else : ?>
             <?= $task_user->feedback
                     ? formatReady($task_user->feedback)
@@ -150,7 +152,8 @@ $path[] = $task->title;
         <span><?= _('Zielvereinbarung:') ?></span><br>
 
         <? if ($perms['edit_goal']) : ?>
-        <textarea name="task_user[goal]" class="add_toolbar"><?= htmlReady($task_user->goal) ?></textarea><br>
+            <textarea name="task_user[goal]" class="add_toolbar"><?= htmlReady($task_user->goal) ?></textarea><br>
+            <?= $this->render_partial('task/_edit_form_buttons') ?>
         <? else : ?>
         <?= $task_user->goal
                 ? formatReady($task_user->goal)
@@ -165,14 +168,6 @@ $path[] = $task->title;
         <span style="font-weight: bold"><?= _('Aufgabe schließen?') ?></span>
     </label>
     <? endif ?>
-
-    <!-- Form-Buttons -->
-    <div style="text-align: center">
-        <div class="button-group">
-            <?= Studip\Button::createAccept(_('Aufgabe speichern')) ?>
-            <?= Studip\LinkButton::createCancel(_('Abbrechen'), $controller->url_for('task/index/' . $portfolio->id)) ?>
-        </div>
-    </div>
 </form>
 
 <script>
