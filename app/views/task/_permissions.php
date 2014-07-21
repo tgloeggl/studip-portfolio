@@ -23,7 +23,7 @@
         </select>
         <?= tooltipIcon(_('Betreuer: Kann die komplette Aufgabe einsehen und diese auch schließen') . "\n"
                 . _('Kommilitone: Kann die komplette Aufgabe einsehen aber nicht ändern') . "\n"
-                . _('Nachfolgebetreuer: Kann die Aufgabenstellung und die Zielvereinbarung einsehen ')) ?>
+                . _('Nachfolgebetreuer: Kann die Aufgabenbeschreibung und die Zielvereinbarung einsehen ')) ?>
     </div>
     
     <div>
