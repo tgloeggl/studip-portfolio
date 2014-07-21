@@ -31,7 +31,7 @@ $path[] = $task->title;
 <?= $this->render_partial('file/js_templates.php') ?>
 
 <h1><?= _('Aufgabe bearbeiten') ?></h1>
-<form method="post" action="<?= $controller->url_for('task/update/' . $portfolio->id .'/'. $task_user->id) ?>">
+<form method="post" action="<?= $controller->url_for('task/update/' . $portfolio->id .'/'. $task_user->id) ?>" class="warn-on-unload">
     <!-- Task -->
     <label <?= ($perms['edit_task'] ? '' : 'class="mark"') ?>>
         <span><?= _('Titel:') ?></span><br>

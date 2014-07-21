@@ -3,6 +3,18 @@ var STUDIP = STUDIP || {};
 (function ($) {
 
     $(document).ready(function() {
+        // warn if user may loose changes
+        $('form.warn-on-unload').on('change keyup keydown', 'input, textarea, select', function (e) {
+            $(this).addClass('changed-input');
+            console.log('form changed!');
+        });
+
+        $(window).on('beforeunload', function () {
+            if ($('.changed-input').length) {
+                return 'Sie haben ungespeicherte Änderungen!'.toLocaleString();
+            }
+        });
+
         $('a.confirm').bind('click', function() {
             return confirm('Sind Sie sicher?'.toLocaleString());
         })
