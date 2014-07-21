@@ -9,6 +9,10 @@ var STUDIP = STUDIP || {};
             console.log('form changed!');
         });
 
+        $('button[type=submit]').on('click', function() {
+            $('.changed-input').removeClass('changed-input');
+        });
+
         $(window).on('beforeunload', function () {
             if ($('.changed-input').length) {
                 return 'Sie haben ungespeicherte Änderungen!'.toLocaleString();
