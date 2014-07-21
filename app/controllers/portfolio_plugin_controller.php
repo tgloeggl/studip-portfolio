@@ -40,6 +40,7 @@ class PortfolioPluginController extends StudipController
 
         $this->container['user'] = $GLOBALS['user'];
         $this->timeformat = '%d.%m.%Y, %R';
+        $this->body_id = 'portfolio';
     }
 
     // customized #url_for for plugins
