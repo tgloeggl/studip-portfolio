@@ -1,5 +1,5 @@
 <h3 style="margin: 5px 0;">
-    <?= _('Tags:') ?>
+    <?= _('Schlagworte:') ?>
 </h3>
 
 

@@ -49,8 +49,8 @@ $path = array(
     </label>
 
     <label>
-        <span><?= _('Tags:') ?></span><br>
-        <select id="tags" name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
+        <span><?= _('Schlagworte:') ?></span><br>
+        <select id="tags" name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Schlagworte hinzu') ?>">
             <? foreach ($tags as $tag) : ?>
             <option><?= htmlReady($tag->tag) ?></option>
             <? endforeach ?>
@@ -77,7 +77,7 @@ $path = array(
             create_option: true,
             persistent_create_option: true,
             skip_no_results: true,
-            create_option_text: 'Tag erstellen'.toLocaleString()
+            create_option_text: 'Schlagwort erstellen'.toLocaleString()
         });
     });
 </script>

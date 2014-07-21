@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th><?= _('Aufgabe') ?></th>
-            <th><?= _('Tags') ?></th>
+            <th><?= _('Schlagworte') ?></th>
             <? if (!empty($task_users)) : ?>
             <th><?= _('Erstellt von') ?></th>
             <? endif ?>

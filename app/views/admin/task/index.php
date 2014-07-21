@@ -23,7 +23,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
             <tr>
                 <th><?= _('Name') ?></th>
                 <th><?= _('Enthalten in Sets') ?></th>
-                <th><?= _('Tags') ?></th>
+                <th><?= _('Schlagworte') ?></th>
                 <th></th>
                 <th></th>
             </tr>

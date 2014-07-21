@@ -18,7 +18,7 @@
                 <? if (!empty($tagless_tasks)) : ?>
                 <?= $this->render_partial('task/_tasks', array(
                     'tasks' => $tagless_tasks,
-                    'tag'   => _('Aufgaben ohne Tags')
+                    'tag'   => _('Aufgaben ohne Schlagworte')
                 )) ?>
                 <? endif ?>
             <? endif ?>

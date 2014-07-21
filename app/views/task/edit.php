@@ -67,8 +67,8 @@ $path[] = $task->title;
     </label>
 
     <label>
-        <span><?= _('Tags:') ?></span><br>
-        <select id="tags" name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Tags hinzu') ?>">
+        <span><?= _('Schlagworte:') ?></span><br>
+        <select id="tags" name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Schlagworte hinzu') ?>">
             <? foreach ($task->tags as $tag) : ?>
                 <option value="<?= htmlReady($tag->tag) ?>" selected="selected" <?= $tag->user_id == 'global' ? 'disabled' : '' ?>><?= htmlReady($tag->tag) ?></option>
             <? endforeach ?>
@@ -179,7 +179,7 @@ $path[] = $task->title;
             create_option: true,
             persistent_create_option: true,
             skip_no_results: true,
-            create_option_text: 'Tag erstellen'.toLocaleString()
+            create_option_text: 'Schlagwort erstellen'.toLocaleString()
         });
         
         <? foreach ($task_user->perms as $perm) : ?>
