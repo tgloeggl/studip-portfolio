@@ -43,12 +43,12 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
     </label>        
 
     <label>
-        <input type="checkbox" name="allow_text">
+        <input type="checkbox" name="allow_text" checked="checked">
         <?= _('Texteingabe erlauben?') ?>
     </label>
 
     <label>
-        <input type="checkbox" name="allow_files">
+        <input type="checkbox" name="allow_files" checked="checked">
         <?= _('Dateiupload erlauben?') ?>
     </label>
 
