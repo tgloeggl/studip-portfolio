@@ -1,10 +1,10 @@
 <?php
 $infobox_content[] = array(
-    'kategorie' => _('Informationen'),
+    'kategorie' => _('Aktionen'),
     'eintrag'   => array(
         array(
-            'icon' => 'icons/16/black/info.png',
-            'text' => _('Nutzer erhalten automatisch Zugriff auf dieses Aufgabenset, wenn sie in eine der ausgewählten Studiengangskombinationen studieren.')
+            'icon' => 'icons/16/black/link-intern.png',
+            'text' => '<a href="'. $controller->url_for('task/index/' . $portfolio->id) .'">'. _('Zurück zur Aufgabenübersicht') .'</a>'
         )
     )
 );
