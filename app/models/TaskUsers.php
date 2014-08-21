@@ -26,8 +26,17 @@ class TaskUsers extends \Portfolio_SimpleORMap
         $this->db_table = 'portfolio_task_users';
 
         $this->has_many['files'] = array(
-            'class_name'  => 'Portfolio\TaskUserFiles',
+            'class_name'        => 'Portfolio\TaskUserFiles',
             'assoc_foreign_key' => 'portfolio_task_users_id',
+            'on_delete'         => 'delete',
+            'on_store'          => 'store'
+        );
+
+        $this->has_one['feedback'] = array(
+            'class_name'        => 'Portfolio\TaskUserFeedback',
+            'assoc_foreign_key' => 'portfolio_task_users_id',
+            'on_delete'         => 'delete',
+            'on_store'          => 'store'
         );
 
         $this->has_many['perms'] = array(

@@ -237,7 +237,8 @@ class TaskController extends PortfolioPluginController
         }
 
         if ($perms['edit_feedback']) {
-            $task_user->feedback = $data['feedback'];
+            $task_user->feedback->feedback = $data['feedback'];
+            $task_user->feedback->user_id  = $user_id;
         }
 
         if ($perms['edit_goal']) {

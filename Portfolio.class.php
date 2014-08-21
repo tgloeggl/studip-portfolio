@@ -5,7 +5,7 @@ require 'bootstrap.php';
  * Portfolio.class.php
  *
  * @author  Till Glöggler <tgloeggl@uos.de>
- * @version 0.1a
+ * @version 1.0
  */
 
 require_once 'app/models/Abschluss.php';
@@ -17,6 +17,7 @@ require_once 'app/models/PortfoliosStudiengangCombos.php';
 require_once 'app/models/StudiengangCombos.php';
 require_once 'app/models/Tags.php';
 require_once 'app/models/TaskUserFiles.php';
+require_once 'app/models/TaskUserFeedback.php';
 require_once 'app/models/TaskUsers.php';
 require_once 'app/models/Tasks.php';
 

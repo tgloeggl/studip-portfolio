@@ -38,7 +38,7 @@ foreach ($tags as $key => $val) {
 
     <!-- Feedback -->
     <td style="text-align: right; vertical-align: top;">
-        <?= (!$task_user || $task_user->feedback === null) ? '0' : strlen($task_user->feedback) ?>
+        <?= (!$task_user || $task_user->feedback === null) ? '0' : strlen($task_user->feedback->feedback) ?>
         <?= Assets::img('icons/16/black/file-text.png', array(
             'title' => _('Antworttext')
         )) ?>

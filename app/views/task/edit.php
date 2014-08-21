@@ -125,13 +125,23 @@ $path[] = $task->title;
             <span><?= _('Feedback:') ?></span><br>
 
             <? if ($perms['edit_feedback']) : ?>
-                <textarea name="task_user[feedback]" class="add_toolbar"><?= htmlReady($task_user->feedback) ?></textarea><br>
+                <textarea name="task_user[feedback]" class="add_toolbar"><?= htmlReady($task_user->feedback->feedback) ?></textarea><br>
                 <?= $this->render_partial('task/_edit_form_buttons') ?>
             <? else : ?>
             <?= $task_user->feedback
-                    ? formatReady($task_user->feedback)
+                    ? formatReady($task_user->feedback->feedback)
                     : '<span class="empty_text">' . _('Es wurde bisher kein Feedback eingegeben.') .'</span>' ?>
             <? endif ?>
+
+            <span class="editor">
+                <? if ($task_user->feedback->mkdate != $task_user->feedback->chdate) : ?>
+                Erstellt am <?= strftime($timeformat, $task_user->feedback->mkdate) ?>,
+                <? endif ?>
+
+                zuletzt bearbeitet von <a href="<?= URLHelper::getLink('dispatch.php/profile/?username=' . get_username($task_user->feedback->user_id)) ?>">
+                    <?= get_fullname($task_user->feedback->user_id) ?></a>
+                am <?= strftime($timeformat, $task_user->feedback->chdate) ?>
+            </span>
         </label>
 
         <br>

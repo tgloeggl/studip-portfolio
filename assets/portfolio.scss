@@ -17,7 +17,16 @@ $form-width: 80%;
                 display: inline-block;
             }
 
-            span.title {
+            & > span.editor {
+                display: block;
+                border-top: 1px solid #1e3e70;
+                margin: 10px -5px 0px -5px;
+                padding: 0px 5px;
+                font-style: italic;
+                text-align: right;
+            }
+            
+            & > span.title {
                 font-size: 1.2em;
             }
 
