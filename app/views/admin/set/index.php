@@ -10,7 +10,7 @@ $infobox_content[] = array(
     )
 );
 
-$infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);    
+$infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
 ?>
 
 <h1><?= _('Vorhandene Aufgabensets') ?></h1>
@@ -38,12 +38,14 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                 <td>
                     <ul style="margin: 0px; padding-left: 0px;">
                         <? foreach ($portfolio->combos as $combo) : ?>
-                            <? foreach ($combo->study_combos as $study_combo) : ?>
-                            <li>
-                                <?= htmlReady($study_combo->studiengang->name) ?> *
-                                <?= htmlReady($study_combo->abschluss->name) ?>
-                            </li>
-                            <? endforeach; ?>
+                        <li>
+                            <?
+                            $list = array();
+                            foreach ($combo->study_combos as $study_combo) :
+                                $list[] = $study_combo->studiengang->name .' * '. $study_combo->abschluss->name;
+                            endforeach; ?>
+                            <?= htmlReady(implode(', ', $list)) ?>
+                        </li>
                         <? endforeach; ?>
                     </ul>
                 </td>
