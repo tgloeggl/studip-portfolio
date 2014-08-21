@@ -36,6 +36,10 @@ class FileController extends PortfolioPluginController
 
     function post_files_action($task_user_id, $type)
     {
+        if (empty($_POST) && $_SERVER['CONTENT_LENGTH'] > Helper::return_bytes(ini_get('post_max_size'))) {
+            throw new Trails_Exception(413, 'Datei zu groß'); // Request Entity Too Large
+        }
+
         $user_id = $this->user->id;
         $task_user = new Portfolio\TaskUsers($task_user_id);
         $task      = new Portfolio\Tasks($task_user->portfolio_tasks_id);

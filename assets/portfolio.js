@@ -81,7 +81,7 @@ var STUDIP = STUDIP || {};
                                 id      : file.id,
                                 url     : file.url,
                                 name    : file.name,
-                                size    : Math.round((file.size / 1024) * 100) / 100,
+                                size    : STUDIP.Portfolio.Helpers.bytesToSize(file.size),
                                 date    : file.date,
                                 creator : file.creator
                             }
@@ -92,7 +92,7 @@ var STUDIP = STUDIP || {};
                 },
 
                 progress: function (e, data) {
-                    var kbs = parseInt(data._progress.bitrate / 8 / 1024);
+                    var kbs = parseInt(data._progress.bitrate / 8 / 1000);
                     var progress = parseInt(data.loaded / data.total * 100, 10);
                     var id = $('#files_to_upload tr:first-child').attr('data-fileid');
                     $('#files_to_upload tr[data-fileid=' + id + '] progress').val(progress);
@@ -143,8 +143,6 @@ var STUDIP = STUDIP || {};
                 $('#files_to_upload').html('');
             }
 
-            $('#upload_button').removeClass('disabled');
-
             var file = data.files[0];
             STUDIP.Portfolio.File.files[data.id] = data;
 
@@ -152,7 +150,7 @@ var STUDIP = STUDIP || {};
                 id: data.id,
                 name: file.name,
                 error: file.size > STUDIP.Portfolio.File.maxFilesize,
-                size: Math.round((file.size / 1024) * 100) / 100
+                size: STUDIP.Portfolio.Helpers.bytesToSize(file.size)
             }
 
             $('#files_to_upload').append(STUDIP.Portfolio.File.fileTemplate(templateData));
@@ -174,6 +172,8 @@ var STUDIP = STUDIP || {};
 
                 $('#files_to_upload tr:last-child td:first-child').append(img);
             }
+
+            STUDIP.Portfolio.File.upload();
         },
 
         removeFile: function(id) {
@@ -191,14 +191,6 @@ var STUDIP = STUDIP || {};
         },
 
         upload: function() {
-            // do nothing if upload has been disabled
-            if ($('upload_button').hasClass('disabled')) {
-                return;
-            }
-
-            // set upload as disabled
-            $('#upload_button').addClass('disabled');
-
             // upload each file separately to allow max filesize for each file
             _.each(STUDIP.Portfolio.File.files, function (data) {
                 if (data.files[0].size > 0 && data.files[0].size <= STUDIP.Portfolio.File.maxFilesize) {
@@ -351,10 +343,19 @@ var STUDIP = STUDIP || {};
         /**
          * remove the studygroup-combo denoted by the passed num from the view
          * @param int num
-         * @returns {undefined}
          */
         removeCombo: function(num) {
             $('div[data-studycourse-num=' + num + ']').remove();
+        }
+    };
+
+    STUDIP.Portfolio.Helpers = {
+        bytesToSize: function(bytes) {
+            if (bytes === 0) return '0 Byte';
+            var k = 1000;
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+            var i = Math.floor(Math.log(bytes) / Math.log(k));
+            return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
         }
     };
 }(jQuery));

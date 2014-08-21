@@ -19,7 +19,7 @@
                 <?= $file->document->name ?>
             </a>
         </td>
-        <td><?= round((($file->document->filesize / 1024) * 100) / 100, 2) ?> kb</td>
+        <td><?= Portfolio\Helper::bytesToSize($file->document->filesize) ?></td>
         <td><?= strftime($timeformat, $file->document->mkdate) ?></td>
 
         <td><?= get_fullname($file->document->user_id) ?></td>

@@ -14,7 +14,7 @@
     <td style="width: 10%">
         <span class="kbs">0</span> kb/s
     </td>
-    <td style="width: 10%"><%- size %> kb</td>
+    <td style="width: 10%"><%- size %></td>
 </tr>
 </script>
 
@@ -26,7 +26,7 @@
             <%- name %>
         </a>
     </td>
-    <td><%- size %> kb</td>
+    <td><%- size %></td>
     <td><%- date %></td>
     <td><%- creator %></td>
     <td>

@@ -17,9 +17,6 @@
     </a>
 </div>
 
-<?= \Studip\LinkButton::create(_('Datei(en) hochladen'), "javascript:STUDIP.Portfolio.File.upload()",
-        array('id' => 'upload_button', 'class' => 'disabled')) ?>
-
 <b><?= _('Maximal erlaubte Größe pro Datei') ?>: <?= round($max / 1024 / 1024, 2) ?> MB</b><br>
 
 <table class="default zebra files">
