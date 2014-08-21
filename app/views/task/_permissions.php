@@ -8,10 +8,10 @@
 
 <div class="three-columns" id="permissions">
     <div>
-        <select name="search" data-placeholder="<?= _('Nach Nutzer suchen...') ?>">
+        <select name="search" data-placeholder="<?= _('Nach Nutzer/in suchen...') ?>">
         </select>
         <span class="chosen-error" style="display: none">
-            <?= _('Bitte suchen Sie zuerst nach einem Nutzer, dem eine Berechtigung eingeräumt werden soll!') ?>
+            <?= _('Bitte suchen Sie zuerst nach einem/r Nutzer/in, dem/der eine Berechtigung eingeräumt werden soll!') ?>
         </span>
     </div>
 

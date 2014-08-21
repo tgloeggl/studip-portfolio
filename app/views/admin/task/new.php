@@ -4,7 +4,7 @@ $infobox_content[] = array(
     'eintrag'   => array(
         array(
             'icon' => 'icons/16/black/info.png',
-            'text' => _('Nutzer erhalten automatisch Zugriff auf dieses Aufgabenset, wenn sie in eine der ausgewählten Studiengangskombinationen studieren.')
+            'text' => _('Nutzer/innen erhalten automatisch Zugriff auf dieses Aufgabe in diesem Aufgabenset, wenn sie in eine der ausgewählten Studiengangskombinationen studieren.')
         )
     )
 );
