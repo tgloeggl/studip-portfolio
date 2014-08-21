@@ -23,36 +23,38 @@ foreach ($tags as $key => $val) {
 
     <!-- Arbeit -->
     <td style="text-align: right; vertical-align: top;">
-        <?= (!$task_user || $task_user->answer === null) ? '0' : strlen($task_user->answer) ?>
+        <?= (!$task_user || $task_user->answer === null || !trim(strip_tags($task_user->answer)))
+            ? '0' : sizeof(explode(' ', trim(strip_tags($task_user->answer)))) ?>
         <?= Assets::img('icons/16/black/file-text.png', array(
-            'title' => _('Antworttext')
+            'title' => _('Anzahl der eingegebenen Wörter beim Antworttext')
         )) ?>
     </td>
     <td style="vertical-align: top;">
         <?= $task_user ? sizeof($task_user->files->findBy('type', 'answer')) : 0 ?>
         <?= Assets::img('icons/16/black/file-generic.png', array(
-            'title' => _('Hochgeladene Dateien')
+            'title' => _('Anzahl der als Antwort hochgeladenen Dateien')
         )) ?>
     </td>
 
 
     <!-- Feedback -->
     <td style="text-align: right; vertical-align: top;">
-        <?= (!$task_user || $task_user->feedback === null) ? '0' : strlen($task_user->feedback->feedback) ?>
+        <?= (!$task_user || $task_user->feedback === null || !trim(strip_tags($task_user->feedback->feedback)))
+            ? '0' : sizeof(explode(' ', trim(strip_tags($task_user->feedback->feedback)))) ?>
         <?= Assets::img('icons/16/black/file-text.png', array(
-            'title' => _('Antworttext')
+            'title' => _('Anzahl der eingegebenen Wörter beim Feedback')
         )) ?>
     </td>
     <td style="vertical-align: top;">
         <?= $task_user ? sizeof($task_user->files->findBy('type', 'feedback')) : 0 ?>
         <?= Assets::img('icons/16/black/file-generic.png', array(
-            'title' => _('Hochgeladene Dateien')
+            'title' => _('Anzahl der als Feedback hochgeladenen Dateien')
         )) ?>
     </td>
 
     <!-- Aktionen -->
     <td style="vertical-align: top;">
-        <a href="<?= $controller->url_for('task/edit/' . $portfolio->id .'/'. $task->id) ?>">
+        <a href="<?= $controller->url_for('task/edit/' . $portfolio->id .'/'. $task->id) ?>" title="<?= _('Diese Aufgabe bearbeiten') ?>">
             <?= Assets::img('icons/16/blue/edit.png') ?>
         </a>
     </td>
@@ -64,7 +66,7 @@ foreach ($tags as $key => $val) {
             )) ?>
         <? else : ?>
         <a href="<?= $controller->url_for('task/delete/' . $portfolio->id .'/'. $task->id) ?>"
-           class="confirm" title="<?= _('Diese Aufgabe löschen') ?>">
+           class="confirm" title="<?= _('Diese Aufgabe löschen') ?>" title="<?= _('Diese Aufgabe löschen') ?>">
             <?= Assets::img('icons/16/blue/trash.png') ?>
         </a>
         <? endif ?>
