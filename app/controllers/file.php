@@ -36,7 +36,7 @@ class FileController extends PortfolioPluginController
 
     function post_files_action($task_user_id, $type)
     {
-        if (empty($_POST) && $_SERVER['CONTENT_LENGTH'] > Helper::return_bytes(ini_get('post_max_size'))) {
+        if (empty($_POST) && $_SERVER['CONTENT_LENGTH'] > Portfolio\Helper::return_bytes(ini_get('post_max_size'))) {
             throw new Trails_Exception(413, 'Datei zu groﬂ'); // Request Entity Too Large
         }
 
