@@ -4,22 +4,17 @@
     <td style="width: 50%">
         <%- name %>
     </td>
-    <td style="width: 25%">
+    <td style="width: 30%">
         <% if (error) { %>
         <span class="file_error"><?= _('Datei zu groß!') ?></span>
         <% } else { %>
         <progress value="0" max="100" style="width: 100%"></progress>
         <% } %>
     </td>
-    <td style="width: 5%">
+    <td style="width: 10%">
         <span class="kbs">0</span> kb/s
     </td>
     <td style="width: 10%"><%- size %> kb</td>
-    <td style="width: 10%">
-        <a href="javascript:STUDIP.Portfolio.File.removeUploadFile(<%- id %>)">
-            <?= Assets::img('icons/16/blue/trash.png') ?>
-        </a>
-    </td>
 </tr>
 </script>
 
@@ -33,8 +28,9 @@
     </td>
     <td><%- size %> kb</td>
     <td><%- date %></td>
+    <td><%- creator %></td>
     <td>
-        <a href="javascript:STUDIP.Portfolio.File.removeFile('<%- seminar %>', '<%- id %>')">
+        <a href="javascript:STUDIP.Portfolio.File.removeFile('<%- id %>')">
             <?= Assets::img('icons/16/blue/trash.png') ?>
         </a>
     </td>

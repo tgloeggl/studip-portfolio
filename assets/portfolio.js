@@ -78,12 +78,12 @@ var STUDIP = STUDIP || {};
                             $('#files_to_upload tr[data-fileid=' + id + ']').remove();
 
                             var templateData = {
-                                id     : file.id,
-                                url    : file.url,
-                                name   : file.name,
-                                size   : Math.round((file.size / 1024) * 100) / 100,
-                                date   : file.date,
-                                seminar: file.seminar_id
+                                id      : file.id,
+                                url     : file.url,
+                                name    : file.name,
+                                size    : Math.round((file.size / 1024) * 100) / 100,
+                                date    : file.date,
+                                creator : file.creator
                             }
 
                             $('#uploaded_files').append(STUDIP.Portfolio.File.uploadedFileTemplate(templateData));
@@ -174,19 +174,6 @@ var STUDIP = STUDIP || {};
 
                 $('#files_to_upload tr:last-child td:first-child').append(img);
             }
-        },
-
-        removeUploadFile: function(id) {
-            var files = STUDIP.Portfolio.File.files[id];
-            delete STUDIP.Portfolio.File.files[id];
-
-            _.each(files, function(file) {
-                if (file.jqXHR) {
-                    file.jqXHR.abort();
-                }
-            });
-
-            $('#files_to_upload tr[data-fileid=' + id + ']').remove();
         },
 
         removeFile: function(id) {

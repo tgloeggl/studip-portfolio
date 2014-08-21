@@ -89,12 +89,12 @@ class FileController extends PortfolioPluginController
 
                 if ($newfile = StudipDocument::createWithFile($file['tmp_name'], $document)) {
                     $output[] = array(
-                        'url'        => GetDownloadLink($newfile->getId(), $newfile['filename']),
-                        'id'         => $taskfile->id,
-                        'name'       => $newfile->name,
-                        'date'       => strftime($this->timeformat, time()),
-                        'size'       => $newfile->filesize,
-                        'seminar_id' => $this->seminar_id
+                        'url'     => GetDownloadLink($newfile->getId(), $newfile['filename']),
+                        'id'      => $taskfile->id,
+                        'name'    => $newfile->name,
+                        'date'    => strftime($this->timeformat, time()),
+                        'size'    => $newfile->filesize,
+                        'creator' => get_fullname($user_id)
                     );
                 } else {
                     throw new Exception('Konnte Datei nicht auf dem Server erstellen! Fehlende Schreibrechte?');
