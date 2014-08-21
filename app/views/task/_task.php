@@ -17,7 +17,9 @@ foreach ($tags as $key => $val) {
 
     <? if ($show_creator) : ?>
     <td>
-        <?= get_fullname($task_user->user_id) ?>
+        <a href="<?= URLHelper::getLink('dispatch.php/profile?username=' . get_username($task_user->user_id)) ?>">
+            <?= get_fullname($task_user->user_id) ?>
+        </a>
     </td>
     <? endif ?>
 
