@@ -31,6 +31,7 @@ class TaskController extends PortfolioPluginController
 
         if (!$this->portfolio) {
             $this->redirect('portfolio');
+            return;
         }
 
         foreach (Portfolio\Helper::sortTasksByTags($this->portfolio->tasks->filter(function($entry) {
