@@ -23,6 +23,12 @@ class TaskController extends PortfolioPluginController
 
         $this->user = $this->container['user'];
         $this->set_layout('layout');
+
+        $this->permissions = array(
+            'tutor'          => _('Betreuer/in'),
+            'student'        => _('Kommilitone/in'),
+            'followup-tutor' => _('Nachfolgebetreuer/in')
+        );
     }
 
     public function index_action($portfolio_id)

@@ -42,6 +42,25 @@ $path[] = $task->title;
         </label>
     </h1>
 
+    <? if ($task_user->user_id != $user->id): ?>
+        <? foreach($task_user->perms as $id => $perm) :
+            if ($perm->user_id == $user->id) :
+                $my_perm = $perm;
+            endif;
+        endforeach; ?>
+
+    <span>
+        <?= sprintf(_('Besitzer: %s, ihr Status %s.'),
+                '<a href="'. URLHelper::getLink('dispatch.php/profile?username='
+                        . get_username($task_user->user_id)) .'">'
+                    . get_fullname($task_user->user_id) . '</a>',
+                $permissions[$my_perm->role]
+        ) ?>
+    </span>
+    <? endif ?>
+
+    
+
     <label <?= ($perms['edit_task'] ? '' : 'class="mark"') ?>>
         <span class="title"><?= _('Aufgabenbeschreibung:') ?></span><br>
         <? if ($perms['edit_task']): ?>
@@ -199,9 +218,7 @@ $path[] = $task->title;
             user: '<?= get_username($perm->user_id) ?>',
             fullname: '<?= get_fullname($perm->user_id) ?>',
             perm: '<?= $perm->role ?>',
-            permission: '<?= $perm->role == 'tutor' 
-                ? _('Betreuer') : ($perm->role == 'student'
-                ?  _('Kommilitone') :  _('Nachfolgebetreuer')) ?>'
+            permission: '<?= $permissions[$perm->role] ?>'
         });
         <? endforeach ?>
     });

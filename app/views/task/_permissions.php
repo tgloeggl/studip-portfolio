@@ -17,13 +17,13 @@
 
     <div>
         <select name="permission" data-placeholder="<?= _('Berechtigung wählen') ?>">
-            <option value="tutor"><?= _('Betreuer') ?></option>
-            <option value="student"><?= _('Kommilitone') ?></option>
-            <option value="followup-tutor"><?= _('Nachfolgebetreuer') ?></option>
+            <? foreach ($permissions as $perm => $name) : ?>
+            <option value="<?= $perm ?>"><?= $name ?></option>
+            <? endforeach ?>
         </select>
-        <?= tooltipIcon(_('Betreuer: Kann die komplette Aufgabe einsehen und diese auch schließen') . "\n"
-                . _('Kommilitone: Kann die komplette Aufgabe einsehen aber nicht ändern') . "\n"
-                . _('Nachfolgebetreuer: Kann die Aufgabenbeschreibung und die Zielvereinbarung einsehen ')) ?>
+        <?= tooltipIcon(_('Betreuer/in: Kann die komplette Aufgabe einsehen und diese auch schließen') . "\n"
+                . _('Kommilitone/in: Kann die komplette Aufgabe einsehen aber nicht ändern') . "\n"
+                . _('Nachfolgebetreuer/in: Kann die Aufgabenbeschreibung und die Zielvereinbarung einsehen ')) ?>
     </div>
     
     <div>
