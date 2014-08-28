@@ -1,4 +1,5 @@
 var STUDIP = STUDIP || {};
+STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
 
 (function ($) {
 
@@ -6,7 +7,6 @@ var STUDIP = STUDIP || {};
         // warn if user may loose changes
         $('form.warn-on-unload').on('change keyup keydown', 'input, textarea, select', function (e) {
             $(this).addClass('changed-input');
-            console.log('form changed!');
         });
 
         $('button[type=submit]').on('click', function() {
@@ -116,6 +116,8 @@ var STUDIP = STUDIP || {};
             STUDIP.Portfolio.File.uploadedFileTemplate = _.template($("script.uploaded_file_template").html());
             STUDIP.Portfolio.File.errorTemplate        = _.template($("script.error_template").html());
         }
+
+        STUDIP.Portfolio.Permissions.initialize();
     });
 
 
@@ -127,6 +129,76 @@ var STUDIP = STUDIP || {};
             return _.template($("script." + name).html());
         }),
     };
+
+    STUDIP.Portfolio.Permissions = {
+        initialize: function() {
+            $('#permissions input[name=search]').select2({
+                width: 'copy',
+                minimumInputLength: 3,
+
+                ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                    url: STUDIP.PortfolioConfig.search_user_url,
+                    dataType: 'json',
+                    data: function (term, page) {
+                        return {
+                            term: term
+                        }
+                    },
+                    results: function (data, page) { // parse the results into the format expected by Select2.
+                        return {results: data, more: false};
+                    }
+                },
+
+                formatResult: function (user) {
+                    return user.picture + ' ' + user.text;
+                },
+
+                formatSelection: function (user) {
+                    return user.text;
+                },
+            });
+
+            $('#permissions select[name=permission]').select2({
+                width: 'copy',
+                minimumResultsForSearch: -1
+            });
+
+            var self = this;
+            $('#add-permission').click(function(){
+                self.add();
+            })
+        },
+
+       add: function() {
+            data_user = $("#permissions input[name=search]").select2("data");
+            data_perm = $('#permissions select[name=permission]').select2("data");
+
+            var data = {
+                user:       data_user.id,
+                fullname:   data_user.text,
+                perm:       data_perm.id,
+                permission: data_perm.text
+            }
+
+            if (data.user === undefined || data.user === null || data.user === "") {
+                $('#permissions input[name=search]').siblings('.error').hide();
+                $('#permissions input[name=search]').siblings('.error').show('highlight');
+                return;
+            }
+
+            $('#permissions input[name=search]').siblings('.error').hide();
+
+            this.addTemplate(data);
+        },
+
+        addTemplate: function(data) {
+            var template = STUDIP.Portfolio.getTemplate('permission');
+
+            $('#permission_list').append(template(data)).find('div:last-child img').click(function() {
+                $(this).parent().parent().remove();
+            });
+        }
+    }
 
     STUDIP.Portfolio.File = {
         files : {},
@@ -268,34 +340,7 @@ var STUDIP = STUDIP || {};
                 });
             }
         },
-
-        addPermission: function() {
-            var data = {
-                user: $('#permissions select[name=search]').val(),
-                fullname: $('#permissions select[name=search]').parent().find('.chosen-single').text(),
-                perm: $('#permissions select[name=permission]').val(),
-                permission: $('#permissions select[name=permission]').parent().find('.chosen-single').text()
-            };
-
-            if (data.user === undefined || data.user === null) {
-                $('#permissions select[name=search]').siblings('.chosen-error').hide();
-                $('#permissions select[name=search]').siblings('.chosen-error').show('highlight');
-                return;
-            }
-
-            $('#permissions select[name=search]').siblings('.chosen-error').hide();
-
-            STUDIP.Portfolio.Homepage.addPermissionTemplate(data);
-        },
-
-        addPermissionTemplate: function(data) {
-            var template = STUDIP.Portfolio.getTemplate('permission');
-
-            $('#permission_list').append(template(data)).find('div:last-child img').click(function() {
-                $(this).parent().parent().remove();
-            });
-        }
-    };
+   };
 
     STUDIP.Portfolio.Admin = {
         num : 0,

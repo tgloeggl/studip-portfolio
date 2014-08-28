@@ -29,6 +29,8 @@ class PortfolioPluginController extends StudipController
         } else {
             $this->infobox_picture =  'infobox/schedules.jpg';
         }
+
+        $this->flash = Trails_Flash::instance();
     }
 
     public function before_filter(&$action, &$args)

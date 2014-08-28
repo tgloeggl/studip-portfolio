@@ -253,7 +253,11 @@ class TaskController extends PortfolioPluginController
 
         $task_user->store();
 
-        $this->redirect('task/index/' . $portfolio_id);
+        $this->flash['messages'] = array(
+            array('type' => 'success', 'text' => _('Die Aufgabe wurde gespeichert'))
+        );
+
+        $this->redirect('task/edit/' . $portfolio_id .'/'. $task->id .'/'. $task_user_id);
     }
 
     public function delete_action($portfolio_id, $task_id)

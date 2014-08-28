@@ -25,7 +25,7 @@ $form-width: 80%;
                 font-style: italic;
                 text-align: right;
             }
-            
+
             & > span.title {
                 font-size: 1.2em;
             }
@@ -59,7 +59,6 @@ $form-width: 80%;
     }
 
     .three-columns {
-        clear: both;
         width: $form-width;
 
         & > div {
@@ -68,14 +67,21 @@ $form-width: 80%;
         }
 
         a.button {
-        margin: 0px;
+            margin: 0px;
         }
     }
 
-    span.chosen-error {
-        display: block;
-        color: #FF0000;
-        padding: 2px;
+    .two-columns {
+        width: $form-width;
+
+        & > label {
+            width: 49%;
+            float: left;
+
+            select {
+                width: 90%;
+            }
+        }
     }
 
     #permission_list {

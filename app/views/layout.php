@@ -1,4 +1,5 @@
 <? $this->set_layout($GLOBALS['template_factory']->open('layouts/base')); ?>
+<!-- breadcrumb navigation -->
 <span class="breadcrumb">
     <?
     $breadcrumb = array();
@@ -15,4 +16,10 @@
     <span><?= implode(' &gt; ', $breadcrumb) ?></span>
 </span>
 
+<!-- area for messages -->
+<? foreach ($flash['messages'] as $message) : ?>
+    <?= MessageBox::$message['type']($message['text']) ?>
+<? endforeach ?>
+
+<!-- content -->
 <?= $content_for_layout ?>

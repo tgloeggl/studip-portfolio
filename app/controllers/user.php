@@ -23,9 +23,9 @@ class UserController extends PortfolioPluginController
         foreach (User::findBySQL("(username LIKE ? OR Vorname LIKE ? OR Nachname LIKE ?) AND " . get_vis_query(), 
                 array($search_term, $search_term, $search_term)) as $user) {
             $users[] = array(
-                'fullname' => Avatar::getAvatar($user->id)->getImageTag(Avatar::SMALL) 
-                    .' '. get_fullname($user->id) .' ('. $user->username .')',
-                'username' => $user->username
+                'id'      => $user->username,
+                'text'    => get_fullname($user->id) .' ('. $user->username .')',
+                'picture' => Avatar::getAvatar($user->id)->getImageTag(Avatar::SMALL)
             );
         }
         

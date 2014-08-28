@@ -9,10 +9,12 @@
 #portfolio form textarea { height: 12em; }
 #portfolio form select { width: 80%; }
 #portfolio span.empty_text { display: block; font-style: italic; margin: 10px 0px; }
-#portfolio .three-columns { clear: both; width: 80%; }
+#portfolio .three-columns { width: 80%; }
 #portfolio .three-columns > div { width: 33%; float: left; }
 #portfolio .three-columns a.button { margin: 0px; }
-#portfolio span.chosen-error { display: block; color: #FF0000; padding: 2px; }
+#portfolio .two-columns { width: 80%; }
+#portfolio .two-columns > label { width: 49%; float: left; }
+#portfolio .two-columns > label select { width: 90%; }
 #portfolio #permission_list img.link { cursor: pointer; }
 #portfolio select option.heading, #portfolio .chosen-drop li.heading { font-weight: bold; color: black; }
 #portfolio span.portfolio { display: block; float: left; margin-right: 30px; font-size: 10pt; font-weight: bold; width: 80px; min-height: 80px; max-height: 8em; overflow: hidden; color: black; background-image: url("images/icons/64/blue/literature2.png"); background-repeat: no-repeat; padding-top: 68px; }

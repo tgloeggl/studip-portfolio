@@ -55,7 +55,10 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
         
         PageLayout::addStylesheet($this->getPluginURL().'/assets/vendor/chosen/chosen.min.css');
         PageLayout::addScript($this->getPluginURL().'/assets/vendor/chosen/chosen.jquery.min.js');
-        PageLayout::addScript($this->getPluginURL().'/assets/vendor/chosen/ajax-chosen.min.js');
+
+        PageLayout::addStylesheet($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2.min.css');
+        PageLayout::addScript($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2.min.js');
+        PageLayout::addScript($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2_locale_de.js');
 
         if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.0", '<=')) {
             PageLayout::addScript($this->getPluginURL().'/assets/vendor/fileupload/jquery.fileupload.js');
