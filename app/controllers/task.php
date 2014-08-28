@@ -243,14 +243,21 @@ class TaskController extends PortfolioPluginController
     {
         $this->render_nothing();
 
+        $current_user_id = $this->container['user']->id;
         $task_user = Portfolio\TaskUsers::find($task_user_id);
+
+        $perms = Portfolio\Perm::get($current_user_id, $task_user);
+        if (!$perms['edit_settings']) {
+            throw new AccessDeniedException();
+        }
+
 
         $perm = new Portfolio\Permissions();
 
         $user_id = get_userid(Request::get('user'));
 
         // the user ist not allowed to store a perm for himself
-        if ($user_id == $this->container['user']->id) {
+        if ($user_id == $current_user_id) {
             $this->response->set_status(400, _('Sie dürfen sich nicht selbst für eine Berechtigung eintragen!'));
             return;
         }
@@ -281,7 +288,13 @@ class TaskController extends PortfolioPluginController
      */
     function delete_permission_action($task_user_id)
     {
+        $current_user_id = $this->container['user']->id;
         $task_user = Portfolio\TaskUsers::find($task_user_id);
+
+        $perms = Portfolio\Perm::get($current_user_id, $task_user);
+        if (!$perms['edit_settings']) {
+            throw new AccessDeniedException();
+        }
 
         $user_id = get_userid(Request::get('user'));
 
