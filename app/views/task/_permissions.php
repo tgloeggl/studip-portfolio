@@ -11,7 +11,6 @@
         <input name="search" data-placeholder="<?= _('Nach Nutzer/in suchen...') ?>" style="width: 80%">
         <br>
         <span class="error" style="display: none;">
-            <?= _('Bitte suchen Sie zuerst nach einem/r Nutzer/in, dem/der eine Berechtigung eingeräumt werden soll!') ?>
         </span>
     </div>
 
@@ -30,9 +29,3 @@
         <?= \Studip\LinkButton::createAccept(_('Berechtigung hinzufügen'), 'javascript:', array('id' => 'add-permission')) ?>
     </div>
 </div>
-
-<script>
-    var STUDIP = STUDIP || {};
-    STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
-    STUDIP.PortfolioConfig.search_user_url = '<?= $controller->url_for('user/search') ?>';
-</script>

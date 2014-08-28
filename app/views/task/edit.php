@@ -30,7 +30,8 @@ $path[] = $task->title;
 <?= $this->render_partial('task/js_templates.php') ?>
 <?= $this->render_partial('file/js_templates.php') ?>
 
-<form method="post" action="<?= $controller->url_for('task/update/' . $portfolio->id .'/'. $task_user->id) ?>" class="warn-on-unload">
+<form method="post" action="<?= $controller->url_for('task/update/' . $portfolio->id .'/'. $task_user->id) ?>" 
+      class="warn-on-unload" id="edit-task-form" data-task-user-id="<?= $task_user->id ?>">
     <!-- Task -->
     <h1>
         <label>
@@ -72,6 +73,39 @@ $path[] = $task->title;
         <? endif ?>
     </label>
 
+    <!-- Answer -->
+    <? if ($perms['view_answer']) : ?>
+        <? if ($task_user->user_id == $user->id && $task_user->closed) : ?>
+        <span style="font-weight: bold; color: #CC0000;"><?= _('Diese Aufgabe wurde vom Betreuer geschlossen und kann deshalb nicht mehr bearbeitet werden!') ?></span>
+        <? endif ?>
+        <? if ($task->allow_text) : ?>
+        <label <?= ($perms['edit_answer']) ? '' : 'class="mark"' ?>>
+            <span><?= _('Antworttext:') ?></span><br>
+
+            <? if ($perms['edit_answer']) : ?>
+                <textarea name="task_user[answer]" class="add_toolbar"><?= htmlReady($task_user->answer) ?></textarea><br>
+                <?= $this->render_partial('task/_edit_form_buttons') ?>
+            <? else : ?>
+            <?= $task_user->answer
+                    ? formatReady($task_user->answer)
+                    : '<span class="empty_text">' . _('Es wurde bisher keine Antwort eingegeben.') .'</span>' ?>
+            <? endif ?>
+        </label>
+        <? endif ?>
+
+        <br>
+
+        <? if ($task->allow_files) : ?>
+        <?= $this->render_partial('file/list', array(
+            'files' => $task_user->files->findBy('type', 'answer'),
+            'type' => 'answer',
+            'edit' => $perms['edit_answer']
+        )) ?>
+        <br>
+        <? endif ?>
+    <? endif ?>
+
+
     <!-- Settings -->
     <? if ($perms['edit_settings']) : ?>
     <div class="two-columns clearfix">
@@ -108,37 +142,6 @@ $path[] = $task->title;
     <br>
     <? endif ?>
 
-    <!-- Answer -->
-    <? if ($perms['view_answer']) : ?>
-        <? if ($task_user->user_id == $user->id && $task_user->closed) : ?>
-        <span style="font-weight: bold; color: #CC0000;"><?= _('Diese Aufgabe wurde vom Betreuer geschlossen und kann deshalb nicht mehr bearbeitet werden!') ?></span>
-        <? endif ?>
-        <? if ($task->allow_text) : ?>
-        <label <?= ($perms['edit_answer']) ? '' : 'class="mark"' ?>>
-            <span><?= _('Antworttext:') ?></span><br>
-
-            <? if ($perms['edit_answer']) : ?>
-                <textarea name="task_user[answer]" class="add_toolbar"><?= htmlReady($task_user->answer) ?></textarea><br>
-                <?= $this->render_partial('task/_edit_form_buttons') ?>
-            <? else : ?>
-            <?= $task_user->answer
-                    ? formatReady($task_user->answer)
-                    : '<span class="empty_text">' . _('Es wurde bisher keine Antwort eingegeben.') .'</span>' ?>
-            <? endif ?>
-        </label>
-        <? endif ?>
-
-        <br>
-
-        <? if ($task->allow_files) : ?>
-        <?= $this->render_partial('file/list', array(
-            'files' => $task_user->files->findBy('type', 'answer'),
-            'type' => 'answer',
-            'edit' => $perms['edit_answer']
-        )) ?>
-        <br>
-        <? endif ?>
-    <? endif ?>
 
     <!-- Feedback -->
     <? if ($perms['view_feedback']) : ?>
@@ -202,6 +205,8 @@ $path[] = $task->title;
     </label>
     <? endif ?>
 </form>
+
+<br><br>
 
 <script>
     jQuery(document).ready(function() {

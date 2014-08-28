@@ -21,5 +21,11 @@
     <?= MessageBox::$message['type']($message['text']) ?>
 <? endforeach ?>
 
+<script>
+    var STUDIP = STUDIP || {};
+    STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
+    STUDIP.PortfolioConfig.base_url = '<?= $controller->url_for('') ?>';
+</script>
+
 <!-- content -->
 <?= $content_for_layout ?>

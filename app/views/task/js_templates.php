@@ -1,5 +1,5 @@
 <script type="text/template" class="permission">
-    <div class="three-columns" style="margin: 5px">
+    <div class="three-columns" style="margin: 5px" data-user="<%- user %>">
         <div><%- fullname %></div>
         <div><%- permission %></div>
         <div>
@@ -8,7 +8,6 @@
                 'class' => 'link'
             )) ?>
         </div>
-        <input type="hidden" name="perms[<%- user %>]" value="<%- perm %>">
         <br style="clear: both">
     </div>
 </script>

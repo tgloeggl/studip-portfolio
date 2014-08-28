@@ -64,6 +64,7 @@ STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
                     data.id = STUDIP.Portfolio.File.file_id;
                     STUDIP.Portfolio.File.addFile(e, data);
                 },
+
                 done: function (e, data) {
                     var files = data.result;
 
@@ -137,7 +138,7 @@ STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
                 minimumInputLength: 3,
 
                 ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-                    url: STUDIP.PortfolioConfig.search_user_url,
+                    url: STUDIP.PortfolioConfig.base_url + 'user/search',
                     dataType: 'json',
                     data: function (term, page) {
                         return {
@@ -170,8 +171,16 @@ STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
         },
 
        add: function() {
-            data_user = $("#permissions input[name=search]").select2("data");
-            data_perm = $('#permissions select[name=permission]').select2("data");
+            var self = this,
+                data_user = $("#permissions input[name=search]").select2("data");
+                data_perm = $('#permissions select[name=permission]').select2("data");
+
+            if (data_user === undefined || data_user === null || data_user.id === "") {
+                $('#permissions .error').hide()
+                    .html('Bitte suchen Sie zuerst nach einem/r Nutzer/in, dem/der eine Berechtigung eingeräumt werden soll!'.toLocaleString())
+                    .show('highlight');
+                return;
+            }
 
             var data = {
                 user:       data_user.id,
@@ -180,22 +189,41 @@ STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
                 permission: data_perm.text
             }
 
-            if (data.user === undefined || data.user === null || data.user === "") {
-                $('#permissions input[name=search]').siblings('.error').hide();
-                $('#permissions input[name=search]').siblings('.error').show('highlight');
-                return;
-            }
+            $('#permissions .error').hide();
 
-            $('#permissions input[name=search]').siblings('.error').hide();
 
-            this.addTemplate(data);
+            // store the new permission
+            $.ajax(STUDIP.PortfolioConfig.base_url + 'task/add_permission/' + $('#edit-task-form').attr('data-task-user-id'), {
+                method: 'POST',
+                data: data,
+                success: function() {
+                    self.addTemplate(data);
+                },
+
+                error: function(error) {
+                    $('#permissions .error').hide()
+                        .html(error.statusText)
+                        .show('highlight');
+                }
+            });
+
+
         },
 
         addTemplate: function(data) {
-            var template = STUDIP.Portfolio.getTemplate('permission');
+            var template = STUDIP.Portfolio.getTemplate('permission'),
+                self = this;
 
             $('#permission_list').append(template(data)).find('div:last-child img').click(function() {
+                self.delete(data.user);
                 $(this).parent().parent().remove();
+            });
+        },
+
+        delete: function(user) {
+            $.ajax(STUDIP.PortfolioConfig.base_url + 'task/delete_permission/' + $('#edit-task-form').attr('data-task-user-id'), {
+                method: 'POST',
+                data: {user: user}
             });
         }
     }
@@ -206,7 +234,7 @@ STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
         fileTemplate: null,
         uploadedFileTemplate: null,
         errorTemplate: null,
-            questionTemplate: null,
+        questionTemplate: null,
         file_id: 0,
 
         addFile: function(e, data) {

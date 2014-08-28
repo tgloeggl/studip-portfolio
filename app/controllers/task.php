@@ -145,6 +145,12 @@ class TaskController extends PortfolioPluginController
         }
     }
 
+    /**
+     * update an user-instance of a task
+     *
+     * @param int $portfolio_id
+     * @param int $task_user_id
+     */
     public function update_action($portfolio_id, $task_user_id)
     {
         $user_id = $this->container['user']->id;
@@ -202,38 +208,6 @@ class TaskController extends PortfolioPluginController
                 }
                 $task->tags[] = $tag;
             }
-
-            // update the permissions for the task
-            foreach (Request::getArray('perms') as $username => $perm) {
-                // only add permissions for users other than the current one (the owner)
-                if ($username != $this->container['user']->username) {
-                    $new_perms[] = array(get_userid($username), $perm);
-                }
-            }
-
-            $diff = Portfolio\Helper::pick($task_user->perms->pluck('user_id role'), $new_perms);
-
-            foreach ($diff['deleted'] as $del) {
-                foreach ($task_user->perms as $key => $perm) {
-                    if ($perm->user_id == $del[0] && $perm->role == $del[1]) {
-                        unset($task_user->perms[$key]);
-                    }
-                }
-            }
-
-            // store to delete old ones before trying to add new ones
-            $task_user->store();
-
-            foreach ($diff['added'] as $add) {
-                $perm = new Portfolio\Permissions();
-                $perm->setData(array(
-                    'user_id' => $add[0],
-                    'role'    => $add[1]
-                ));
-                $task_user->perms[] = $perm;
-            }
-
-            $task->store();
         }
 
         $data = Request::getArray('task_user');
@@ -258,6 +232,68 @@ class TaskController extends PortfolioPluginController
         );
 
         $this->redirect('task/edit/' . $portfolio_id .'/'. $task->id .'/'. $task_user_id);
+    }
+
+    /**
+     * add a permission for an user-instance of a task
+     *
+     * @param int $task_user_id
+     */
+    function add_permission_action($task_user_id)
+    {
+        $this->render_nothing();
+
+        $task_user = Portfolio\TaskUsers::find($task_user_id);
+
+        $perm = new Portfolio\Permissions();
+
+        $user_id = get_userid(Request::get('user'));
+
+        // the user ist not allowed to store a perm for himself
+        if ($user_id == $this->container['user']->id) {
+            $this->response->set_status(400, _('Sie dürfen sich nicht selbst für eine Berechtigung eintragen!'));
+            return;
+        }
+
+        // check that the submitted user has not another perm already
+        foreach ($task_user->perms as $key => $perm) {
+            if ($perm->user_id == $user_id) {
+                $this->response->set_status(400, _('Für diesen Nutzer existiert bereits eine andere Berechtigung!'));
+            }
+            return;
+        }
+
+        // add new permission entry
+        $perm->setData(array(
+            'user_id' => $user_id,
+            'role'    => Request::option('perm')
+        ));
+
+        $task_user->perms[] = $perm;
+
+        $task_user->store();
+    }
+
+    /**
+     * delete a permission for an user-instance of a task
+     *
+     * @param int $task_user_id
+     */
+    function delete_permission_action($task_user_id)
+    {
+        $task_user = Portfolio\TaskUsers::find($task_user_id);
+
+        $user_id = get_userid(Request::get('user'));
+
+        foreach ($task_user->perms as $key => $perm) {
+            if ($perm->user_id == $user_id) {
+                unset($task_user->perms[$key]);
+            }
+        }
+
+        $task_user->store();
+
+        $this->render_nothing();
     }
 
     public function delete_action($portfolio_id, $task_id)
