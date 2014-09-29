@@ -35,7 +35,8 @@ class TaskController extends PortfolioPluginController
     {
         $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
 
-        if (!$this->portfolio) {
+        if (!$this->portfolio
+                || ($this->portfolio->user_id != $this->user->id && $this->portfolio->global != 1)) {
             $this->redirect('portfolio');
             return;
         }
@@ -168,46 +169,8 @@ class TaskController extends PortfolioPluginController
             ));
         }
 
-
         if ($perms['close_task']) {
             $task_user->closed = Request::option('close') ? 1 : 0;
-        }
-
-        if ($perms['edit_settings']) {
-            // update sets
-            foreach ($task->portfolios as $key => $portfolio) {
-                if (!$portfolio->global) {
-                    unset($task->portfolios[$key]);
-                }
-            }
-
-            // add the task to the correct portfolio
-            foreach (Request::getArray('sets') as $id) {
-                $task->portfolios[] = Portfolio\Portfolios::find($id);
-            }
-
-
-            // update tags
-            $diff = Portfolio\Helper::pick($task->tags->pluck('tag'), array_unique(Request::getArray('tags')));
-
-            foreach ($diff['deleted'] as $del_tag) {
-                foreach ($task->tags as $key => $tag) {
-                    if ($del_tag == $tag['tag'] && $tag['user_id'] != 'global') {
-                        unset($task->tags[$key]);
-                    }
-                }
-            }
-
-            foreach ($diff['added'] as $tag_name) {
-                if (!$tag = current(Portfolio\Tags::findBySQL('user_id = ? AND tag = ?', array($user_id, $tag_name)))) {
-                    $data = array(
-                        'user_id' => $user_id,
-                        'tag'     => $tag_name
-                    );
-                    $tag = Portfolio\Tags::create($data);
-                }
-                $task->tags[] = $tag;
-            }
         }
 
         $data = Request::getArray('task_user');
@@ -232,6 +195,74 @@ class TaskController extends PortfolioPluginController
         );
 
         $this->redirect('task/edit/' . $portfolio_id .'/'. $task->id .'/'. $task_user_id);
+    }
+
+    function update_tags_action($task_user_id)
+    {
+        $this->render_nothing();
+
+        $user_id   = $this->container['user']->id;
+        $task_user = Portfolio\TaskUsers::find($task_user_id);
+        $task      = $task_user->task;
+
+        $perms = Portfolio\Perm::get($user_id, $task_user);
+        if (!$perms['edit_settings']) {
+            throw new AccessDeniedException();
+        }
+
+        // update tags
+        $diff = Portfolio\Helper::pick($task->tags->pluck('tag'), array_unique(Request::getArray('tags')));
+        var_dump($diff);
+
+        foreach ($diff['deleted'] as $del_tag) {
+            foreach ($task->tags as $key => $tag) {
+                if ($del_tag == $tag['tag'] && $tag['user_id'] != 'global') {
+                    unset($task->tags[$key]);
+                }
+            }
+        }
+
+        foreach ($diff['added'] as $tag_name) {
+            if (!$tag = current(Portfolio\Tags::findBySQL('user_id = ? AND tag = ?', array($user_id, $tag_name)))) {
+                $data = array(
+                    'user_id' => $user_id,
+                    'tag'     => $tag_name
+                );
+                $tag = Portfolio\Tags::create($data);
+            }
+            $task->tags[] = $tag;
+        }
+
+        $task->store();
+    }
+
+
+    function update_portfolios_action($task_user_id)
+    {
+        $this->render_nothing();
+
+        $user_id   = $this->container['user']->id;
+        $task_user = Portfolio\TaskUsers::find($task_user_id);
+        $task      = $task_user->task;
+
+        $perms = Portfolio\Perm::get($user_id, $task_user);
+        if (!$perms['edit_settings']) {
+            throw new AccessDeniedException();
+        }
+
+        // update sets
+        foreach ($task->portfolios as $key => $portfolio) {
+            if (!$portfolio->global) {
+                unset($task->portfolios[$key]);
+            }
+        }
+
+        // add the task to the correct portfolio
+        foreach (Request::getArray('sets') as $id) {
+            $task->portfolios[] = Portfolio\Portfolios::find($id);
+        }
+
+        $task->store();
     }
 
     /**

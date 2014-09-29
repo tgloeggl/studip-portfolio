@@ -228,6 +228,18 @@ STUDIP.PortfolioConfig = STUDIP.PortfolioConfig || {};
         }
     }
 
+    STUDIP.Portfolio.Tags = {
+        update: function() {
+            var tags = $("select[name^=tags]").chosen().val();
+
+            console.log(tags);
+            $.ajax(STUDIP.PortfolioConfig.base_url + 'task/update_tags/' + $('#edit-task-form').attr('data-task-user-id'), {
+                method: 'POST',
+                data: {tags: tags}
+            })
+        }
+    }
+
     STUDIP.Portfolio.File = {
         files : {},
         maxFilesize: 0,

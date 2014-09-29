@@ -86,7 +86,7 @@ class Portfolios extends \Portfolio_SimpleORMap
     static function getPortfoliosWithStudycourses($studycourses)
     {
         // get all portfolios
-        $portfolios = \Portfolio\Portfolios::findBySQL('1');
+        $portfolios = \Portfolio\Portfolios::findBySQL('global = 1');
 
         // filter portfolios by studiengang-combos
         foreach ($portfolios as $pkey => $portfolio) {

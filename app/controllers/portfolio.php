@@ -26,7 +26,7 @@ class PortfolioController extends PortfolioPluginController
 
         $this->task_users = Portfolio\Helper::getForeignTasksForUser($this->container['user']->id);
 
-        $this->portfolio->id = 0;
+        #$this->portfolio->id = 0;
 
         foreach (Portfolio\Helper::sortTaskUsersByTags($this->task_users) as $key => $data) {
             $this->$key = $data;

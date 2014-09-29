@@ -212,14 +212,17 @@ $path[] = $task->title;
     jQuery(document).ready(function() {
         jQuery('#sets').chosen({
             width: "90%",
-            create_option_text: 'Portfolio erstellen'.toLocaleString()
         });
+
         jQuery('#tags').chosen({
             width: "90%",
             create_option: true,
             persistent_create_option: true,
             skip_no_results: true,
             create_option_text: 'Schlagwort erstellen'.toLocaleString()
+        }).change(function(event) {
+            // store modified tags
+            STUDIP.Portfolio.Tags.update();
         });
         
         <? foreach ($task_user->perms as $perm) : ?>

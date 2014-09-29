@@ -17,7 +17,7 @@
 </span>
 
 <!-- area for messages -->
-<? foreach ($flash['messages'] as $message) : ?>
+<? if (!empty($flash['messages'])) foreach ($flash['messages'] as $message) : ?>
     <?= MessageBox::$message['type']($message['text']) ?>
 <? endforeach ?>
 
