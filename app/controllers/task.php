@@ -41,8 +41,10 @@ class TaskController extends PortfolioPluginController
             return;
         }
 
-        foreach (Portfolio\Helper::sortTasksByTags($this->portfolio->tasks->filter(function($entry) {
-                if (in_array($entry->user_id, words('global ' . $this->user->id)) !== false) {
+        $user_id = $this->user->id;
+
+        foreach (Portfolio\Helper::sortTasksByTags($this->portfolio->tasks->filter(function($entry) use ($user_id) {
+                if (in_array($entry->user_id, words('global ' . $user_id)) !== false) {
                     return $entry;
                 }
             })) as $key => $data) {
