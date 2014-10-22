@@ -20,7 +20,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
     </label>
 
     <label>
-        <span><?= _('Aufgabenbeschreibung:') ?></span><br>
+        <span><?= _('Aufgabe:') ?></span><br>
         <textarea name="content" required="required" class="add_toolbar"></textarea><br>
     </label>
 

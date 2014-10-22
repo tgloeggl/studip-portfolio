@@ -34,7 +34,7 @@ $path = array(
     </h1>
 
     <label>
-        <span><?= _('Aufgabenbeschreibung:') ?></span><br>
+        <span><?= _('Aufgabe:') ?></span><br>
         <textarea name="content" required="required" class="add_toolbar"></textarea><br>
     </label>
 

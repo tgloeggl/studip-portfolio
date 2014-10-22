@@ -63,7 +63,7 @@ $path[] = $task->title;
     
 
     <label <?= ($perms['edit_task'] ? '' : 'class="mark"') ?>>
-        <span class="title"><?= _('Aufgabenbeschreibung:') ?></span><br>
+        <span class="title"><?= _('Aufgabe:') ?></span><br>
         <? if ($perms['edit_task']): ?>
         <textarea name="content" required="required" class="add_toolbar"><?= htmlReady($task->content) ?></textarea><br>
         <? else : ?>
