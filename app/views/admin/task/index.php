@@ -44,7 +44,10 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                     </ul>                        
                 </td>
                 <td>
-                    <?= htmlReady(implode(', ', $task->tags->orderBy('tag')->pluck('tag'))); ?>
+                    <?= htmlReady(implode(', ', $task->tags->orderBy('tag')->filter(function($tag) {
+                        if ($tag['user_id'] == 'global') return true;
+                        return false;
+                    })->pluck('tag'))); ?>
                 </td>
 
                 <td>
