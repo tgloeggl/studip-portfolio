@@ -7,6 +7,11 @@
         <? endif ?>
 
         <td id="tasks">
+            <div class="set-description">
+                <?= formatReady($portfolio['description']) ?>
+                <br><br>
+            </div>
+
             <? if (empty($tasks_by_tag) && empty($tagless_tasks)) : ?>
                 <?= MessageBox::info(sprintf(_('Es sind bisher keine Aufgaben in diesem Portfolio vorhanden. %sLegen Sie eine neue Aufgabe an.%s'),
                     '<a href="'. $controller->url_for('task/new/' . $portfolio->id) .'">', '</a>')) ?>

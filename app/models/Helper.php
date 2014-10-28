@@ -59,14 +59,20 @@ class Helper
                         $tags[$tag] = array();
                     }
 
+                    /*
                     foreach ($tags as $tag2 => $taglist) {
                         if ($tag != $tag2) {
                             $tags[$tag][] = $tag2;
                         }
                     }
+                     * 
+                     */
                 }
             }
         }
+
+        ksort($tasks_by_tag);
+        ksort($tags);
 
         return compact('tasks_by_tag', 'tagless_tasks', 'tags');
     }

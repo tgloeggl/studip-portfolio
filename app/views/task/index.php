@@ -45,10 +45,6 @@ $path = array(
     <? endif ?>
 </h1>
 
-<div class="set-description">
-    <?= formatReady($portfolio['description']) ?>
-</div>
-
 <?= $this->render_partial('task/_task_list') ?>
 
 <script>

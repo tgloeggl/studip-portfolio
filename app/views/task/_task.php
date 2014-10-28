@@ -24,21 +24,6 @@ foreach ($tags as $key => $val) {
     <? endif ?>
 
     <!-- Arbeit -->
-    <? /*
-    <td style="text-align: right; vertical-align: top;">
-        <?= (!$task_user || $task_user->answer === null || !trim(strip_tags($task_user->answer)))
-            ? '0' : sizeof(explode(' ', trim(strip_tags($task_user->answer)))) ?>
-        <?= Assets::img('icons/16/black/file-text.png', array(
-            'title' => _('Anzahl der eingegebenen Wörter beim Antworttext')
-        )) ?>
-    </td>
-    <td style="vertical-align: top;">
-        <?= $task_user ? sizeof($task_user->files->findBy('type', 'answer')) : 0 ?>
-        <?= Assets::img('icons/16/black/file-generic.png', array(
-            'title' => _('Anzahl der als Antwort hochgeladenen Dateien')
-        )) ?>
-    </td>
-    */ ?>
     <td style="vertical-align: top;" colspan="2">
         <? if ($task_user && (   $task_user->answer !== null && trim(strip_tags($task_user->answer))
                               || sizeof($task_user->files->findBy('type', 'answer')))) : ?>
@@ -47,21 +32,6 @@ foreach ($tags as $key => $val) {
     </td>
 
     <!-- Feedback -->
-    <? /*
-    <td style="text-align: right; vertical-align: top;">
-        <?= (!$task_user || $task_user->feedback === null || !trim(strip_tags($task_user->feedback->feedback)))
-            ? '0' : sizeof(explode(' ', trim(strip_tags($task_user->feedback->feedback)))) ?>
-        <?= Assets::img('icons/16/black/file-text.png', array(
-            'title' => _('Anzahl der eingegebenen Wörter beim Feedback')
-        )) ?>
-    </td>
-    <td style="vertical-align: top;">
-        <?= $task_user ? sizeof($task_user->files->findBy('type', 'feedback')) : 0 ?>
-        <?= Assets::img('icons/16/black/file-generic.png', array(
-            'title' => _('Anzahl der als Feedback hochgeladenen Dateien')
-        )) ?>
-    </td>
-    */ ?>
     <td style="vertical-align: top;" colspan="2">
         <? if ($task_user && (   $task_user->feedback !== null && trim(strip_tags($task_user->feedback->feedback))
                               || sizeof($task_user->files->findBy('type', 'feedback')))) : ?>
