@@ -21,7 +21,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
     <table class="default zebra">
         <thead>
             <tr>
-                <th><?= _('Name') ?></th>
+                <th><?= _('Titel') ?></th>
                 <th><?= _('Enthalten in Sets') ?></th>
                 <th><?= _('Schlagworte') ?></th>
                 <th></th>
@@ -44,7 +44,7 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
                     </ul>                        
                 </td>
                 <td>
-                    <?= htmlReady(implode(', ', $task->tags->pluck('tag'))); ?>
+                    <?= htmlReady(implode(', ', $task->tags->orderBy('tag')->pluck('tag'))); ?>
                 </td>
 
                 <td>

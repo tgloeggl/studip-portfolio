@@ -12,7 +12,7 @@ foreach ($tags as $key => $val) {
     
     <!-- Tags -->
     <td>
-        <?= implode(' &bullet; ', array_filter($task->tags->pluck('tag'), function($element) { return htmlReady($element); })) ?>
+        <?= implode(' &bullet; ', array_map(function($element) { return htmlReady($element); }, $task->tags->orderBy('tag')->pluck('tag'))) ?>
     </td>
 
     <? if ($show_creator) : ?>
@@ -24,6 +24,7 @@ foreach ($tags as $key => $val) {
     <? endif ?>
 
     <!-- Arbeit -->
+    <? /*
     <td style="text-align: right; vertical-align: top;">
         <?= (!$task_user || $task_user->answer === null || !trim(strip_tags($task_user->answer)))
             ? '0' : sizeof(explode(' ', trim(strip_tags($task_user->answer)))) ?>
@@ -37,9 +38,16 @@ foreach ($tags as $key => $val) {
             'title' => _('Anzahl der als Antwort hochgeladenen Dateien')
         )) ?>
     </td>
-
+    */ ?>
+    <td style="vertical-align: top;" colspan="2">
+        <? if ($task_user && (   $task_user->answer !== null && trim(strip_tags($task_user->answer))
+                              || sizeof($task_user->files->findBy('type', 'answer')))) : ?>
+            <?= Assets::img('icons/16/green/accept', array('title' => _('Aufgabe wurde bereits bearbeitet'))) ?>
+        <? endif ?>
+    </td>
 
     <!-- Feedback -->
+    <? /*
     <td style="text-align: right; vertical-align: top;">
         <?= (!$task_user || $task_user->feedback === null || !trim(strip_tags($task_user->feedback->feedback)))
             ? '0' : sizeof(explode(' ', trim(strip_tags($task_user->feedback->feedback)))) ?>
@@ -52,6 +60,13 @@ foreach ($tags as $key => $val) {
         <?= Assets::img('icons/16/black/file-generic.png', array(
             'title' => _('Anzahl der als Feedback hochgeladenen Dateien')
         )) ?>
+    </td>
+    */ ?>
+    <td style="vertical-align: top;" colspan="2">
+        <? if ($task_user && (   $task_user->feedback !== null && trim(strip_tags($task_user->feedback->feedback))
+                              || sizeof($task_user->files->findBy('type', 'feedback')))) : ?>
+            <?= Assets::img('icons/16/green/accept', array('title' => _('Feedback liegt vor'))) ?>
+        <? endif ?>
     </td>
 
     <!-- Aktionen -->

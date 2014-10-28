@@ -125,7 +125,7 @@ $path[] = $task->title;
         <label>
             <span><?= _('Schlagworte:') ?></span><br>
             <select id="tags" name="tags[]" multiple data-placeholder="<?= _('Fügen Sie Schlagworte hinzu') ?>">
-                <? foreach ($task->tags as $tag) : ?>
+                <? foreach ($task->tags->orderBy('tag') as $tag) : ?>
                     <option value="<?= htmlReady($tag->tag) ?>" selected="selected" <?= $tag->user_id == 'global' ? 'disabled' : '' ?>><?= htmlReady($tag->tag) ?></option>
                 <? endforeach ?>
 

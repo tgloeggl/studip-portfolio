@@ -17,7 +17,7 @@
             <? if (!empty($task_users)) : ?>
             <th><?= _('Erstellt von') ?></th>
             <? endif ?>
-            <th colspan="2"><?= _('Arbeit') ?></th>
+            <th colspan="2"><?= _('Bearbeitet') ?></th>
             <th colspan="2"><?= _('Feedback') ?></th>
             <th colspan="2"><?= _('Aktionen') ?></th>
         </tr>
@@ -26,7 +26,7 @@
 
         <? if (!empty($task_users)) :
             foreach ($task_users as $task_user) :
-                $tags = $task_user->task->tags->pluck('tag');
+                $tags = $task_user->task->tags->orderBy('tag')->pluck('tag');
                 $task = $task_user->task;
                 $show_creator = true;
                 ?>
@@ -34,7 +34,7 @@
             <? endforeach ?>
         <? else : ?>
             <? foreach ($tasks as $task) :
-                $tags = $task->tags->pluck('tag');
+                $tags = $task->tags->orderBy('tag')->pluck('tag');
                 $task_user = $task->task_users->findOneBy('user_id', $user->id);
                 ?>
 

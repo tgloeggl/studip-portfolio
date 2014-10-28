@@ -38,9 +38,10 @@ class Admin_SetController extends PortfolioPluginController
     public function add_action()
     {
         $data = array(
-            'name'    => Request::get('name'),
-            'user_id' => $GLOBALS['user']->id,
-            'global'  => 1
+            'name'        => Request::get('name'),
+            'description' => Request::get('description'),
+            'user_id'     => $GLOBALS['user']->id,
+            'global'      => 1
         );
 
         $portfolio = Portfolio\Portfolios::create($data);
@@ -79,8 +80,9 @@ class Admin_SetController extends PortfolioPluginController
         $portfolio = Portfolio\Portfolios::find($set_id);
         
         $portfolio->setData(array(
-            'name'   => Request::get('name'),
-            'global' => 1
+            'name'        => Request::get('name'),
+            'description' => Request::get('description'),
+            'global'      => 1
         ));
 
         foreach ($portfolio->combos as $key => $combo) {

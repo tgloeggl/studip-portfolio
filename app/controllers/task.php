@@ -57,7 +57,7 @@ class TaskController extends PortfolioPluginController
         $this->portfolio = \Portfolio\Portfolios::find($portfolio_id);
         $this->portfolios = Portfolio\Portfolios::getPortfoliosForUser($this->container['user']->id);
 
-        $this->tags = Portfolio\Tags::findByUser_id($this->container['user']->id);
+        $this->tags = Portfolio\Tags::findByUser_id($this->container['user']->id, 'ORDER BY tag ASC');
     }
 
     public function add_action($portfolio_id)
@@ -124,7 +124,7 @@ class TaskController extends PortfolioPluginController
 
         $this->task = Portfolio\Tasks::find($task_id);
 
-        $this->task_tags = $this->task->tags->pluck('tag');
+        $this->task_tags = $this->task->tags->orderBy('tag')->pluck('tag');
         $this->task_portfolios = $this->task->portfolios->pluck('id');
 
         // make sure we have an user-entry for the current task
@@ -214,7 +214,6 @@ class TaskController extends PortfolioPluginController
 
         // update tags
         $diff = Portfolio\Helper::pick($task->tags->pluck('tag'), array_unique(Request::getArray('tags')));
-        var_dump($diff);
 
         foreach ($diff['deleted'] as $del_tag) {
             foreach ($task->tags as $key => $tag) {

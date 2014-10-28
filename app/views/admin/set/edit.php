@@ -20,6 +20,10 @@ $infobox = array('picture' => $infobox_picture, 'content' => $infobox_content);
         <span class="label"><?= _('Name des Sets:') ?></span><br>
         <input type="text" name="name" value="<?= htmlReady($portfolio->name) ?>"><br>
     </label>
+    <label>
+        <span class="label"><?= _('Beschreibung:') ?></span><br>
+        <textarea name="description" class="add_toolbar"><?= htmlReady($portfolio->description) ?></textarea><br>
+    </label>
     <br>
     <span class="label"><?= _('Freigeben für Studiengänge:') ?></span><br>
 

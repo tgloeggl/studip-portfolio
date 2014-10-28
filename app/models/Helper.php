@@ -46,7 +46,7 @@ class Helper
 
         // get tags
         foreach ($tasks as $task) {
-            $ttags = $task->tags->pluck('tag');
+            $ttags = $task->tags->orderBy('tag')->pluck('tag');
 
             if (empty($ttags)) {
                 $tagless_tasks[] = $task;
@@ -59,7 +59,7 @@ class Helper
                         $tags[$tag] = array();
                     }
 
-                    foreach ($tags as $tag2) {
+                    foreach ($tags as $tag2 => $taglist) {
                         if ($tag != $tag2) {
                             $tags[$tag][] = $tag2;
                         }
@@ -79,7 +79,7 @@ class Helper
         foreach ($task_users as $task_user) {
             $task = $task_user->task;
 
-            $ttags = $task->tags->pluck('tag');
+            $ttags = $task->tags->orderBy('tag')->pluck('tag');
 
             if (empty($ttags)) {
                 $tagless_tasks[] = $task;
@@ -92,7 +92,7 @@ class Helper
                         $tags[$tag] = array();
                     }
 
-                    foreach ($tags as $tag2) {
+                    foreach ($tags as $tag2 => $taglist) {
                         if ($tag != $tag2) {
                             $tags[$tag][] = $tag2;
                         }
