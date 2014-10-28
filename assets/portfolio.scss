@@ -157,6 +157,7 @@ $form-width: 80%;
                 display: block;
                 font-size: 12pt;
                 margin-bottom: 5px;
+                /*
                 padding-left: 20px;
 
                 &.closed {
@@ -168,16 +169,21 @@ $form-width: 80%;
                         background-image: url('../../../../assets/images/icons/16/red/arr_1right.png');
                     }
                 }
+                */
 
                 &.open {
+                    /*
                     background-image: url('../../../../assets/images/icons/16/blue/arr_1down.png');
                     background-repeat: no-repeat;
                     background-position: 0 2px;
+                    */
                     background-color: #DDDDFF;
 
+                    /*
                     &:hover {
                        background-image: url('../../../../assets/images/icons/16/red/arr_1down.png');
                     }
+                    */
                 }
 
                 &.selected {

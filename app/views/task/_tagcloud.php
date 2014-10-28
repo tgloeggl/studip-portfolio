@@ -10,6 +10,7 @@
             <?= htmlReady($name) ?> <!-- (<?= sizeof($combo) ?>) -->
         </a>
 
+        <? /*
         <div class="lvl2" <?= ($filter[0] == $name) ? '' : 'style="display: none"' ?>>
             <? foreach ($combo as $name2) : ?>
             <a href="#" data-tag="<?= htmlReady($name2) ?>">
@@ -17,6 +18,7 @@
             </a>
             <? endforeach ?>
         </div>
+        */ ?>
     </section>
 <? endforeach; ?>
 </div>
