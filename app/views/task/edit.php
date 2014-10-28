@@ -63,7 +63,7 @@ $path[] = $task->title;
     
 
     <label <?= ($perms['edit_task'] ? '' : 'class="mark"') ?>>
-        <span class="title"><?= _('Aufgabe:') ?></span><br>
+        <span class="title"><?= _('Reflexionsimpulse:') ?></span><br>
         <? if ($perms['edit_task']): ?>
         <textarea name="content" required="required" class="add_toolbar"><?= htmlReady($task->content) ?></textarea><br>
         <? else : ?>
@@ -80,7 +80,7 @@ $path[] = $task->title;
         <? endif ?>
         <? if ($task->allow_text) : ?>
         <label <?= ($perms['edit_answer']) ? '' : 'class="mark"' ?>>
-            <span><?= _('Antworttext:') ?></span><br>
+            <span><?= _('Dokumentations(text-)feld:') ?></span><br>
 
             <? if ($perms['edit_answer']) : ?>
                 <textarea name="task_user[answer]" class="add_toolbar"><?= htmlReady($task_user->answer) ?></textarea><br>
