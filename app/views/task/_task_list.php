@@ -1,10 +1,10 @@
 <table style="border-collapse: collapse; width: 100%">
     <tr>
-        <? if (!empty($tags)) : ?>
+        <? /* if (!empty($tags)) : ?>
         <td class="tags">
             <?= $this->render_partial('task/_tagcloud') ?>
         </td>
-        <? endif ?>
+        <? endif */ ?>
 
         <td id="tasks">
             <div class="set-description">
