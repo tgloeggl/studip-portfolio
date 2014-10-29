@@ -38,8 +38,11 @@ background-position: 0 2px;
 }
 */ }
 #portfolio td.tags > div a.selected { background-color: #DDDDFF; }
-#portfolio #tasks { vertical-align: top; 		/* border-left: 1px dashed #1E3E70; padding-left: 10px;
-		*/ }
+#portfolio #tasks { vertical-align: top; /*
+border-left: 1px dashed #1E3E70;
+padding-left: 10px;
+*/ }
+#portfolio #tasks .set-description { background-color: #F1F1F1; }
 #portfolio table.tasks tr td:nth-child(1n+3) { white-space: nowrap; }
 #portfolio table.tasks tr td:nth-child(4) { padding-right: 25px; }
 #portfolio .mark { background-color: #F1F1F1; padding: 5px; width: 80%; }

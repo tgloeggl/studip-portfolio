@@ -1,4 +1,6 @@
 $form-width: 80%;
+$background-tags: #DDDDFF;
+$background: #F1F1F1;
 
 #portfolio {
     span.breadcrumb {
@@ -177,7 +179,7 @@ $form-width: 80%;
                     background-repeat: no-repeat;
                     background-position: 0 2px;
                     */
-                    background-color: #DDDDFF;
+                    background-color: $background-tags;
 
                     /*
                     &:hover {
@@ -187,7 +189,7 @@ $form-width: 80%;
                 }
 
                 &.selected {
-                    background-color: #DDDDFF;
+                    background-color: $background-tags;
                 }
 
             }
@@ -197,10 +199,14 @@ $form-width: 80%;
 
     #tasks {
         vertical-align: top;
-		/*
+        /*
         border-left: 1px dashed #1E3E70;
         padding-left: 10px;
-		*/
+        */
+
+        .set-description {
+            background-color: $background;
+        }
     }
 
     table.tasks tr {
@@ -214,7 +220,7 @@ $form-width: 80%;
     }
 
     .mark {
-        background-color: #F1F1F1;
+        background-color: $background;
         padding: 5px;
         width: $form-width;
     }

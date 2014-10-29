@@ -1,6 +1,6 @@
 pluginname=Portfolio
 pluginclassname=Portfolio
 origin=elan-ev
-version=1.0.4
+version=1.0.5
 homepage=http://tgloeggl.github.com/studip-portfolio
 studipMinVersion=2.5
