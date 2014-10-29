@@ -161,9 +161,11 @@ $path[] = $task->title;
                     Erstellt am <?= strftime($timeformat, $task_user->feedback->mkdate) ?>,
                     <? endif ?>
 
+                    <? if ($task_user->feedback->chdate) : ?>
                     zuletzt bearbeitet von <a href="<?= URLHelper::getLink('dispatch.php/profile/?username=' . get_username($task_user->feedback->user_id)) ?>">
                         <?= get_fullname($task_user->feedback->user_id) ?></a>
                     am <?= strftime($timeformat, $task_user->feedback->chdate) ?>
+                    <? endif ?>
                 </span>
             <? endif ?>
         </label>
