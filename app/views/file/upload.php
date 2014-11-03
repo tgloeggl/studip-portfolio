@@ -6,7 +6,7 @@
 </script>
 
 <!-- Workaround for broken jquery.widget & jquery.metadata. data-url at #fileupload gets wrongly interpreted as regexp and fails -->
-<input type="hidden" name="upload_url" value="<?= $controller->url_for('file/post_files/' . $task->id .'/'. $type) ?>">
+<input type="hidden" name="upload_url" value="<?= $controller->url_for('file/post_files/' . $task_user->id .'/'. $type) ?>">
 
 <div style="position: relative; display: inline-block;">
     <a class="button" style="overflow: hidden; position: relative;">
