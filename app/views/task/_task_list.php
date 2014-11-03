@@ -7,10 +7,12 @@
         <? endif */ ?>
 
         <td id="tasks">
+            <? if ($portfolio['description']) : ?>
             <div class="set-description">
                 <?= formatReady($portfolio['description']) ?>
                 <br><br>
             </div>
+            <? endif ?>
 
             <? if (empty($tasks_by_tag) && empty($tagless_tasks)) : ?>
                 <?= MessageBox::info(sprintf(_('Es sind bisher keine Aufgaben in diesem Portfolio vorhanden. %sLegen Sie eine neue Aufgabe an.%s'),
