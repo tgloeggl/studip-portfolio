@@ -5,7 +5,7 @@ $background: #F1F1F1;
 #portfolio {
     span.breadcrumb {
         display: block;
-        margin: 0 0 1em 10px;
+        margin-bottom: 1em;
     }
 
     form {
@@ -26,14 +26,6 @@ $background: #F1F1F1;
                 padding: 0px 5px;
                 font-style: italic;
                 text-align: right;
-            }
-
-            & > span.title {
-                font-size: 1.2em;
-            }
-
-            .task-description {
-                font-size: 1.2em;
             }
         }
 

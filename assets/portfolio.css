@@ -1,9 +1,7 @@
-#portfolio span.breadcrumb { display: block; margin: 0 0 1em 10px; }
+#portfolio span.breadcrumb { display: block; margin-bottom: 1em; }
 #portfolio form label { display: block; margin-top: 1em; }
 #portfolio form label > span:first-child { font-weight: bold; margin-bottom: 5px; display: inline-block; }
 #portfolio form label > span.editor { display: block; border-top: 1px solid #1e3e70; margin: 10px -5px 0px -5px; padding: 0px 5px; font-style: italic; text-align: right; }
-#portfolio form label > span.title { font-size: 1.2em; }
-#portfolio form label .task-description { font-size: 1.2em; }
 #portfolio form h1 input { font-size: 16pt; }
 #portfolio form input[type=text], #portfolio form textarea { width: 80%; }
 #portfolio form textarea { height: 12em; }
