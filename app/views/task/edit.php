@@ -51,7 +51,7 @@ $path[] = $task->title;
         endforeach; ?>
 
     <span>
-        <?= sprintf(_('Besitzer: %s, ihr Status %s.'),
+        <?= sprintf(_('Besitzer: %s, ihr Status: %s.'),
                 '<a href="'. URLHelper::getLink('dispatch.php/profile?username='
                         . get_username($task_user->user_id)) .'">'
                     . get_fullname($task_user->user_id) . '</a>',
