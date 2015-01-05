@@ -88,11 +88,11 @@ class Helper
             $ttags = $task->tags->orderBy('tag')->pluck('tag');
 
             if (empty($ttags)) {
-                $tagless_tasks[] = $task;
+                $tagless_tasks[] = $task_user;
             } else {
                 // collect all tag-combinations and group tasks by tags
                 foreach ($ttags as $tag) {
-                    $tasks_by_tag[$tag][] = $task;
+                    $tasks_by_tag[$tag][] = $task_user;
 
                     if (!$tags[$tag]) {
                         $tags[$tag] = array();

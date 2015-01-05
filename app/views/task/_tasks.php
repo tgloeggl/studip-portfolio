@@ -1,8 +1,9 @@
+<? $show_creator = !empty($task_users) ?>
 <table class="default zebra tasks" data-tag="<?= htmlReady($tag) ?>">
     <colgroup>
         <col style="width: 44%">
         <col style="width: 50%">
-        <? if (!empty($task_users)) : ?>
+        <? if ($show_creator) : ?>
         <col style="width: 10%">
         <? endif ?>
         <col span="2" style="width: 2%">
@@ -14,7 +15,7 @@
         <tr>
             <th><?= _('Aufgabe') ?></th>
             <th><?= _('Schlagworte') ?></th>
-            <? if (!empty($task_users)) : ?>
+            <? if (!empty($show_creator)) : ?>
             <th><?= _('Erstellt von') ?></th>
             <? endif ?>
             <th colspan="2"><?= _('Bearbeitet') ?></th>
@@ -24,11 +25,10 @@
     </thead>
     <tbody>
 
-        <? if (!empty($task_users)) :
-            foreach ($task_users as $task_user) :
+        <? if ($show_creator) :
+            foreach ($tasks as $task_user) :
                 $tags = $task_user->task->tags->orderBy('tag')->pluck('tag');
                 $task = $task_user->task;
-                $show_creator = true;
                 ?>
                 <?= $this->render_partial('task/_task', compact('task', 'tags', 'task_user', 'show_creator')); ?>
             <? endforeach ?>
