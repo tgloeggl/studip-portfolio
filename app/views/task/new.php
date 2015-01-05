@@ -57,9 +57,6 @@ $path = array(
         </select>
     </label>
 
-    <?= $this->render_partial('task/_permissions') ?>
-    <br>
-
     <div style="text-align: center">
         <div class="button-group">
             <?= Studip\Button::createAccept(_('Aufgabe erstellen')) ?>
