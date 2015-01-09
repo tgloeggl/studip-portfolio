@@ -18,17 +18,40 @@ class UserController extends PortfolioPluginController
 
     public function search_action()
     {
-        $search_term = '%'. studip_utf8decode(urldecode(Request::get('term'))) .'%';
-        
-        foreach (User::findBySQL("(username LIKE ? OR Vorname LIKE ? OR Nachname LIKE ?) AND " . get_vis_query(), 
-                array($search_term, $search_term, $search_term)) as $user) {
+        $db = DBManager::get();
+
+        $users = array();
+
+        $searchterm = studip_utf8decode(urldecode(Request::get('term')));
+
+        // search a bit more intelligent
+        $parts = explode(' ', $searchterm);
+
+        if (sizeof($parts) == 1) {
+            $sql = "Vorname LIKE ". $db->quote('%'. $parts[0] .'%') ." OR Nachname LIKE ". $db->quote('%'. $parts[0] .'%');
+        } else {
+            $zw = array();
+
+            foreach ($parts as $search) {
+                foreach ($parts as $search2) {
+                    if ($search != $search2) {
+                        $zw[] = "Vorname LIKE ". $db->quote('%'. $search .'%') ." AND Nachname LIKE ". $db->quote('%'. $search2 .'%');
+                    }
+                }
+            }
+
+            $sql = '(' . implode(') OR (', $zw) . ')';
+        }
+
+        foreach (User::findBySQL($sql . ' AND ' . get_vis_query()
+                ." ORDER BY Nachname ASC, Vorname") as $user) {
             $users[] = array(
                 'id'      => $user->username,
                 'text'    => get_fullname($user->id) .' ('. $user->username .')',
                 'picture' => Avatar::getAvatar($user->id)->getImageTag(Avatar::SMALL)
             );
         }
-        
+
         $this->render_json($users);
     }
 }
