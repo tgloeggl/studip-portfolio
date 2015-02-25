@@ -100,7 +100,7 @@ class AddPortfolioTables extends DBMigration {
               `user_id` VARCHAR(32) NULL ,
               `role` ENUM('tutor','followup-tutor','student') NULL ,
               PRIMARY KEY (`portfolio_task_users_id`, `user_id`)
-            ) ENGINE = InnoDB;
+            );
         ");
 
         SimpleORMap::expireTableScheme();
