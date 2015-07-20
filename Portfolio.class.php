@@ -48,23 +48,6 @@ class Portfolio extends StudIPPlugin implements HomepagePlugin, SystemPlugin
         }
     }
 
-    public function initialize ()
-    {
-        PageLayout::addStylesheet($this->getPluginURL().'/assets/portfolio.css');
-        PageLayout::addScript($this->getPluginURL().'/assets/portfolio.js');
-        
-        PageLayout::addStylesheet($this->getPluginURL().'/assets/vendor/chosen/chosen.min.css');
-        PageLayout::addScript($this->getPluginURL().'/assets/vendor/chosen/chosen.jquery.min.js');
-
-        PageLayout::addStylesheet($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2.min.css');
-        PageLayout::addScript($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2.min.js');
-        PageLayout::addScript($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2_locale_de.js');
-
-        if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.0", '<=')) {
-            PageLayout::addScript($this->getPluginURL().'/assets/vendor/fileupload/jquery.fileupload.js');
-        }
-    }
-
     public function getHomepageTemplate($user_id) {
         // ...
     }

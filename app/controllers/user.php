@@ -46,9 +46,9 @@ class UserController extends PortfolioPluginController
         foreach (User::findBySQL($sql . ' AND ' . get_vis_query()
                 ." ORDER BY Nachname ASC, Vorname") as $user) {
             $users[] = array(
-                'id'      => $user->username,
-                'text'    => get_fullname($user->id) .' ('. $user->username .')',
-                'picture' => Avatar::getAvatar($user->id)->getImageTag(Avatar::SMALL)
+                'id'      => studip_utf8encode($user->username),
+                'text'    => studip_utf8encode(get_fullname($user->id) .' ('. $user->username .')'),
+                'picture' => studip_utf8encode(Avatar::getAvatar($user->id)->getImageTag(Avatar::SMALL))
             );
         }
 

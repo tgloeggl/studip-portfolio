@@ -43,6 +43,18 @@ class PortfolioPluginController extends StudipController
         $this->container['user'] = $GLOBALS['user'];
         $this->timeformat = '%d.%m.%Y, %R';
         $this->body_id = 'portfolio';
+
+        PageLayout::addStylesheet($this->getPluginURL().'/assets/portfolio.css');
+        PageLayout::addScript($this->getPluginURL().'/assets/portfolio.js');
+
+        PageLayout::addStylesheet($this->getPluginURL().'/assets/vendor/chosen/chosen.min.css');
+        PageLayout::addScript($this->getPluginURL().'/assets/vendor/chosen/chosen.jquery.min.js');
+
+        PageLayout::addStylesheet($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2.min.css');
+        PageLayout::addScript($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2.min.js');
+        PageLayout::addScript($this->getPluginURL().'/assets/vendor/select2-3.5.1/select2_locale_de.js');
+
+        PageLayout::addScript($this->getPluginURL().'/assets/vendor/fileupload/jquery.fileupload.js');
     }
 
     // customized #url_for for plugins
